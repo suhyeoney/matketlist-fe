@@ -1,33 +1,33 @@
 'use client'
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-
-type locationType = {
-  latitude: number,
-  longitude: number
-};
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store/store';
+import { add } from '../features/location/locationSlice';
 
 const RegionInputbox:React.FC = () => {
 
   const latitudeRef = useRef<HTMLInputElement | null>(null);
   const longitudeRef = useRef<HTMLInputElement | null>(null);
 
-  const [ location, setLocation ] = useState<locationType>();
+  const arrLocation = useSelector((state: RootState) => state.location.arrLocation);
+  const dispatch = useDispatch();
 
   const onAddBtnClick = useCallback((e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    const latitude = Number(latitudeRef.current?.value);
-    const longitude = Number(longitudeRef.current?.value);
-    setLocation({
-      latitude: latitude,
-      longitude: longitude
-    });
+
+    const location = {
+      latitude: Number(latitudeRef.current?.value),
+      longitude: Number(longitudeRef.current?.value)
+    };
+
+    dispatch(add(location));
+
   }, []);
 
-  useMemo(() => {
-    console.log(location);
-  }, [ location ]);
-
+  useEffect(() => {
+    console.log(arrLocation);
+  }, []);
 
   return (
     <div className="border-[1px] border-solid border-grey rounded-md grid gap-4 grid-cols-4 p-[10px]">
@@ -40,6 +40,7 @@ const RegionInputbox:React.FC = () => {
         </svg>
         추가하기
       </button>    
+      <span>현재 location 배열 : { JSON.stringify(arrLocation) }</span>
     </div>
   );
 }

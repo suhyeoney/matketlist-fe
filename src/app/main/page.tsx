@@ -4,6 +4,8 @@ import useNaverMap from '../utils/useNaverMap';
 import RegionInputbox from './regionInputbox';
 import RegionSelectbox from './regionSelectbox';
 
+import ReduxTest from './reduxTest';
+
 const Main: React.FC = ({}) => {
 
   useNaverMap();
@@ -12,6 +14,8 @@ const Main: React.FC = ({}) => {
     <div className="flex flex-col gap-[10px] justify-center items-center px-[180px]">
       <RegionInputbox/>
       <div id="map" className="w-[1200px] h-[600px] self-center border-[1px] border-solid border-grey"></div>
+      
+      <ReduxTest />
     </div>
   );
 };
