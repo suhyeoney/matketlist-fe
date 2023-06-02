@@ -10,24 +10,24 @@ const RegionInputbox:React.FC = () => {
   const latitudeRef = useRef<HTMLInputElement | null>(null);
   const longitudeRef = useRef<HTMLInputElement | null>(null);
 
-  const arrLocation = useSelector((state: RootState) => state.location.arrLocation);
+  const location = useSelector((state: RootState) => state.location);
   const dispatch = useDispatch();
 
   const onAddBtnClick = useCallback((e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-
-    const location = {
+    
+    const newLocation = {
       latitude: Number(latitudeRef.current?.value),
       longitude: Number(longitudeRef.current?.value)
     };
 
-    dispatch(add(location));
+    dispatch(add(newLocation));
 
   }, []);
 
   useEffect(() => {
-    console.log(arrLocation);
-  }, []);
+    console.log(location.cntLocation);
+  }, [ location.arrLocation ]);
 
   return (
     <div className="border-[1px] border-solid border-grey rounded-md grid gap-4 grid-cols-4 p-[10px]">
@@ -40,7 +40,8 @@ const RegionInputbox:React.FC = () => {
         </svg>
         추가하기
       </button>    
-      <span>현재 location 배열 : { JSON.stringify(arrLocation) }</span>
+      <span>현재 location 배열 : { JSON.stringify(location.arrLocation) }</span>
+      <span>현재 location 크기 : { location.cntLocation }</span>
     </div>
   );
 }

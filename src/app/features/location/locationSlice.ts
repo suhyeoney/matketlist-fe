@@ -3,16 +3,19 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 type LocationType = {
+  id: number,
   latitude: number,
   longitude: number
 };
 
 export interface LocationState {
-  arrLocation: LocationType[]
+  arrLocation: LocationType[],
+  cntLocation: number
 };
 
 const initialState: LocationState = {
-  arrLocation: []
+  arrLocation: [],
+  cntLocation: 0,
 };
 
 export const locationSlice = createSlice({
@@ -20,7 +23,12 @@ export const locationSlice = createSlice({
   initialState,
   reducers: {
     add: (state, action) => {
-      state.arrLocation = [ ...state.arrLocation, action.payload ]
+      action.payload.id = state.arrLocation.length + 1;
+      state.arrLocation = [ ...state.arrLocation, action.payload ];
+      state.cntLocation = state.arrLocation.length;
+    },
+    remove: (state, action) => {
+    //  state.arrLocation = state.arrLocation.filter((e: LocationType) => e.id !== action.payload)
     }
   }
 });
