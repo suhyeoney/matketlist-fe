@@ -56,8 +56,8 @@ const NaverMap = () => {
         position: new naver.maps.LatLng(currentPosition[0], currentPosition[1]),
         icon: {
           url: './icons/you-are-here.png',
-          size: new naver.maps.Size(50, 50), // 마커 크기
-          scaledSize: new naver.maps.Size(50, 50), // 아이콘 크기
+          size: new naver.maps.Size(30, 30), // 마커 크기
+          scaledSize: new naver.maps.Size(30, 30), // 아이콘 크기
           origin: new naver.maps.Point(0, 0),
           anchor: new naver.maps.Point(11, 10)
         },
@@ -74,8 +74,8 @@ const NaverMap = () => {
         animation: index === arrMatjipLocation.length -1 ? naver.maps.Animation.DROP : undefined,
         icon: {
           url: './icons/like-it.png',
-          size: new naver.maps.Size(50, 50), // 마커 크기
-          scaledSize: new naver.maps.Size(50, 50), // 아이콘 크기
+          size: new naver.maps.Size(30, 30), // 마커 크기
+          scaledSize: new naver.maps.Size(30, 30), // 아이콘 크기
           origin: new naver.maps.Point(0, 0),
           anchor: new naver.maps.Point(11, 35)
         },

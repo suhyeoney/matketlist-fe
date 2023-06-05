@@ -3,11 +3,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';
 import locationReducer from '../features/location/locationSlice';
+import modalControlReducer from '../features/modalControl/modalControlSlice';
 
 export const store = configureStore({
 	reducer: {
 		counter: counterReducer,
-		location: locationReducer
+		location: locationReducer,
+		modalControl: modalControlReducer,
 	},
 	devTools: true
 });
