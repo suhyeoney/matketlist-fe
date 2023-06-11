@@ -1,6 +1,6 @@
-import instance from './axios';
+import { AxiosInstance } from 'axios';
 
-export const get = <T, >(url: string, payload: object | number | string) => {
+export const get = <T, >(url: string, payload: object | number | string, instance: AxiosInstance) => {
   switch(typeof payload) {
     case 'object':
       if(Object.keys(payload).length !== 0) {
@@ -16,6 +16,6 @@ export const get = <T, >(url: string, payload: object | number | string) => {
   }
 };
 
-export const post = (url: string, payload: object | number | string) => {
+export const post = (url: string, payload: object | number | string, instance: AxiosInstance) => {
   return instance.post(url, payload);
 };

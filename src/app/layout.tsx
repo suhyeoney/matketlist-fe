@@ -29,13 +29,13 @@ export default function RootLayout({
           { children }
           <Script
             strategy="beforeInteractive"
-            src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_MAP_KEY}`}
+            src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_MAP_KEY}`}
           ></Script>
-          <Script
+          {/* <Script
             strategy="beforeInteractive"
-            src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_MAP_KEY}&submodules=geocoder`}
-          ></Script>
-          </Providers>
+            src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_MAP_KEY}&submodules=geocoder`}
+          ></Script> */}
+        </Providers>
       </body>
     </html>
   )
