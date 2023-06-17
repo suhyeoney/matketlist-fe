@@ -10,8 +10,11 @@ import SearchInputbox from './searchInputbox';
 import { Subscribe, bind } from '@react-rxjs/core';
 import { SearchMatjipInfo } from '../dataTypes/Matjip';
 import { createSignal } from '@react-rxjs/utils';
-import { debounceTime, distinctUntilChanged, filter } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { isEmpty } from '../utils/stringUtils';
+import { addLocation } from '../features/location/locationSlice';
+import { storeInputMajip } from '../features/inputControl/inputControlSlice';
+import { LocationType } from '../dataTypes/Location';
 
 const [ keywordChange$, setKeyword ] = createSignal<string>();
 const [ useKeyword, keyword$ ] = bind(
@@ -27,6 +30,7 @@ const SearchAddressModal: React.FC = () => {
 
 	const modalControl = useSelector((state: RootState) => state.modalControl);
   const inputControl = useSelector((state: RootState) => state.inputControl);
+  const location = useSelector((state: RootState) => state.location)
 
 	const dispatch = useDispatch();
   const keyword = useKeyword();
@@ -68,6 +72,25 @@ const SearchAddressModal: React.FC = () => {
       setSearchResultsOrigin([]);
       setSearchResultsCopy([]);
     }
+  };
+
+  const registerMatjip = (e: SearchMatjipInfo) => {
+    console.log('*** latitude: ', e.latitude);
+    console.log('*** longitude: ', e.longitude);
+
+    const inputLatitude = e.latitude;
+    const inputLongitude = e.longitude;
+
+    const isDuplicated = location.arrLocation.find((e: LocationType) => { return e.latitude === inputLatitude && e.longitude === inputLongitude });
+    if(isDuplicated) {
+      alert('해당 맛집은 이미 등록되어 있습니다.');
+      return;
+    }
+    
+    dispatch(addLocation({ latitude: e.latitude, longitude: e.longitude }));
+    dispatch(setSearchAddressModalOpen(false));
+    dispatch(storeInputMajip(null));
+    alert('맛집이 정상적으로 등록되었습니다.');
   };
 
 	useEffect(() => {
@@ -122,10 +145,10 @@ const SearchAddressModal: React.FC = () => {
             </div>
           <div className="flex flex-col justify-center items-center py-3">
             <Subscribe>
-              <div>
+              <div className="flex flex-row justify-end">
                 <SearchInputbox setKeyword={ setKeyword } />
               </div>
-              <SearchResultsTable data={ searchResultsCopy } />
+              <SearchResultsTable data={ searchResultsCopy } registerMatjip={ registerMatjip } />
             </Subscribe>
           </div>
         </div>

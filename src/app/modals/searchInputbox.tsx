@@ -16,7 +16,7 @@ const SearchInputbox: React.FC<SearchInputboxProps> = ({ setKeyword  }) => {
       <input 
         type="text" 
         placeholder="Type here" 
-        className="input input-bordered input-info w-full max-w-xs" 
+        className="input input-bordered input-info w-full max-w-xs w-[150px] h-[40px]" 
         onChange={ (e: React.ChangeEvent<HTMLInputElement>) => onInputKeywordChange(e) }
       />
     </>

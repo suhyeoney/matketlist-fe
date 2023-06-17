@@ -22,7 +22,7 @@ export const locationSlice = createSlice({
   name: 'location',
   initialState,
   reducers: {
-    add: (state, action) => {
+    addLocation: (state, action) => {
       action.payload.id = state.arrLocation.length + 1;
       state.arrLocation = [ ...state.arrLocation, action.payload ];
       state.cntLocation = state.arrLocation.length;
@@ -33,7 +33,7 @@ export const locationSlice = createSlice({
   }
 });
 
-export const { add } = locationSlice.actions;
+export const { addLocation } = locationSlice.actions;
 
 export default locationSlice.reducer;
 

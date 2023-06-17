@@ -6,10 +6,11 @@ import LoadingSpinner from '../spinners/loadingSpinner';
 import { setSearchAddressModalOpen } from '../features/modalControl/modalControlSlice';
 
 type SearchResultsTableProps = {
-  data: any[]
+  data: any[],
+  registerMatjip: (e: SearchMatjipInfo) => void
 };
 
-const SearchResultsTable: React.FC<SearchResultsTableProps> = ({ data }) => {
+const SearchResultsTable: React.FC<SearchResultsTableProps> = ({ data, registerMatjip }) => {
 
   const dispatch = useDispatch();
 
@@ -25,7 +26,7 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({ data }) => {
         </thead>
         <tbody>
           { data?.map((e: SearchMatjipInfo, idx: number) => (
-          <tr key={ idx }>
+          <tr key={ idx } className="py-10 border-b border-gray-200 hover:bg-gray-100">
             <td className="p-0">
               <div className="w-[150px]">
                 <p className="px-3 font-bold truncate ...">{ e?.name }</p>
@@ -37,7 +38,12 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({ data }) => {
               </div>
             </td>
             <td className="flex justify-center items-center w-[130px] p-[8px]">
-              <button className="font-['Tenada'] btn btn-outline btn-primary">선택</button>
+              <button 
+                className="font-['Tenada'] btn btn-outline btn-primary"
+                onClick={ () => registerMatjip(e) }
+              >
+                선택
+              </button>
             </td>
           </tr>
           ))}

@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { Marker } from 'react-naver-maps';
+import image1 from '../assets/icons/you-are-here.png';
+import image2 from '../assets/icons/like-it.png';
 
 type MatjipLocation = {
   // id: number,
@@ -55,7 +57,7 @@ const NaverMap = () => {
       mapRef.current = new naver.maps.Marker({
         position: new naver.maps.LatLng(currentPosition[0], currentPosition[1]),
         icon: {
-          url: './icons/you-are-here.png',
+          url: image1.src,
           size: new naver.maps.Size(30, 30), // 마커 크기
           scaledSize: new naver.maps.Size(30, 30), // 아이콘 크기
           origin: new naver.maps.Point(0, 0),
@@ -73,7 +75,7 @@ const NaverMap = () => {
         clickable: true,
         animation: index === arrMatjipLocation.length -1 ? naver.maps.Animation.DROP : undefined,
         icon: {
-          url: './icons/like-it.png',
+          url: image2.src,
           size: new naver.maps.Size(30, 30), // 마커 크기
           scaledSize: new naver.maps.Size(30, 30), // 아이콘 크기
           origin: new naver.maps.Point(0, 0),
