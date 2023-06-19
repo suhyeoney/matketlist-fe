@@ -1,10 +1,11 @@
 'use client'
 
 type SearchInputboxProps = {
-  setKeyword: (payload: string) => void
+  setKeyword: (payload: string) => void,
+  placeholder: string,
 };
 
-const SearchInputbox: React.FC<SearchInputboxProps> = ({ setKeyword  }) => {
+const SearchInputbox: React.FC<SearchInputboxProps> = ({ setKeyword, placeholder  }) => {
     
   const onInputKeywordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
@@ -15,8 +16,8 @@ const SearchInputbox: React.FC<SearchInputboxProps> = ({ setKeyword  }) => {
     <>
       <input 
         type="text" 
-        placeholder="Type here" 
-        className="input input-bordered input-info w-full max-w-xs w-[150px] h-[40px]" 
+        placeholder={ placeholder }
+        className="input input-bordered input-info w-[200px] h-[40px]" 
         onChange={ (e: React.ChangeEvent<HTMLInputElement>) => onInputKeywordChange(e) }
       />
     </>

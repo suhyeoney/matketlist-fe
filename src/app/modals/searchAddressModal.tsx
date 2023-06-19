@@ -16,6 +16,7 @@ import { addLocation } from '../features/location/locationSlice';
 import { storeInputMajip } from '../features/inputControl/inputControlSlice';
 import { LocationType } from '../dataTypes/Location';
 
+// rxjs
 const [ keywordChange$, setKeyword ] = createSignal<string>();
 const [ useKeyword, keyword$ ] = bind(
   keywordChange$.pipe(
@@ -27,6 +28,7 @@ const SearchAddressModal: React.FC = () => {
 
   const [ searchResultsOrigin, setSearchResultsOrigin ] = useState<any>(undefined);
   const [ searchResultsCopy, setSearchResultsCopy ] = useState<any>(undefined);
+  const [ page, setPage ] = useState<number>(0);
 
 	const modalControl = useSelector((state: RootState) => state.modalControl);
   const inputControl = useSelector((state: RootState) => state.inputControl);
@@ -86,7 +88,7 @@ const SearchAddressModal: React.FC = () => {
       alert('해당 맛집은 이미 등록되어 있습니다.');
       return;
     }
-    
+
     dispatch(addLocation({ latitude: e.latitude, longitude: e.longitude }));
     dispatch(setSearchAddressModalOpen(false));
     dispatch(storeInputMajip(null));
@@ -116,16 +118,13 @@ const SearchAddressModal: React.FC = () => {
   };
 
   useEffect(() => {
+    setPage(1);
     if(keyword?.length < 1) {
       setSearchResultsCopy(searchResultsOrigin);
       return;
     }
-    if(searchResultsCopy?.length < 1) {
+    if(searchResultsCopy !== undefined || searchResultsCopy?.length < 1) {
       setSearchResultsCopy(filter(keyword, searchResultsOrigin));
-      return;
-    }
-    if(searchResultsCopy !== undefined) {
-      setSearchResultsCopy(filter(keyword, searchResultsCopy));
       return;
     }
 
@@ -136,7 +135,7 @@ const SearchAddressModal: React.FC = () => {
       <div className="absolute inset-0 flex items-center justify-center bg-gray-700 bg-opacity-50">
         <div className=" p-6 bg-white divide-y divide-gray-500 w-[800px] h-[600px] rounded-[20px]">
             <div className="flex items-center justify-between pb-[15px]">
-                <h3 className="text-2xl">🦐 검색결과 (현재 위치 기준 최대 20곳 목록 표시)</h3>
+                <h3 className="font-['NanumGothic'] text-2xl">🦐 검색결과</h3>
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 cursor-pointer" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor" onClick={ closeModal }>
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
@@ -145,10 +144,19 @@ const SearchAddressModal: React.FC = () => {
             </div>
           <div className="flex flex-col justify-center items-center py-3">
             <Subscribe>
-              <div className="flex flex-row justify-end">
-                <SearchInputbox setKeyword={ setKeyword } />
+              <div className="flex justify-end w-full pr-[70px]">
+                <SearchInputbox 
+                  setKeyword={ setKeyword } 
+                  placeholder={ '검색결과 내 키워드로 조회' } 
+                />
               </div>
-              <SearchResultsTable data={ searchResultsCopy } registerMatjip={ registerMatjip } />
+              <SearchResultsTable 
+                data={ searchResultsCopy } 
+                page={ page }
+                setData={ setSearchResultsCopy } 
+                setPage={ setPage }
+                registerMatjip={ registerMatjip } 
+              />
             </Subscribe>
           </div>
         </div>
