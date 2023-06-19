@@ -23,18 +23,19 @@ export default function RootLayout({
   */
   return (
     <html data-theme="lemonade" lang="en">
+      <head>
+        <Script
+          src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_MAP_KEY}`}
+        ></Script>
+        {/* <Script
+          strategy="beforeInteractive"
+          src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_MAP_KEY}&submodules=geocoder`}
+        ></Script> */}
+      </head>
       <body className="flex flex-col justify-center">
         <Providers>
           <Header />
           { children }
-          <Script
-            strategy="beforeInteractive"
-            src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_MAP_KEY}`}
-          ></Script>
-          {/* <Script
-            strategy="beforeInteractive"
-            src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_MAP_KEY}&submodules=geocoder`}
-          ></Script> */}
         </Providers>
       </body>
     </html>
