@@ -13,7 +13,7 @@ type MatjipLocation = {
   longitude: number
 };
 
-const NaverMap = () => {
+const NaverMap = (setMapObj: React.Dispatch<React.SetStateAction<object>>) => {
   const mapRef = useRef<HTMLElement | null | any>(null);
   const [myLocation, setMyLocation] = useState<
     { latitude: number; longitude: number } | string
@@ -46,7 +46,7 @@ const NaverMap = () => {
 
     if (typeof myLocation !== 'string') {
       // 현재 위치 추적
-      let currentPosition = [myLocation.latitude, myLocation.longitude];
+      let currentPosition = [ myLocation.latitude, myLocation.longitude ];
 
       // Naver Map 생성
       const map = mapRef.current = new naver.maps.Map('map', {
@@ -54,6 +54,9 @@ const NaverMap = () => {
         zoomControl: true,
         mapDataControl: true,
       });
+
+      setMapObj(map);
+
       mapRef.current = new naver.maps.Marker({
         position: new naver.maps.LatLng(currentPosition[0], currentPosition[1]),
         icon: {

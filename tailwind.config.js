@@ -16,8 +16,8 @@ module.exports = {
       theme: {
         extend: {
           fontFamily:{
-            'tenada': ['Tenada'],
-            'nanumGothic': ['NanumGothic'],
+            // 'tenada': ['Tenada'],
+            // 'nanumGothic': ['NanumGothic'],
           },
         },
       },

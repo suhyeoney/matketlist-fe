@@ -32,7 +32,7 @@ export default function RootLayout({
           src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_MAP_KEY}&submodules=geocoder`}
         ></Script> */}
       </head>
-      <body className="flex flex-col justify-center">
+      <body className="flex flex-col justify-center relative z-0">
         <Providers>
           <Header />
           { children }

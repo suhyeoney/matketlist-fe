@@ -133,18 +133,18 @@ const SearchAddressModal: React.FC = () => {
   return (
 		<div className="container flex justify-center mx-auto">
       <div className="absolute inset-0 flex items-center justify-center bg-gray-700 bg-opacity-50">
-        <div className=" p-6 bg-white divide-y divide-gray-500 w-[800px] h-[600px] rounded-[20px]">
-            <div className="flex items-center justify-between pb-[15px]">
-                <h3 className="font-['NanumGothic'] text-2xl">🦐 검색결과</h3>
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 cursor-pointer" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor" onClick={ closeModal }>
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+        <div className="px-5 py-1 bg-white divide-y divide-gray-500 w-[800px] h-[610px] rounded-[20px]">
+            <div className="flex items-center justify-between py-3">
+              <h3 className="font-['NanumGothic'] text-2xl">🦐 검색결과</h3>
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 cursor-pointer" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor" onClick={ closeModal }>
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                      d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
             </div>
-          <div className="flex flex-col justify-center items-center py-3">
+          <div className="flex flex-col justify-center items-center">
             <Subscribe>
-              <div className="flex justify-end w-full pr-[70px]">
+              <div className="flex justify-end w-full pr-[80px] py-3">
                 <SearchInputbox 
                   setKeyword={ setKeyword } 
                   placeholder={ '검색결과 내 키워드로 조회' } 

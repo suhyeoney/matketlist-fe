@@ -2,7 +2,7 @@
 
 import { useDispatch } from 'react-redux';
 import { SearchMatjipInfo } from '../dataTypes/Matjip';
-import LoadingSpinner from '../spinners/loadingSpinner';
+import LoadingSpinner01 from '../spinners/loadingSpinner01';
 import { setSearchAddressModalOpen } from '../features/modalControl/modalControlSlice';
 import { useEffect, useState } from 'react';
 
@@ -21,6 +21,25 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({ data, page, set
   const SIZE_PER_PAGE = 5;
   // const [ foldedData, setFoldedData ] = useState<any[]>([]);
 
+  // CSS default : tooltip tailwind class 적용 상태.
+  // querySelector로 얻은 각 요소들이 truncated 상태인지 체크
+  // truncated 상태이면 tooltip 보여줘야 함. (상태유지)
+  // is not truncated 상태이면 이미 적용되어 있는 tooltip class를 제거함.
+  const processCssTooltip = (selector: string) => {
+    const elements = document.querySelectorAll(selector);
+    console.log(elements);
+    elements.forEach(e => {
+      const clientWidth = e.clientWidth;
+      const scrollWidth = e.scrollWidth;
+      // console.log('clientWidth', clientWidth);
+      // console.log('scrollWidth', scrollWidth);
+      if(scrollWidth <= clientWidth) {
+        // is not truncated
+        e.classList.remove('tooltip');
+      }
+    });
+  };
+
   useEffect(() => {
     // const arrData = data ?? [];
     // setFoldedData(arrData);
@@ -28,17 +47,21 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({ data, page, set
   }, []);
 
   useEffect(() => {
-    console.log(data);
-    console.log(page);
+    // console.log(data);
+    // console.log(page);
     if(data !== undefined) {
       const arr = data.filter((e: SearchMatjipInfo, idx: number) => idx < SIZE_PER_PAGE * page);
-      console.log(arr);
+      // console.log(arr);
       // setData(data.filter((e: SearchMatjipInfo, idx: number) => idx < SIZE_PER_PAGE * page));
     }
+
+    processCssTooltip('#name-tooltip');
+    processCssTooltip('#address-tooltip');
+
   }, [ page ]);
 
   useEffect(() => {
-    console.log(data);
+    // console.log(data);
   }, [ data ]);
 
   const btnShowMore =
@@ -55,10 +78,10 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({ data, page, set
     </tr>;
 
   const resultTable = 
-    <div className="w-[650px] h-[450px] mt-4 overflow-y-scroll">
-      <table className="table text-sm">
+    <div className="w-[700px] h-[450px] pl-5 pr-0 mb-4 overflow-x-clip overflow-y-scroll">
+      <table className="table text-sm font-['NanumGothic']">
         <thead>
-          <tr>
+          <tr className="sticky z-20">
             <th className="sticky top-0 px-6 py-3 text-center">매장명</th>
             <th className="sticky top-0 px-6 py-3 text-center">주소</th>
             <th className="sticky top-0 px-6 py-3"></th>
@@ -70,18 +93,26 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({ data, page, set
             (e: SearchMatjipInfo, idx: number) => (
           <tr key={ idx } className="py-10">
             <td className="p-0">
-              <div className="w-[150px]">
-                <p className="px-3 font-bold truncate ...">{ e?.name }</p>
+              <div 
+                id="name-tooltip"
+                data-tip={ e?.name } 
+                className="w-[200px] tooltip tooltip-accent tooltip-top before:max-w-fit hover:cursor-default hover:underline hover:decoration-dotted"
+              >
+                <p className="text-left px-3 font-bold truncate ...">{ e?.name }</p>
               </div>
             </td>
             <td className="p-0">
-              <div className="w-[350px]">
-                <p className="px-3 truncate ...">{ e?.address }</p>
+              <div
+                id="address-tooltip"
+                data-tip={ e?.address } 
+                className="w-[300px] tooltip tooltip-info tooltip-top before:max-w-fit hover:cursor-default hover:underline hover:decoration-dotted"
+              >
+                <p className="text-left px-3 truncate ...">{ e?.address }</p>
               </div>
             </td>
             <td className="flex justify-center items-center w-[130px] p-[8px]">
               <button 
-                className="font-['Tenada'] btn btn-outline btn-primary"
+                className="font-['NanumGothic'] btn btn-outline btn-primary"
                 onClick={ () => registerMatjip(e) }
               >선택
               </button>
@@ -96,7 +127,7 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({ data, page, set
   const isLoading = 
     // <div className="w-[650px] h-[450px] mt-4">
     // </div>;
-    <LoadingSpinner color={ 'purple' } depth={ '500' } thickness={ '4' } />;
+    <LoadingSpinner01 color={ 'purple' } depth={ '500' } thickness={ '4' } text={ 'Loading...' } />;
   
   const render = () => {
     if(data === undefined) {

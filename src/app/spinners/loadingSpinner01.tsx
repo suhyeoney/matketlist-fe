@@ -1,12 +1,13 @@
 'use client'
 
-type LoadingSpinnerProps = {
+type LoadingSpinner01Props = {
   color: string,
   depth: string,
   thickness: string,
+  text: string,
 };
 
-const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ color , depth, thickness }) => {
+const LoadingSpinner01: React.FC<LoadingSpinner01Props> = ({ color , depth, thickness, text }) => {
   
   const getBorderThickness = (thickness: string) => {
     switch (thickness) {
@@ -58,10 +59,10 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ color , depth, thicknes
       <div 
         className={ `w-12 h-12 rounded-full animate-spin ${ getBorderThickness(thickness) } border-solid ${ getBorderStyle(color, depth) } border-t-transparent`}
       ></div>
-      <span className="my-[10px]">Loading...</span>
+      <span className="my-[10px]">{ text }</span>
     </div>
   );
     
 };
 
-export default LoadingSpinner;
+export default LoadingSpinner01;
