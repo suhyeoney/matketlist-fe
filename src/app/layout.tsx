@@ -1,7 +1,7 @@
 import Script from 'next/script'
 import './globals.css'
 import { Inter } from 'next/font/google'
-import Header from './header'
+import Header from './main/header'
 import { store } from './store/store'
 import { Providers } from './store/provider'
 
@@ -32,9 +32,8 @@ export default function RootLayout({
           src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_MAP_KEY}&submodules=geocoder`}
         ></Script> */}
       </head>
-      <body className="flex flex-col justify-center relative z-0">
+      <body>
         <Providers>
-          <Header />
           { children }
         </Providers>
       </body>

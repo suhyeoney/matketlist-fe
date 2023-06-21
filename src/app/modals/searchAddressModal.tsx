@@ -131,7 +131,7 @@ const SearchAddressModal: React.FC = () => {
   }, [ keyword ]);
 
   return (
-		<div className="container flex justify-center mx-auto">
+    <div className="container flex justify-center mx-auto">
       <div className="absolute inset-0 flex items-center justify-center bg-gray-700 bg-opacity-50">
         <div className="px-5 py-1 bg-white divide-y divide-gray-500 w-[800px] h-[610px] rounded-[20px]">
             <div className="flex items-center justify-between py-3">
@@ -160,8 +160,8 @@ const SearchAddressModal: React.FC = () => {
             </Subscribe>
           </div>
         </div>
-			</div>
-		</div>
+      </div>
+    </div>
 	);
 };
 

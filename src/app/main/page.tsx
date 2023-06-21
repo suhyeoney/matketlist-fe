@@ -9,6 +9,7 @@ import ReduxTest from './reduxTest';
 import { RootState } from '../store/store';
 import { useState } from 'react';
 import LoadingSpinner01 from '../spinners/loadingSpinner01';
+import Header from './header';
 
 const Main: React.FC = () => {
 
@@ -30,6 +31,12 @@ const Main: React.FC = () => {
           </div>
         </> : null
       }
+      { modalControl.isSearchAddressModalOpen ?
+        <>
+          <div className="flex justify-center items-center w-full h-full absolute z-10"></div>
+        </> : null
+       }
+      <Header />
       <div className="relative z-10 flex flex-col gap-[10px] justify-center items-center px-[180px]">
         <MatjipInputbox/>
         <div id="map" className="w-[1200px] h-[550px] z-0 self-center border-[1px] border-solid border-grey"></div> 
