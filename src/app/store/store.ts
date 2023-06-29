@@ -1,10 +1,10 @@
 'use client'
 
 import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
-import locationReducer from '../features/location/locationSlice';
-import modalControlReducer from '../features/modalControl/modalControlSlice';
-import inputControlReducer from '../features/inputControl/inputControlSlice';
+import counterReducer from '@features/counter/counterSlice';
+import locationReducer from '@features/location/locationSlice';
+import modalControlReducer from '@features/modalControl/modalControlSlice';
+import inputControlReducer from '@features/inputControl/inputControlSlice';
 
 export const store = configureStore({
 	reducer: {

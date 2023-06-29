@@ -1,14 +1,14 @@
 'use client'
 
 import { useSelector } from 'react-redux';
-import SearchAddressModal from '../modals/searchAddressModal';
-import useNaverMap from '../utils/useNaverMap';
+import SearchAddressModal from '@modals/searchAddressModal';
+import useNaverMap from '../hooks/useNaverMap';
 import MatjipInputbox from './matjipInputbox';
 
 import ReduxTest from './reduxTest';
-import { RootState } from '../store/store';
+import { RootState } from '@store/store';
 import { useState } from 'react';
-import LoadingSpinner01 from '../spinners/loadingSpinner01';
+import LoadingSpinner01 from '@spinners/loadingSpinner01';
 import Header from './header';
 
 const Main: React.FC = () => {

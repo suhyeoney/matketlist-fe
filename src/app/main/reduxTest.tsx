@@ -1,8 +1,8 @@
 'use client'
 
-import type { RootState } from '../store/store'; 
+import type { RootState } from '@store/store'; 
 import { useSelector, useDispatch } from 'react-redux';
-import { increment, decrement, incrementByAmount } from '../features/counter/counterSlice'; 
+import { increment, decrement, incrementByAmount } from '@features/counter/counterSlice'; 
 
 const ReduxTest: React.FC = () => {
 

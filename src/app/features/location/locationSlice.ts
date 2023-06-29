@@ -1,5 +1,6 @@
 'use client'
 
+import { SearchMatjipInfo } from '@/app/dataTypes/Matjip';
 import { createSlice } from '@reduxjs/toolkit';
 
 type LocationType = {
@@ -9,7 +10,7 @@ type LocationType = {
 };
 
 export interface LocationState {
-  arrLocation: LocationType[],
+  arrLocation: SearchMatjipInfo[],
   cntLocation: number
 };
 

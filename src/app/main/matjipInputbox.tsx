@@ -2,12 +2,12 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store/store';
-import { addLocation } from '../features/location/locationSlice';
-import SearchAddressModal from '../modals/searchAddressModal';
-import { setSearchAddressModalOpen } from '../features/modalControl/modalControlSlice';
-import { storeInputMajip } from '../features/inputControl/inputControlSlice';
-import { LocationType } from '../dataTypes/Location';
+import { RootState } from '@store/store';
+import { addLocation } from '@features/location/locationSlice';
+import SearchAddressModal from '@modals/searchAddressModal';
+import { setSearchAddressModalOpen } from '@features/modalControl/modalControlSlice';
+import { storeInputMajip } from '@features/inputControl/inputControlSlice';
+import { LocationType } from '@dataTypes/Location';
 
 const matjipInputbox:React.FC = () => {
 

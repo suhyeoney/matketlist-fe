@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { SearchMatjipInfo } from '../dataTypes/Matjip';
+import { SearchMatjipInfo } from '@dataTypes/Matjip';
 import { get } from '../api/api';
 import { instanceForGoogleApi, instanceForNaverApi } from '../api/axios';
 
@@ -9,6 +9,11 @@ type LocalSearchParams = {
   // display: number,
   // start: number,
   // sort: string
+};
+
+type PlaceDetailParams = {
+  key: string | undefined,
+  placeid: string,
 };
 
 // const getMatjipListApi = async () => {
@@ -42,9 +47,23 @@ const getLocalSearchDataApi = async(params: LocalSearchParams) => {
   }
 };
 
+const getPlaceDetailDataApi = async(params: PlaceDetailParams) => {
+  try {
+    const response: AxiosResponse = await get<any>(
+      '/maps/api/place/details/json', 
+      params, 
+      instanceForGoogleApi
+    );
+    const data = response.data.result;
+    return data;
+  } catch(e) {
+  }
+};
+
 const MainService = {
   // getMatjipListApi,
   getLocalSearchDataApi,
+  getPlaceDetailDataApi,
 };
 
 export default MainService;

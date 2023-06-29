@@ -1,9 +1,9 @@
 'use client'
 
 import { useDispatch } from 'react-redux';
-import { SearchMatjipInfo } from '../dataTypes/Matjip';
-import LoadingSpinner01 from '../spinners/loadingSpinner01';
-import { setSearchAddressModalOpen } from '../features/modalControl/modalControlSlice';
+import { SearchMatjipInfo } from '@dataTypes/Matjip';
+import LoadingSpinner01 from '@spinners/loadingSpinner01';
+import { setSearchAddressModalOpen } from '@features/modalControl/modalControlSlice';
 import { useEffect, useState } from 'react';
 
 type SearchResultsTableProps = {

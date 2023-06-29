@@ -1,4 +1,4 @@
-import RegionSelectbox from '../main/regionSelectbox';
+import RegionSelectbox from '@main/regionSelectbox';
 
 const Header: React.FC = () => {
 

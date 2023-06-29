@@ -1,20 +1,18 @@
 'use client'
 
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store/store';
-import { setSearchAddressModalOpen } from '../features/modalControl/modalControlSlice';
+import { RootState } from '@store/store';
+import { setSearchAddressModalOpen } from '@features/modalControl/modalControlSlice';
 import { useEffect, useState } from 'react';
-import MainService from '../services/main.service';
+import MainService from '@services/main.service';
 import SearchResultsTable from '../tables/searchResultsTable';
 import SearchInputbox from './searchInputbox';
 import { Subscribe, bind } from '@react-rxjs/core';
-import { SearchMatjipInfo } from '../dataTypes/Matjip';
+import { SearchMatjipInfo } from '@dataTypes/Matjip';
 import { createSignal } from '@react-rxjs/utils';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
-import { isEmpty } from '../utils/stringUtils';
-import { addLocation } from '../features/location/locationSlice';
-import { storeInputMajip } from '../features/inputControl/inputControlSlice';
-import { LocationType } from '../dataTypes/Location';
+import { addLocation } from '@features/location/locationSlice';
+import { storeInputMajip } from '@features/inputControl/inputControlSlice';
 
 // rxjs
 const [ keywordChange$, setKeyword ] = createSignal<string>();
@@ -42,14 +40,14 @@ const SearchAddressModal: React.FC = () => {
 	};
 
   const fetchResults = async () => {
-    const params = {
+    const paramsLocalSearch = {
       query: inputControl.inputMatjip,
       key: process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY
       // display: 5,
       // start: 10,
       // sort: 'random'
     };
-    const searchResults = await MainService.getLocalSearchDataApi(params);
+    const searchResults = await MainService.getLocalSearchDataApi(paramsLocalSearch);
     if(searchResults.length > 0) {
       const formattedResults = searchResults.map((e: any) => {
         let newObj = { 
@@ -57,13 +55,16 @@ const SearchAddressModal: React.FC = () => {
           name : '', 
           iconUrl: '', 
           latitude: 0, 
-          longitude: 0 
+          longitude: 0,
+          phoneNumber: '',
+          placeId: '',
         };
         newObj['address'] = e.formatted_address.includes('대한민국') ? e.formatted_address.split('대한민국 ')[1] : e.formatted_address;
         newObj['name'] = e.name;
         newObj['iconUrl'] = e.icon;
         newObj['latitude'] = e.geometry.location.lat;
         newObj['longitude'] = e.geometry.location.lng;
+        newObj['placeId'] = e.place_id;
 
         return newObj;
       });
@@ -76,20 +77,41 @@ const SearchAddressModal: React.FC = () => {
     }
   };
 
-  const registerMatjip = (e: SearchMatjipInfo) => {
+  const registerMatjip = async (e: SearchMatjipInfo) => {
     console.log('*** latitude: ', e.latitude);
     console.log('*** longitude: ', e.longitude);
 
     const inputLatitude = e.latitude;
     const inputLongitude = e.longitude;
+    const inputName = e.name;
+    const inputAddress = e.address;
+    const inputIconUrl = e.iconUrl;
+    const inputPlaceId = e.placeId;
 
-    const isDuplicated = location.arrLocation.find((e: LocationType) => { return e.latitude === inputLatitude && e.longitude === inputLongitude });
+    const isDuplicated = location.arrLocation.find((e: SearchMatjipInfo) => { return e.latitude === inputLatitude && e.longitude === inputLongitude });
     if(isDuplicated) {
       alert('해당 맛집은 이미 등록되어 있습니다.');
       return;
     }
 
-    dispatch(addLocation({ latitude: e.latitude, longitude: e.longitude }));
+    const paramsPlaceDetail = {
+      placeid: e.placeId,
+      key: process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY
+    };
+    const placeDetailResult = await MainService.getPlaceDetailDataApi(paramsPlaceDetail);
+    const getPhoneNumber = placeDetailResult.formatted_phone_number;
+    const getWebsiteUrl = placeDetailResult.website;
+    
+    dispatch(addLocation({ 
+      latitude: inputLatitude, 
+      longitude: inputLongitude, 
+      name: inputName, 
+      address: inputAddress, 
+      iconUrl: inputIconUrl, 
+      placeId: inputPlaceId, 
+      phoneNumber: getPhoneNumber ?? '-',
+      website: getWebsiteUrl ?? '-',
+    }));
     dispatch(setSearchAddressModalOpen(false));
     dispatch(storeInputMajip(null));
     alert('맛집이 정상적으로 등록되었습니다.');
