@@ -9,12 +9,20 @@ import { useEffect, useState } from 'react';
 type SearchResultsTableProps = {
   data: any[],
   page: number,
+  isRegistering: boolean,
   setData: React.Dispatch<React.SetStateAction<any>>,
   setPage: React.Dispatch<React.SetStateAction<number>>,
   registerMatjip: (e: SearchMatjipInfo) => void
 };
 
-const SearchResultsTable: React.FC<SearchResultsTableProps> = ({ data, page, setData, setPage, registerMatjip }) => {
+const SearchResultsTable: React.FC<SearchResultsTableProps> = ({ 
+  data, 
+  page, 
+  isRegistering,
+  setData, 
+  setPage, 
+  registerMatjip 
+}) => {
 
   const dispatch = useDispatch();
 
@@ -113,6 +121,7 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({ data, page, set
             <td className="flex justify-center items-center w-[130px] p-[8px]">
               <button 
                 className="font-['NanumGothic'] btn btn-outline btn-primary"
+                disabled={ isRegistering }
                 onClick={ () => registerMatjip(e) }
               >선택
               </button>

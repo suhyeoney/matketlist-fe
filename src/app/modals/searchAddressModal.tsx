@@ -5,7 +5,7 @@ import { RootState } from '@store/store';
 import { setSearchAddressModalOpen } from '@features/modalControl/modalControlSlice';
 import { useEffect, useState } from 'react';
 import MainService from '@services/main.service';
-import SearchResultsTable from '../tables/searchResultsTable';
+import SearchResultsTable from '@tables/searchResultsTable';
 import SearchInputbox from './searchInputbox';
 import { Subscribe, bind } from '@react-rxjs/core';
 import { SearchMatjipInfo } from '@dataTypes/Matjip';
@@ -27,6 +27,7 @@ const SearchAddressModal: React.FC = () => {
   const [ searchResultsOrigin, setSearchResultsOrigin ] = useState<any>(undefined);
   const [ searchResultsCopy, setSearchResultsCopy ] = useState<any>(undefined);
   const [ page, setPage ] = useState<number>(0);
+  const [ isRegistering, setRegisteringStatus ] = useState<boolean>(false);
 
 	const modalControl = useSelector((state: RootState) => state.modalControl);
   const inputControl = useSelector((state: RootState) => state.inputControl);
@@ -48,6 +49,7 @@ const SearchAddressModal: React.FC = () => {
       // sort: 'random'
     };
     const searchResults = await MainService.getLocalSearchDataApi(paramsLocalSearch);
+    
     if(searchResults.length > 0) {
       const formattedResults = searchResults.map((e: any) => {
         let newObj = { 
@@ -78,6 +80,9 @@ const SearchAddressModal: React.FC = () => {
   };
 
   const registerMatjip = async (e: SearchMatjipInfo) => {
+    
+    setRegisteringStatus(true);
+
     console.log('*** latitude: ', e.latitude);
     console.log('*** longitude: ', e.longitude);
 
@@ -91,6 +96,7 @@ const SearchAddressModal: React.FC = () => {
     const isDuplicated = location.arrLocation.find((e: SearchMatjipInfo) => { return e.latitude === inputLatitude && e.longitude === inputLongitude });
     if(isDuplicated) {
       alert('해당 맛집은 이미 등록되어 있습니다.');
+      setRegisteringStatus(false);
       return;
     }
 
@@ -115,6 +121,7 @@ const SearchAddressModal: React.FC = () => {
     dispatch(setSearchAddressModalOpen(false));
     dispatch(storeInputMajip(null));
     alert('맛집이 정상적으로 등록되었습니다.');
+    setRegisteringStatus(false);
   };
 
 	useEffect(() => {
@@ -175,6 +182,7 @@ const SearchAddressModal: React.FC = () => {
               <SearchResultsTable 
                 data={ searchResultsCopy } 
                 page={ page }
+                isRegistering={ isRegistering }
                 setData={ setSearchResultsCopy } 
                 setPage={ setPage }
                 registerMatjip={ registerMatjip } 

@@ -2,7 +2,7 @@
 
 import { useSelector } from 'react-redux';
 import SearchAddressModal from '@modals/searchAddressModal';
-import useNaverMap from '../hooks/useNaverMap';
+import useNaverMap from '@hooks/useNaverMap';
 import MatjipInputbox from './matjipInputbox';
 
 import ReduxTest from './reduxTest';
@@ -10,6 +10,9 @@ import { RootState } from '@store/store';
 import { useState } from 'react';
 import LoadingSpinner01 from '@spinners/loadingSpinner01';
 import Header from './header';
+import { GetServerSideProps } from 'next';
+import { QueryClient, dehydrate } from 'react-query';
+import MainService from '@services/main.service';
 
 const Main: React.FC = () => {
 
@@ -46,15 +49,5 @@ const Main: React.FC = () => {
     </>
   );
 };
-
-// 서버사이드 데이터 업데이트가 주기적으로 발생할 시, 호출
-// export const getServerSideProps: GetServerSideProps<{}> = async(context) => {
-
-//   return {
-//     props: {
-      
-//     }
-//   };
-// };
 
 export default Main;

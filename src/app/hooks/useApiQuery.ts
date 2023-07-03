@@ -1,3 +1,5 @@
+'use client'
+
 import { useQuery } from 'react-query';
 
 export const useGetQuery = (queryKey: Array<any>, queryFunction: any, options: object) => {

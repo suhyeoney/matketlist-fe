@@ -21,7 +21,7 @@ const NaverMap = (setMapObj: React.Dispatch<React.SetStateAction<object>>) => {
 
   const setMarkerInfoHtmlString =  (e: SearchMatjipInfo) => {
     return  [
-      '<div class="">',
+      '<div class="border-solid border-2 rounded-[20px]">',
       '<table class="table text-sm font-[\'NanumGothic\']">',
       '<tbody>',
       '<tr>',
@@ -134,8 +134,9 @@ const NaverMap = (setMapObj: React.Dispatch<React.SetStateAction<object>>) => {
       const infowindow = new naver.maps.InfoWindow({
         content: setMarkerInfoHtmlString(e),
         borderWidth: 0,
-        // borderColor: '#2db400',
+        borderColor: '#2db400',
         // disableAnchor: true,
+        
         backgroundColor: 'transparent',
       });
 
