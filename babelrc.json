@@ -3,7 +3,6 @@
       "next/babel"
     ],
     "plugins": [
-      //...
       [
         "module-resolver",
         {
@@ -22,7 +21,7 @@
             "@spinners": "./src/app/spinners",
             "@store": "./src/app/store",
             "@tables": "./src/app/tables",
-            "@utils": "./src/app/utils",
+            "@utils": "./src/app/utils"
           }
         }
       ]
