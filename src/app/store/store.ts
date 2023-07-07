@@ -5,6 +5,7 @@ import counterReducer from '@features/counter/counterSlice';
 import locationReducer from '@features/location/locationSlice';
 import modalControlReducer from '@features/modalControl/modalControlSlice';
 import inputControlReducer from '@features/inputControl/inputControlSlice';
+import environmentVariablesReducer from '@features/environmentVariables/environmentVariablesSlice';
 
 export const store = configureStore({
 	reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
 		location: locationReducer,
 		modalControl: modalControlReducer,
 		inputControl: inputControlReducer,
+		environmentVariables: environmentVariablesReducer,
 	},
 	devTools: true
 });

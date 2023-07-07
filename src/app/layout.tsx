@@ -23,7 +23,7 @@ export default function RootLayout({
   */
 
   return (
-    <html data-theme="lemonade" lang="en">
+    <html lang="en">
       <head>
         <Script
           src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_MAP_KEY}`}

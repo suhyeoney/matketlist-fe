@@ -13,12 +13,15 @@ module.exports = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
-      theme: {
-        extend: {
-          fontFamily:{
-            // 'tenada': ['Tenada'],
-            // 'nanumGothic': ['NanumGothic'],
-          },
+      screens: { // min-width 기준
+        'laptop': '1280px',
+        'tablet': '768px',
+        'mobile': '200px',
+      },
+      extend: {
+        fontFamily:{
+          // 'tenada': ['Tenada'],
+          // 'nanumGothic': ['NanumGothic'],
         },
       },
     },
