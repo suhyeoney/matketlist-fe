@@ -22,6 +22,10 @@ export const useWindowSize = () => {
     setWindowSize({
       width: window.innerWidth,
     });
+    const currentUrl = window.location.href;
+    if(currentUrl.includes('/signIn')) {
+      window.location.reload();
+    }
   }, 500);
 
   return windowSize;

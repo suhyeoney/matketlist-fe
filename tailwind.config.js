@@ -14,9 +14,9 @@ module.exports = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       screens: { // min-width 기준
-        'laptop': '1280px',
+        'laptop': '1024px',
         'tablet': '768px',
-        'mobile': '200px',
+        'mobile': '320px',
       },
       extend: {
         fontFamily:{

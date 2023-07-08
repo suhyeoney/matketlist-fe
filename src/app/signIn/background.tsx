@@ -15,7 +15,7 @@ const Background: React.FC = () => {
         muted
         className="fixed min-w-full min-h-full right-0 bottom-0"
       >
-        <source src={ useWindowSize().width <= 768 ? video1_narrow : video1_wide } type="video/mp4" />
+        <source src={ useWindowSize().width < 1024 ? video1_narrow : video1_wide } type="video/mp4" />
       </video>
       {/* <video 
         loop 
