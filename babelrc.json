@@ -18,6 +18,7 @@
             "@main": "./src/app/main",
             "@modals": "./src/app/modals",
             "@services": "./src/app/services",
+            "@signIn": "./src/app/signIn",
             "@spinners": "./src/app/spinners",
             "@store": "./src/app/store",
             "@tables": "./src/app/tables",

@@ -24,7 +24,10 @@ const Main: React.FC = () => {
   useNaverMap(setMapObj);
 
   return (
-    <div data-theme={ environmentVariables.backgroundMode === 'L' ? 'lemonade' : 'dark' }>
+    <div 
+      data-theme={ environmentVariables.backgroundMode === 'L' ? 'lemonade' : 'dark' }
+      className="h-screen"
+    >
       { Object.keys(mapObj).length === 0 ? 
         <>
           <div className="flex justify-center items-center absolute z-20 w-full h-full opacity-50 bg-gray-700"></div>
@@ -42,7 +45,7 @@ const Main: React.FC = () => {
        }
       <Header />
       <div className="
-        flex flex-col justify-center items-center relative z-10 gap-[10px] 
+        flex flex-col justify-center items-center relative z-10 gap-[10px]
       ">
         <MatjipInputbox/>
         <div id="map" className="

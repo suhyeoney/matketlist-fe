@@ -9,6 +9,10 @@ export const useWindowSize = () => {
   });
 
   useEffect(() => {
+    console.log(windowSize);
+  }, [ windowSize ]);
+
+  useEffect(() => {
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
