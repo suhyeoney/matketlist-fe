@@ -68,4 +68,16 @@ module.exports = withVideos({
       }
     ]
   },
+  rewrites: async () => {
+    return [
+      // { // 1. 네이버 OpenAPI
+      //   source: '/:path*',
+      //   destination: 'https://openapi.naver.com/:path*',
+      // },
+      { // 2. 구글 OpenAPI
+        source: '/:path*',
+        destination: 'https://maps.googleapis.com/:path*',
+      }
+    ];
+  }
 });

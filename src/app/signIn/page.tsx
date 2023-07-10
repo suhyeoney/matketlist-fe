@@ -3,7 +3,7 @@
 import Background from '@signIn/background';
 import SocialSignInForm from '@signIn/socialSignInForm';
 import Header from '@signIn/header';
-import Footer from '@signIn/footer';
+import Footer from 'src/app/footer';
 
 const SignIn: React.FC = () => {
 
@@ -12,7 +12,7 @@ const SignIn: React.FC = () => {
       <Background />
       <Header />
       <SocialSignInForm />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

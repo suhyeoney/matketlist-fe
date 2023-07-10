@@ -7,7 +7,7 @@ import { addLocation } from '@features/location/locationSlice';
 import SearchAddressModal from '@modals/searchAddressModal';
 import { setSearchAddressModalOpen } from '@features/modalControl/modalControlSlice';
 import { storeInputMajip } from '@features/inputControl/inputControlSlice';
-import { LocationType } from '@dataTypes/Location';
+import { LocationType } from '@dataTypes/location';
 import { useWindowSize } from '@hooks/useWindowSize';
 
 const matjipInputbox:React.FC = () => {

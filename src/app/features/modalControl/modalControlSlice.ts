@@ -3,11 +3,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export interface ModalControlState {
-  isSearchAddressModalOpen: boolean
+  isSearchAddressModalOpen: boolean,
+  isMyMatjipListOpen: boolean,
 };
 
 const initialState: ModalControlState = {
-  isSearchAddressModalOpen: false
+  isSearchAddressModalOpen: false,
+  isMyMatjipListOpen: false,
 }
 
 export const modalControlSlice = createSlice({
@@ -16,12 +18,14 @@ export const modalControlSlice = createSlice({
   reducers: {
     setSearchAddressModalOpen: (state, action) => {
       state.isSearchAddressModalOpen = action.payload
-    }
-
+    },
+    setMyMatjipListOpen: (state, action) => {
+      state.isMyMatjipListOpen = action.payload
+    },
   }
 });
 
-export const { setSearchAddressModalOpen } = modalControlSlice.actions;
+export const { setSearchAddressModalOpen, setMyMatjipListOpen } = modalControlSlice.actions;
 
 export default modalControlSlice.reducer;
 

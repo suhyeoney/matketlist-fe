@@ -5,10 +5,10 @@ import { RootState } from '@store/store';
 import { setSearchAddressModalOpen } from '@features/modalControl/modalControlSlice';
 import { useEffect, useState } from 'react';
 import MainService from '@services/main.service';
-import SearchResultsTable from '@tables/SearchResultsTable';
+import SearchResultsTable from '@tables/searchResultsTable';
 import SearchInputbox from './searchInputbox';
 import { Subscribe, bind } from '@react-rxjs/core';
-import { SearchMatjipInfo } from '@dataTypes/Matjip';
+import { SearchMatjipInfo } from '@dataTypes/matjip';
 import { createSignal } from '@react-rxjs/utils';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { addLocation } from '@features/location/locationSlice';
@@ -32,6 +32,7 @@ const SearchAddressModal: React.FC = () => {
 	const modalControl = useSelector((state: RootState) => state.modalControl);
   const inputControl = useSelector((state: RootState) => state.inputControl);
   const location = useSelector((state: RootState) => state.location)
+  const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
 
 	const dispatch = useDispatch();
   const keyword = useKeyword();
@@ -160,20 +161,30 @@ const SearchAddressModal: React.FC = () => {
   }, [ keyword ]);
 
   return (
-    <div className="container flex justify-center mx-auto">
-      <div className="absolute inset-0 flex items-center justify-center bg-gray-700 bg-opacity-50">
-        <div className="px-5 py-1 bg-white divide-y divide-gray-500 w-[800px] h-[610px] rounded-[20px]">
-            <div className="flex items-center justify-between py-3">
-              <h3 className="font-['NanumGothic'] text-2xl">🦐 검색결과</h3>
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 cursor-pointer" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor" onClick={ closeModal }>
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                      d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
+    <div 
+      className="container flex justify-center mx-auto"
+    >
+      <div
+        className="absolute inset-0 flex items-center justify-center bg-gray-700 bg-opacity-50"
+      >
+        <div
+          className="px-5 py-1 bg-white divide-y divide-gray-500 w-[800px] h-[580px] rounded-[20px]"
+        >
+          <div 
+            className="flex items-center justify-between py-3"
+          >
+            <h3 className="font-['NanumGothic'] text-2xl">🦐 검색결과</h3>
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 cursor-pointer" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" onClick={ closeModal }>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
           <div className="flex flex-col justify-center items-center">
             <Subscribe>
-              <div className="flex justify-end w-full pr-[80px] py-3">
+              <div 
+                className="flex justify-end w-full pr-[80px] py-3"
+              >
                 <SearchInputbox 
                   setKeyword={ setKeyword } 
                   placeholder={ '검색결과 내 키워드로 조회' } 

@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { SearchMatjipInfo } from '@dataTypes/Matjip';
+import { SearchMatjipInfo } from '@dataTypes/matjip';
 import { get } from '../api/api';
 import { instanceForGoogleApi, instanceForNaverApi } from '../api/axios';
 

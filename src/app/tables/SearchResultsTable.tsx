@@ -1,7 +1,7 @@
 'use client'
 
 import { useDispatch } from 'react-redux';
-import { SearchMatjipInfo } from '@dataTypes/Matjip';
+import { SearchMatjipInfo } from '@dataTypes/matjip';
 import LoadingSpinner01 from '@spinners/loadingSpinner01';
 import { setSearchAddressModalOpen } from '@features/modalControl/modalControlSlice';
 import { useEffect, useState } from 'react';
@@ -35,7 +35,7 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
   // is not truncated 상태이면 이미 적용되어 있는 tooltip class를 제거함.
   const processCssTooltip = (selector: string) => {
     const elements = document.querySelectorAll(selector);
-    console.log(elements);
+    // console.log(elements);
     elements.forEach(e => {
       const clientWidth = e.clientWidth;
       const scrollWidth = e.scrollWidth;
@@ -76,20 +76,20 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
     <tr>
       <td colSpan={3} className="px-0">
         <div 
-          className="flex justify-center items-center border-[1px] border-grey-700 font-bold px-0 py-1 cursor-pointer"
+          className="flex justify-center items-center border-[1px] border-grey-700 font-bold mx-5 py-1 cursor-pointer"
           onClick={ () => setPage(page + 1) }
         >더 보기
         </div>
       </td>
-      <td></td>
-      <td></td>
+      {/* <td></td>
+      <td></td> */}
     </tr>;
 
   const resultTable = 
-    <div className="w-[700px] h-[450px] pl-5 pr-0 mb-4 overflow-x-clip overflow-y-scroll">
+    <div className="w-[700px] h-[450px] ml-10 mr-0 overflow-y-scroll scrollbar-hide">
       <table className="table text-sm font-['NanumGothic']">
         <thead>
-          <tr className="sticky z-20">
+          <tr className="sticky">
             <th className="sticky top-0 px-6 py-3 text-center">매장명</th>
             <th className="sticky top-0 px-6 py-3 text-center">주소</th>
             <th className="sticky top-0 px-6 py-3"></th>
@@ -106,7 +106,12 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
                 data-tip={ e?.name } 
                 className="w-[200px] tooltip tooltip-accent tooltip-top before:max-w-fit hover:cursor-default hover:underline hover:decoration-dotted"
               >
-                <p className="text-left px-3 font-bold truncate ...">{ e?.name }</p>
+                <p className="
+                  text-left px-3 font-bold 
+                  laptop:truncate ...
+                  tablet:whitespace-normal
+                  mobile:whitespace-normal
+                ">{ e?.name }</p>
               </div>
             </td>
             <td className="p-0">
@@ -115,7 +120,12 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
                 data-tip={ e?.address } 
                 className="w-[300px] tooltip tooltip-info tooltip-top before:max-w-fit hover:cursor-default hover:underline hover:decoration-dotted"
               >
-                <p className="text-left px-3 truncate ...">{ e?.address }</p>
+                <p className="
+                  text-left px-3 
+                  laptop:truncate ...
+                  tablet:whitespace-normal
+                  mobile:whitespace-normal
+                ">{ e?.address }</p>
               </div>
             </td>
             <td className="flex justify-center items-center w-[130px] p-[8px]">

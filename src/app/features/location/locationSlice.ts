@@ -1,6 +1,6 @@
 'use client'
 
-import { SearchMatjipInfo } from '@/app/dataTypes/Matjip';
+import { SearchMatjipInfo } from '@dataTypes/matjip';
 import { createSlice } from '@reduxjs/toolkit';
 
 type LocationType = {
@@ -28,13 +28,14 @@ export const locationSlice = createSlice({
       state.arrLocation = [ ...state.arrLocation, action.payload ];
       state.cntLocation = state.arrLocation.length;
     },
-    remove: (state, action) => {
-    //  state.arrLocation = state.arrLocation.filter((e: LocationType) => e.id !== action.payload)
+    removeLocation: (state, action) => {
+     state.arrLocation = state.arrLocation.filter((e: SearchMatjipInfo) => e.placeId !== action.payload)
+     state.cntLocation = state.arrLocation.length;
     }
   }
 });
 
-export const { addLocation } = locationSlice.actions;
+export const { addLocation, removeLocation } = locationSlice.actions;
 
 export default locationSlice.reducer;
 

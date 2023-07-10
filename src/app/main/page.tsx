@@ -13,6 +13,7 @@ import Header from './header';
 import { GetServerSideProps } from 'next';
 import { QueryClient, dehydrate } from 'react-query';
 import MainService from '@services/main.service';
+import MyMatjipList from '@modals/myMatjipList';
 
 const Main: React.FC = () => {
 
@@ -20,8 +21,18 @@ const Main: React.FC = () => {
   const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
 
   const [ mapObj, setMapObj ] = useState<object>({});
+  const [ mapStyle, setMapStyle ] = useState<string>('');
 
   useNaverMap(setMapObj);
+
+  useEffect(() => {
+    console.log(Object.keys(mapObj).length);
+    if(Object.keys(mapObj).length > 0) {
+      setMapStyle('border-[1px] border-gray-200');
+    } else {
+      setMapStyle('border-0');
+    }
+  }, [ mapObj ]);
 
   return (
     <div 
@@ -45,17 +56,19 @@ const Main: React.FC = () => {
        }
       <Header />
       <div className="
-        flex flex-col justify-center items-center relative z-10 gap-[10px]
+        flex flex-col justify-center items-center relative z-10 gap-5
       ">
         <MatjipInputbox/>
-        <div id="map" className="
-          z-0 self-center border-[1px] border-solid border-grey
-          laptop:w-[1200px] h-[550px] 
-          tablet:w-[750px] h-[500px]
-          mobile:w-[350px] h-[400px]  
-          "></div> 
+        <div id="map" className={`
+          z-0 self-center ${ mapStyle }
+          laptop:w-[1000px] h-[500px] 
+          tablet:w-[700px] h-[500px]
+          mobile:w-[350px] h-[400px]
+        `}></div> 
         {/* <ReduxTest /> */}
         { modalControl.isSearchAddressModalOpen ? <SearchAddressModal /> : null }
+        { modalControl.isMyMatjipListOpen ? <MyMatjipList /> : null }
+
       </div>
     </div>
   );
