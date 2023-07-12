@@ -5,7 +5,7 @@ import { RootState } from '@store/store';
 import { setSearchAddressModalOpen } from '@features/modalControl/modalControlSlice';
 import { useEffect, useState } from 'react';
 import MainService from '@services/main.service';
-import SearchResultsTable from '@tables/searchResultsTable';
+import SearchResultsTable from '@tables/SearchResultsTable';
 import SearchInputbox from './searchInputbox';
 import { Subscribe, bind } from '@react-rxjs/core';
 import { SearchMatjipInfo } from '@dataTypes/matjip';
@@ -167,9 +167,12 @@ const SearchAddressModal: React.FC = () => {
       <div
         className="absolute inset-0 flex items-center justify-center bg-gray-700 bg-opacity-50"
       >
-        <div
-          className="px-5 py-1 bg-white divide-y divide-gray-500 w-[800px] h-[580px] rounded-[20px]"
-        >
+        <div className="
+          px-5 py-1 bg-white divide-y divide-gray-500 rounded-[20px]
+          laptop:w-[800px] h-[580px] 
+          tablet:w-[800px] h-[580px] 
+          mobile:w-[350px] h-[500px]   
+        ">
           <div 
             className="flex items-center justify-between py-3"
           >
@@ -182,9 +185,12 @@ const SearchAddressModal: React.FC = () => {
           </div>
           <div className="flex flex-col justify-center items-center">
             <Subscribe>
-              <div 
-                className="flex justify-end w-full pr-[80px] py-3"
-              >
+              <div className="
+                flex justify-end w-full py-3
+                laptop:pr-20
+                tablet:pr-20
+                mobile:pr-[20px]
+              ">
                 <SearchInputbox 
                   setKeyword={ setKeyword } 
                   placeholder={ '검색결과 내 키워드로 조회' } 

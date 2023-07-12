@@ -5,6 +5,7 @@ import { SearchMatjipInfo } from '@dataTypes/matjip';
 import LoadingSpinner01 from '@spinners/loadingSpinner01';
 import { setSearchAddressModalOpen } from '@features/modalControl/modalControlSlice';
 import { useEffect, useState } from 'react';
+import image1 from '@assets/icons/choose-from-list.png';
 
 type SearchResultsTableProps = {
   data: any[],
@@ -86,13 +87,21 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
     </tr>;
 
   const resultTable = 
-    <div className="w-[700px] h-[450px] ml-10 mr-0 overflow-y-scroll scrollbar-hide">
+    <div className="
+      overflow-y-scroll scrollbar-hide
+      laptop:w-[700px] h-[450px]
+      tablet:w-[700px] h-[450px]
+      mobile:w-[300px] h-[400px]
+    ">
       <table className="table text-sm font-['NanumGothic']">
         <thead>
-          <tr className="sticky">
-            <th className="sticky top-0 px-6 py-3 text-center">매장명</th>
-            <th className="sticky top-0 px-6 py-3 text-center">주소</th>
-            <th className="sticky top-0 px-6 py-3"></th>
+          <tr className="sticky z-10">
+            <th className="sticky top-0 px-6 mt-2 text-center">매장명</th>
+            <th className="sticky top-0 px-6 mt-2 text-center">주소</th>
+            <th className="
+              sticky top-0 px-5 mt-2
+              mobile:w-[60px]
+            "></th>
           </tr>
         </thead>
         <tbody>
@@ -104,13 +113,17 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
               <div 
                 id="name-tooltip"
                 data-tip={ e?.name } 
-                className="w-[200px] tooltip tooltip-accent tooltip-top before:max-w-fit hover:cursor-default hover:underline hover:decoration-dotted"
-              >
+                className="
+                  tooltip tooltip-accent tooltip-top before:max-w-fit hover:cursor-default hover:underline hover:decoration-dotted
+                  laptop:w-[200px]
+                  tablet:w-[200px] 
+                  mobile:w-[80px]  
+                ">
                 <p className="
-                  text-left px-3 font-bold 
-                  laptop:truncate ...
-                  tablet:whitespace-normal
-                  mobile:whitespace-normal
+                  text-left font-bold 
+                  laptop: px-7 truncate ...
+                  tablet: px-7 whitespace-normal
+                  mobile:px-3 whitespace-normal
                 ">{ e?.name }</p>
               </div>
             </td>
@@ -118,8 +131,12 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
               <div
                 id="address-tooltip"
                 data-tip={ e?.address } 
-                className="w-[300px] tooltip tooltip-info tooltip-top before:max-w-fit hover:cursor-default hover:underline hover:decoration-dotted"
-              >
+                className="
+                  tooltip tooltip-info tooltip-top before:max-w-fit hover:cursor-default hover:underline hover:decoration-dotted
+                  laptop:w-[300px]
+                  tablet:w-[300px]
+                  mobile:w-[150px] 
+                ">
                 <p className="
                   text-left px-3 
                   laptop:truncate ...
@@ -128,12 +145,28 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
                 ">{ e?.address }</p>
               </div>
             </td>
-            <td className="flex justify-center items-center w-[130px] p-[8px]">
-              <button 
-                className="font-['NanumGothic'] btn btn-outline btn-primary"
+            <td className="
+              flex justify-center items-center p-0 py-5
+              laptop:w-[130px]
+              tablet:w-[130px]
+              mobile:w-[50px]
+            ">
+              <button className="
+                  font-['NanumGothic'] btn btn-outline btn-primary
+                  laptop:w-[60px] h-[60px]
+                  tablet:w-[60px] h-[60px]
+                  mobile:w-[40px] h-[40px] p-1
+                "
                 disabled={ isRegistering }
                 onClick={ () => registerMatjip(e) }
-              >선택
+              >
+                <img 
+                  src={ image1.src } 
+                  className="
+                    laptop:w-[30px] h-[30px]
+                    tablet:w-[30px] h-[30px]
+                    mobile:w-[20px] h-[20px]
+                "/>
               </button>
             </td>
           </tr>
