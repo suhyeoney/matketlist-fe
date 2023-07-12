@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
+const plugin = require('tailwindcss/plugin');
+
 module.exports = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -25,9 +27,26 @@ module.exports = {
         },
       },
     },
+    keyframes: {
+      rotate: {
+        from: {
+          transform: 'rotate3d(1, 1, -1, 0deg)'
+        },
+        '0%': {
+          transform: 'rotate3d(1, 1.5, -1, 0deg)'
+        },
+        '100%': {
+          transform: 'rotate3d(1, 1.5, -1, 360deg)'
+        },
+      }
+    },
+    animation: {
+      rotate: 'rotate 1.5s linear infinite',
+    },
   },
   plugins: [
     require('daisyui'),
     require('tailwind-scrollbar-hide'),
+    require('tailwindcss-3d'),
   ]
 }

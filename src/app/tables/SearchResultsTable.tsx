@@ -146,7 +146,7 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
   const isLoading = 
     // <div className="w-[650px] h-[450px] mt-4">
     // </div>;
-    <LoadingSpinner01 color={ 'purple' } depth={ '500' } thickness={ '4' } text={ 'Loading...' } />;
+    <LoadingSpinner01 color={ 'purple' } depth={ '500' } thickness={ '4' } text={ '데이터를 불러오고 있습니다.' } />;
   
   const render = () => {
     if(data === undefined) {
