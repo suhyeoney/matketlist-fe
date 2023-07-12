@@ -21,17 +21,19 @@ const Main: React.FC = () => {
   const modalControl = useSelector((state: RootState) => state.modalControl);
   const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
 
-  const [ mapObj, setMapObj ] = useState<object>({});
+  const [ mapObj, setMapObj ] = useState<naver.maps.Map | undefined | null>(null);
   const [ mapStyle, setMapStyle ] = useState<string>('');
 
-  useNaverMap(setMapObj);
+  useNaverMap(mapObj, setMapObj);
 
   useEffect(() => {
-    console.log(Object.keys(mapObj).length);
-    if(Object.keys(mapObj).length > 0) {
-      setMapStyle('border-[1px] border-gray-200');
-    } else {
-      setMapStyle('border-0');
+    // console.log('>>>> mapObj', mapObj);
+    if(mapObj !== null && mapObj !== undefined) {
+      if(Object.keys(mapObj).length > 0) {
+        setMapStyle('border-[1px] border-gray-200');
+      } else {
+        setMapStyle('border-0');
+      }
     }
   }, [ mapObj ]);
 
@@ -40,7 +42,7 @@ const Main: React.FC = () => {
       data-theme={ environmentVariables.backgroundMode === 'L' ? 'lemonade' : 'dark' }
       className="h-screen"
     >
-      { Object.keys(mapObj).length === 0 ? 
+      { Object.keys(mapObj ?? {}).length === 0 ? 
         <>
           <div className="flex justify-center items-center absolute z-20 w-full h-full opacity-50 bg-gray-700"></div>
           <div className="flex justify-center items-center absolute z-40 w-full h-full ">

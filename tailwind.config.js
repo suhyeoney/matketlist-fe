@@ -38,10 +38,21 @@ module.exports = {
         '100%': {
           transform: 'rotate3d(1, 1.5, -1, 360deg)'
         },
-      }
+      },
+      ping: {
+        '75%': {
+          transform: 'scale(2)',
+          opacity: 0
+        },
+        '100%': {
+          transform: 'scale(2)',
+          opacity: 0
+        }
+      },
     },
     animation: {
       rotate: 'rotate 1.5s linear infinite',
+      ping: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
     },
   },
   plugins: [

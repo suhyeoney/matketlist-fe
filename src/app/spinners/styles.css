@@ -27,7 +27,7 @@ body {
   transform-style: preserve-3d;
 }
 .side {
-  @apply font-['Tenada'] absolute w-full h-full text-center text-[30px] rounded-[5px] mt-0;
+  @apply font-['Tenada'] absolute w-full h-full text-center text-[30px] rounded-[5px] mt-0 cursor-default;
   background: #f003;
 }
 .side-1 {

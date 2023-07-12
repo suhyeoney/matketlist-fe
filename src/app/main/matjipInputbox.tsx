@@ -18,7 +18,7 @@ const matjipInputbox:React.FC = () => {
   const matjipRef = useRef<HTMLInputElement | null>(null);
 
   const location = useSelector((state: RootState) => state.location);
-  // const modalControl = useSelector((state: RootState) => state.modalControl);
+  const modalControl = useSelector((state: RootState) => state.modalControl);
   // const inputControl = useSelector((state: RootState) => state.inputControl);
   const dispatch = useDispatch();
 
@@ -28,9 +28,8 @@ const matjipInputbox:React.FC = () => {
       alert('검색할 맛집 상호명을 입력해주세요.');
       return;
     }
-
     dispatch(setSearchAddressModalOpen(true));
-    dispatch(storeInputMajip(matjipRef.current?.value))
+    dispatch(storeInputMajip(matjipRef.current?.value));    
   }, []);
 
   const onMatjipInputTouchEnd = useCallback((e: React.TouchEvent<HTMLElement>) => {
@@ -43,13 +42,6 @@ const matjipInputbox:React.FC = () => {
     const inputLatitude = Number(latitudeRef.current?.value);
     const inputLongitude = Number(longitudeRef.current?.value);
     
-    // const isDuplicated = location.arrLocation.find((e: LocationType) => { return e.latitude === inputLatitude && e.longitude === inputLongitude });
-
-    // if(isDuplicated) {
-    //   alert('해당 맛집은 이미 등록되어 있습니다.');
-    //   return;
-    // }
-
     const newLocation = {
       latitude: inputLatitude,
       longitude: inputLongitude
@@ -59,9 +51,9 @@ const matjipInputbox:React.FC = () => {
 
   }, [ location.arrLocation ]);
 
-  useEffect(() => {
-    console.log(location.cntLocation);
-  }, [ location.arrLocation ]);
+  // useEffect(() => {
+  //   console.log('modalControl.isMatjipInfoModalOpen', modalControl.isMatjipInfoModalOpen);
+  // }, [ modalControl.isMatjipInfoModalOpen ]);
 
   console.log(useWindowSize());
 
@@ -76,9 +68,6 @@ const matjipInputbox:React.FC = () => {
           mobile:text-[0px] 
         ">나만의 맛집 추가하기</span> : null
         }
-
-        {/* <input type="text"  ref={ latitudeRef } placeholder="위도 값" className="input input-ghost w-[150px] max-w-xs" />
-        <input type="text" ref={ longitudeRef } placeholder="경도 값" className="input input-ghost w-[150px] max-w-xs" /> */}
         <div className="flex flex-row gap-[20px]">
           <input 
             type="search" 
@@ -87,24 +76,13 @@ const matjipInputbox:React.FC = () => {
             className="input input-bordered"
             onTouchEnd={ onMatjipInputTouchEnd }
           />
-          {/* <button className="btn btn-circle btn-outline">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
-          </button> */}
-
         </div>
         <button 
           onClick={ onSearchBtnClick }
+          disabled={ modalControl.isMatjipInfoModalOpen ? true : false }
           className="
           font-['Tenada'] text-white text-[17px] btn w-[100px] border-violet-500 bg-violet-500
         "><span className="pr-2">🔍</span>검색</button>
-        {/* <button className="btn btn-outline gap-2 w-[150px]" onClick={ onAddBtnClick }>
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-          </svg>
-          추가하기
-        </button> */}
-        {/* <span>현재 location 배열 : { JSON.stringify(location.arrLocation) }</span>
-        <span>현재 location 크기 : { location.cntLocation }</span> */}
       </div>      
     </>
   );

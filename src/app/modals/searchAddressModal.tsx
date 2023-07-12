@@ -176,7 +176,12 @@ const SearchAddressModal: React.FC = () => {
           <div 
             className="flex items-center justify-between py-3"
           >
-            <h3 className="font-['NanumGothic'] text-2xl">🦐 검색결과</h3>
+            <h3 className="
+              font-['NanumGothic'] 
+              laptop:text-2xl
+              tablet:text-2xl
+              mobile:text-1xl
+            ">🦐 검색 결과</h3>
             <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 cursor-pointer" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor" onClick={ closeModal }>
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
@@ -193,7 +198,7 @@ const SearchAddressModal: React.FC = () => {
               ">
                 <SearchInputbox 
                   setKeyword={ setKeyword } 
-                  placeholder={ '검색결과 내 키워드로 조회' } 
+                  placeholder={ '검색 결과 내 키워드로 조회' } 
                 />
               </div>
               <SearchResultsTable 

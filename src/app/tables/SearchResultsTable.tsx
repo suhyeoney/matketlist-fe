@@ -6,6 +6,7 @@ import LoadingSpinner01 from '@spinners/loadingSpinner01';
 import { setSearchAddressModalOpen } from '@features/modalControl/modalControlSlice';
 import { useEffect, useState } from 'react';
 import image1 from '@assets/icons/choose-from-list.png';
+import LoadingSpinner03 from '@spinners/loadingSpinner03';
 
 type SearchResultsTableProps = {
   data: any[],
@@ -152,10 +153,10 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
               mobile:w-[50px]
             ">
               <button className="
-                  font-['NanumGothic'] btn btn-outline btn-primary
+                  font-['NanumGothic'] btn btn-ghost bg-red-100
                   laptop:w-[60px] h-[60px]
                   tablet:w-[60px] h-[60px]
-                  mobile:w-[40px] h-[40px] p-1
+                  mobile:w-[50px] h-[50px] p-1
                 "
                 disabled={ isRegistering }
                 onClick={ () => registerMatjip(e) }
@@ -177,11 +178,14 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
     </div>;
 
   const isLoading = 
-    // <div className="w-[650px] h-[450px] mt-4">
-    // </div>;
-    <LoadingSpinner01 color={ 'purple' } depth={ '500' } thickness={ '4' } text={ '데이터를 불러오고 있습니다.' } />;
-  
-  const render = () => {
+    <div className="fixed z-10 w-full mt-[250px]">
+      <div className="
+        relative flex flex-col items-center justify-end z-20 h-[300px]
+      ">
+        <LoadingSpinner03 cubeText={ 'MATKET' } infoText={ '검색 결과를 불러오고 있습니다.' } />
+      </div>
+    </div>;
+     const render = () => {
     if(data === undefined) {
       return isLoading;
     }
@@ -189,6 +193,7 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
       console.log('>>>>> resultTable');
       return resultTable;
     }
+    // return isLoading;
   };
     
   return (
