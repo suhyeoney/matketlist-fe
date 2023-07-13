@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  /* @apply h-screen grid place-items-center m-0; */
+  perspective: 500px;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate3d(1, 1, -1, 0deg);
+  }
+  0% {
+    transform: rotate3d(1, 1.5, -1, 0deg);
+  }
+  100% {
+    transform: rotate3d(1, 1.5, -1, 360deg);
+  }
+  to {
+    transform: rotate3d(1, 1, -1, 0deg);
+  }
+}
+.cube {
+  @apply animate-[rotate_1.5s_linear_infinite] w-[40px] h-[40px];
+  background: #a7a7a8;
+  transform-style: preserve-3d;
+}
+.side {
+  @apply font-['Tenada'] absolute w-full h-full text-center text-[30px] rounded-[5px] mt-0 cursor-default;
+  background: #f003;
+}
+.side-1 {
+  transform: rotateX(0deg) translateZ(20px);
+  background: #55efc4;
+  color: #fff;
+}
+.side-2 {
+  transform: rotateY(270deg) translateZ(20px);
+  background: #fab1a0;
+  color: #fff;
+}
+.side-3 {
+  transform: rotateX(270deg) translateZ(20px);
+  background: #81ecec;
+  color: #fff;
+}
+.side-4 {
+  transform: rotateX(90deg) translateZ(20px);
+  background: #fd79a8;
+  color: #fff;
+}
+.side-5 {
+  transform: rotateY(90deg) translateZ(20px);
+  background: #a29bfe;
+  color: #fff;
+}
+.side-6 {
+  transform: rotateX(180deg) translateZ(20px);
+  background: #e17055;
+  color: #fff;
+}
+
