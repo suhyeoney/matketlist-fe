@@ -10,7 +10,7 @@ import { storeInputMajip } from '@features/inputControl/inputControlSlice';
 import { LocationType } from '@dataTypes/location';
 import { useWindowSize } from '@hooks/useWindowSize';
 
-const matjipInputbox:React.FC = () => {
+const MatjipInputbox:React.FC = () => {
 
   const latitudeRef = useRef<HTMLInputElement | null>(null);
   const longitudeRef = useRef<HTMLInputElement | null>(null);
@@ -88,4 +88,4 @@ const matjipInputbox:React.FC = () => {
   );
 }
 
-export default matjipInputbox;
+export default MatjipInputbox;
