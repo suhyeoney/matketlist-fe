@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+const plugin = require('tailwindcss/plugin');
+
 module.exports = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -12,7 +15,49 @@ module.exports = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      screens: { // min-width 기준
+        'laptop': '1024px',
+        'tablet': '768px',
+        'mobile': '320px',
+      },
+      extend: {
+        fontFamily:{
+          // 'tenada': ['Tenada'],
+          // 'nanumGothic': ['NanumGothic'],
+        },
+      },
+    },
+    keyframes: {
+      rotate: {
+        from: {
+          transform: 'rotate3d(1, 1, -1, 0deg)'
+        },
+        '0%': {
+          transform: 'rotate3d(1, 1.5, -1, 0deg)'
+        },
+        '100%': {
+          transform: 'rotate3d(1, 1.5, -1, 360deg)'
+        },
+      },
+      ping: {
+        '75%': {
+          transform: 'scale(2)',
+          opacity: 0
+        },
+        '100%': {
+          transform: 'scale(2)',
+          opacity: 0
+        }
+      },
+    },
+    animation: {
+      rotate: 'rotate 1.5s linear infinite',
+      ping: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
     },
   },
-  plugins: [],
+  plugins: [
+    require('daisyui'),
+    require('tailwind-scrollbar-hide'),
+    require('tailwindcss-3d'),
+  ]
 }
