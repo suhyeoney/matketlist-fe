@@ -1,6 +1,11 @@
 'use client'
 
-import Background from '@signIn/background';
+import dynamic from 'next/dynamic';
+const Background = dynamic(() => import('@signIn/background'), {
+  ssr: false
+});
+
+// import Background from '@signIn/background';
 import SocialSignInForm from '@signIn/socialSignInForm';
 import Header from '@signIn/header';
 import Footer from 'src/app/footer';
