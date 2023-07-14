@@ -3,12 +3,12 @@
 @tailwind utilities;
 @font-face {
   font-family: 'Tenada';
-  src: url('/fonts/Tenada.ttf');
+  src: url('/fonts/Tenada.woff');
 }
-@font-face {
+/* @font-face {
   font-family: 'NanumGothic';
   src: url('/fonts/NanumGothic.ttf');
-}
+} */
 
 :root {
   --foreground-rgb: 0, 0, 0;

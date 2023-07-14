@@ -28,15 +28,9 @@ export default function RootLayout({
       <head>
         <link
           rel="preload"
-          href="/fonts/NanumGothic.ttf"
+          href="/fonts/Tenada.woff"
           as="font"
-          type="font/ttf"
-        />
-        <link
-          rel="preload"
-          href="/fonts/Tenada.ttf"
-          as="font"
-          type="font/ttf"
+          type="font/woff"
         />
         <Script
           src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_MAP_KEY}`}

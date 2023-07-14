@@ -177,7 +177,7 @@ const SearchAddressModal: React.FC = () => {
             className="flex items-center justify-between py-3"
           >
             <h3 className="
-              font-['NanumGothic'] 
+              font-['Tenada'] 
               laptop:text-2xl
               tablet:text-2xl
               mobile:text-1xl
