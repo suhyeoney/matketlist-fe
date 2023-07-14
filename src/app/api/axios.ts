@@ -6,7 +6,7 @@ const API_HOST_URL_GOOGLE = 'https://maps.googleapis.com';
 const BASE_URL_NAVER= '/v1';
 const BASE_URL_GOOGLE = '';
 
-// console.log(process.env.NODE_ENV);
+console.log(process.env.NODE_ENV);
 
 export const instanceForNaverApi: AxiosInstance = axios.create({
   baseURL: (!process.env.NODE_ENV || process.env.NODE_ENV === 'development' ? '' : API_HOST_URL_NAVER) + BASE_URL_NAVER,
