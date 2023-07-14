@@ -1,10 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@font-face {
+/* @font-face {
   font-family: 'Tenada';
   src: url('/fonts/Tenada.woff');
-}
+} */
 /* @font-face {
   font-family: 'NanumGothic';
   src: url('/fonts/NanumGothic.ttf');
