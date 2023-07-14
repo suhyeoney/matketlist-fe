@@ -3,7 +3,7 @@
 // import video1_wide from '@assets/videos/matket-list-background1-wide.mp4';
 // import video1_narrow from '@assets/videos/matket-list-background1-narrow.mp4';
 // import video2 from '@assets/videos/matket-list-background2.mp4';
-import video1_wide from '@assets/videos/matket-list-background1-wide-low.mp4';
+import video1_wide from '@assets/videos/matket-list-background1-wide-medium.mp4';
 import video1_narrow from '@assets/videos/matket-list-background1-narrow-low.mp4';
 import { useWindowSize } from '@hooks/useWindowSize';
 
