@@ -9,16 +9,21 @@ import poster1 from '@assets/images/matket-list-background1-wide-medium-poster.p
 import poster2 from '@assets/images/matket-list-background1-narrow-low-poster.png';
 
 import { useWindowSize } from '@hooks/useWindowSize';
+import Image from 'next/image';
 
 const Background: React.FC = () => {
 
   return (
     <div className="absolute z-0">
+      <Image
+        src={ useWindowSize().width < 1024 ? poster2.src : poster1.src }
+        alt=""
+        width={ useWindowSize().width }
+      />
       <video 
         loop 
         autoPlay 
         muted
-        poster={ useWindowSize().width < 1024 ? poster2.src : poster1.src }
         className="fixed min-w-full min-h-full right-0 bottom-0"
       >
         <source src={ useWindowSize().width < 1024 ? video1_narrow : video1_wide } type="video/mp4" />

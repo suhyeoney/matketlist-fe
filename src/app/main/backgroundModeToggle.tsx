@@ -6,6 +6,7 @@ import image2 from '@assets/icons/dark-mode.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@store/store';
 import { backgroundModeToggle } from '@features/environmentVariables/environmentVariablesSlice';
+import Image from 'next/image';
 
 const BackgroundModeToggle:React.FC = () => {
 
@@ -37,25 +38,24 @@ const BackgroundModeToggle:React.FC = () => {
     switch(backgroundMode) {
       case 'L':
         return (
-          <img 
+          <Image
             src={ image1.src }
+            alt=""
+            width="20"
+            height="20"
             className="w-[20px] h-[20px]"
-          ></img>
+          />
         );
       case 'D':
         return (
-          <img 
+          <Image 
             src={ image2.src }
+            alt=""
+            width="20"
+            height="20"
             className="w-[20px] h-[20px]"
-          ></img>
+          />
         );
-      // default:
-      //   return (
-      //     <img 
-      //       src={ image1.src }
-      //       className="w-[20px] h-[20px]"
-      //     ></img>
-      //   );
     }
   }, [ environmentVariables.backgroundMode ]);
 

@@ -7,6 +7,7 @@ import { setSearchAddressModalOpen } from '@features/modalControl/modalControlSl
 import { useEffect, useState } from 'react';
 import image1 from '@assets/icons/choose-from-list.png';
 import LoadingSpinner03 from '@spinners/loadingSpinner03';
+import Image from 'next/image';
 
 type SearchResultsTableProps = {
   data: any[],
@@ -161,8 +162,9 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
                 disabled={ isRegistering }
                 onClick={ () => registerMatjip(e) }
               >
-                <img 
+                <Image 
                   src={ image1.src } 
+                  alt=""
                   className="
                     laptop:w-[30px] h-[30px]
                     tablet:w-[30px] h-[30px]
