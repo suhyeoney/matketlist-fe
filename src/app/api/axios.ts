@@ -1,16 +1,12 @@
 import axios, { AxiosInstance } from 'axios';
 
-const API_HOST_URL_NAVER = 'https://openapi.naver.com';
-const API_HOST_URL_GOOGLE = 'https://maps.googleapis.com';
-const HOST_URL_PRD = '13.50.64.205:3000';
-
 const BASE_URL_NAVER= '/v1';
 const BASE_URL_GOOGLE = '';
 
 console.log(process.env.NODE_ENV);
 
 export const instanceForNaverApi: AxiosInstance = axios.create({
-  baseURL: (!process.env.NODE_ENV || process.env.NODE_ENV === 'development' ? '' : HOST_URL_PRD) + BASE_URL_NAVER,
+  baseURL: BASE_URL_NAVER,
   headers: {
     "Content-type": "application/json",
     "X-Naver-Client-Id": process.env.NEXT_PUBLIC_NAVER_DEV_CLIENT_ID,
@@ -20,7 +16,7 @@ export const instanceForNaverApi: AxiosInstance = axios.create({
 });
 
 export const instanceForGoogleApi: AxiosInstance = axios.create({
-  baseURL: (!process.env.NODE_ENV || process.env.NODE_ENV === 'development' ? '' : HOST_URL_PRD) + BASE_URL_GOOGLE,
+  baseURL: BASE_URL_GOOGLE,
   headers: {
     "Content-type": "application/json"
   },
