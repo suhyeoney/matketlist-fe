@@ -9,6 +9,11 @@ import { setSearchAddressModalOpen } from '@features/modalControl/modalControlSl
 import { storeInputMajip } from '@features/inputControl/inputControlSlice';
 import { LocationType } from '@dataTypes/location';
 import { useWindowSize } from '@hooks/useWindowSize';
+import localFont from 'next/font/local';
+
+const Tenada = localFont({
+  src: '../assets/fonts/Tenada.woff'
+});
 
 const MatjipInputbox:React.FC = () => {
 
@@ -61,12 +66,12 @@ const MatjipInputbox:React.FC = () => {
     <>
       <div className="flex flex-row justify-center items-center border-[1px] border-solid border-grey rounded-md gap-[20px] p-[10px]">
         { useWindowSize().width >= 768 ?
-          <span className="
-          font-['Tenada'] h-[48px] text-center p-[10px] rounded-md flex justify-center items-center 
+          <span className={`
+          ${ Tenada.className } h-[48px] text-center p-[10px] rounded-md flex justify-center items-center 
           laptop:text-base 
           tablet:text-sm tablet:bg-yellow-300
           mobile:text-[0px] 
-        ">나만의 맛집 추가하기</span> : null
+        `}>나만의 맛집 추가하기</span> : null
         }
         <div className="flex flex-row gap-[20px]">
           <input 
@@ -80,9 +85,9 @@ const MatjipInputbox:React.FC = () => {
         <button 
           onClick={ onSearchBtnClick }
           disabled={ modalControl.isMatjipInfoModalOpen ? true : false }
-          className="
-          font-['Tenada'] text-white text-[17px] btn w-[100px] border-violet-500 bg-violet-500
-        "><span className="pr-2">🔍</span>검색</button>
+          className={`
+          ${ Tenada.className } text-white text-[17px] btn w-[100px] border-violet-500 bg-violet-500
+        `}><span className="pr-2">🔍</span>검색</button>
       </div>      
     </>
   );
