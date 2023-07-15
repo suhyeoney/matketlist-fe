@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 import useNaverMap from '@hooks/useNaverMap';
 import { RootState } from '@store/store';
 import { useEffect, useState } from 'react';
-import { getResponsiveMapSize } from '@utils/responsiveUtils';
+import responsiveMapSize from '@utils/responsiveMapSize';
 
 const Main: React.FC = () => {
 
@@ -72,7 +72,7 @@ const Main: React.FC = () => {
       ">
         <MatjipInputbox/>
         <div id="map" className={`
-          z-0 self-center ${ mapStyle } ${ getResponsiveMapSize() }
+          z-0 self-center ${ mapStyle } ${ responsiveMapSize() }
         `}></div> 
         {/* <ReduxTest /> */}
         { modalControl.isSearchAddressModalOpen ? <SearchAddressModal /> : null }

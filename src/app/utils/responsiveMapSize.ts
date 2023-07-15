@@ -3,12 +3,11 @@
 import { useWindowSize } from '@hooks/useWindowSize';
 import { detect } from 'detect-browser';
 
-const browser = detect();
-// 브라우저 종류 : ios(safari), chrome
-
-export const getResponsiveMapSize = () => {
+const ResponsiveMapSize = () => {
   const width = useWindowSize().width;
   const height = useWindowSize().height;
+  const browser = detect();
+  // 브라우저 종류 : ios(safari), chrome    
   const browserName = browser?.name;
 
   console.log(browserName);
@@ -168,3 +167,5 @@ export const getResponsiveMapSize = () => {
       }
   }
 };
+
+export default ResponsiveMapSize;
