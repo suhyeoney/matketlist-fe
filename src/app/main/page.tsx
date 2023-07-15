@@ -4,10 +4,10 @@ import dynamic from 'next/dynamic';
 
 const Header = dynamic(() => import('@main/header'));
 const MatjipInputbox = dynamic(() => import('@main/matjipInputbox'));
-const LoadingSpinner03 = dynamic(() => import('@spinners/loadingSpinner03'));
 const MyMatjipList = dynamic(() => import('@modals/myMatjipList'));
 
 import SearchAddressModal from '@modals/searchAddressModal';
+import LoadingSpinner03 from '@spinners/loadingSpinner03';
 
 import { useSelector } from 'react-redux';
 import useNaverMap from '@hooks/useNaverMap';
