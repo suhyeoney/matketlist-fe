@@ -64,7 +64,13 @@ const MatjipInputbox:React.FC = () => {
 
   return (
     <>
-      <div className="flex flex-row justify-center items-center border-[1px] border-solid border-grey rounded-md gap-[20px] p-[10px]">
+      <div className="
+        flex flex-row justify-center items-center border-[1px] border-solid border-grey rounded-md p-[10px]
+        laptop:gap-[20px]
+        tablet:gap-[20px]
+        mobile:gap-[20px]
+        smallest:gap-[5px]
+      ">
         { useWindowSize().width >= 768 ?
           <span className={`
           ${ Tenada.className } h-[48px] text-center p-[10px] rounded-md flex justify-center items-center 
@@ -78,9 +84,12 @@ const MatjipInputbox:React.FC = () => {
             type="search" 
             ref={ matjipRef } 
             placeholder={ useWindowSize().width >= 768 ? '맛집 상호명 입력' : '나만의 맛집 추가하기' } 
-            className="input input-bordered"
-            onTouchEnd={ onMatjipInputTouchEnd }
-          />
+            onFocus={ () => document.querySelector('#footer')?.classList.add('hidden') }
+            onBlur={ () => document.querySelector('#footer')?.classList.remove('hidden') }
+            className="
+              input input-bordered
+              smallest:w-[170px]
+            "/>
         </div>
         <button 
           onClick={ onSearchBtnClick }

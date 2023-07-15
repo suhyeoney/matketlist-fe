@@ -94,15 +94,23 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
       laptop:w-[700px] h-[450px]
       tablet:w-[700px] h-[450px]
       mobile:w-[300px] h-[400px]
+      smallest:w-[250px]
     ">
-      <table className="table text-sm">
+      <table className="
+        table 
+        laptop:text-sm
+        tablet:text-sm
+        mobile:text-sm
+        smallest:text-[6px]
+      ">
         <thead>
           <tr className="sticky z-10">
-            <th className="sticky top-0 px-6 mt-2 text-center">매장명</th>
-            <th className="sticky top-0 px-6 mt-2 text-center">주소</th>
+            <th className="sticky top-0 px-6 py-2 mt-2 text-center rounded-tl-[7px]">매장명</th>
+            <th className="sticky top-0 px-6 py-2 mt-2 text-center">주소</th>
             <th className="
-              sticky top-0 px-5 mt-2
+              sticky top-0 px-5 py-2 mt-2 rounded-tr-[7px]
               mobile:w-[60px]
+              smallest:w-[40px]
             "></th>
           </tr>
         </thead>
@@ -119,13 +127,15 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
                   tooltip tooltip-accent tooltip-top before:max-w-fit hover:cursor-default hover:underline hover:decoration-dotted
                   laptop:w-[200px]
                   tablet:w-[200px] 
-                  mobile:w-[80px]  
+                  mobile:w-[80px]
+                  smallest:w-[40px]
                 ">
                 <p className="
                   text-left font-bold 
-                  laptop: px-7 truncate ...
-                  tablet: px-7 whitespace-normal
+                  laptop:px-7 truncate ...
+                  tablet:px-7 whitespace-normal
                   mobile:px-3 whitespace-normal
+                  smallest:px-1 whitespace-normal
                 ">{ e?.name }</p>
               </div>
             </td>
@@ -137,13 +147,15 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
                   tooltip tooltip-info tooltip-top before:max-w-fit hover:cursor-default hover:underline hover:decoration-dotted
                   laptop:w-[300px]
                   tablet:w-[300px]
-                  mobile:w-[150px] 
+                  mobile:w-[150px]
+                  smallest:w-[100px] 
                 ">
                 <p className="
                   text-left px-3 
                   laptop:truncate ...
                   tablet:whitespace-normal
                   mobile:whitespace-normal
+                  smallest:whitespace-normal
                 ">{ e?.address }</p>
               </div>
             </td>
@@ -152,12 +164,14 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
               laptop:w-[130px]
               tablet:w-[130px]
               mobile:w-[50px]
+              smallest:w-[30px]
             ">
               <button className="
                   btn btn-ghost bg-red-100
                   laptop:w-[60px] h-[60px]
                   tablet:w-[60px] h-[60px]
                   mobile:w-[50px] h-[50px] p-1
+                  smallest:w-[30px]
                 "
                 disabled={ isRegistering }
                 onClick={ () => registerMatjip(e) }
@@ -165,11 +179,9 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
                 <Image 
                   src={ image1.src } 
                   alt=""
-                  className="
-                    laptop:w-[30px] h-[30px]
-                    tablet:w-[30px] h-[30px]
-                    mobile:w-[20px] h-[20px]
-                "/>
+                  width="20"
+                  height="20"
+                />
               </button>
             </td>
           </tr>

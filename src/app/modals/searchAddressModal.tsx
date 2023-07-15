@@ -168,7 +168,7 @@ const SearchAddressModal: React.FC = () => {
         className="absolute inset-0 flex items-center justify-center bg-gray-700 bg-opacity-50"
       >
         <div className="
-          px-5 py-1 bg-white divide-y divide-gray-500 rounded-[20px]
+          px-5 py-1 bg-white divide-y divide-gray-500
           laptop:w-[800px] h-[580px] 
           tablet:w-[800px] h-[580px] 
           mobile:w-[350px] h-[500px]   

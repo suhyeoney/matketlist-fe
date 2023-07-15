@@ -5,7 +5,8 @@ import { useEffect, useState } from 'react';
 
 export const useWindowSize = () => {
   const [ windowSize, setWindowSize ] = useState({
-    width: typeof window !== 'undefined' ? window.innerWidth : 0
+    width: typeof window !== 'undefined' ? window.innerWidth : 0,
+    height: typeof window !== 'undefined' ? window.innerHeight : 0,
   });
 
   useEffect(() => {
@@ -21,6 +22,7 @@ export const useWindowSize = () => {
   const handleResize = debounce(() => {
     setWindowSize({
       width: window.innerWidth,
+      height: window.innerHeight,
     });
     const currentUrl = window.location.href;
     if(currentUrl.includes('/signIn')) {
