@@ -161,9 +161,7 @@ const ResponsiveMapSize = () => {
       }
       // 랩탑 이상
       if(width >= 1150) {
-        if(height >= 800) {
-          return 'w-[1200px] h-[550px]';
-        }
+        return 'w-[1200px] h-[550px]';
       }
   }
 };
