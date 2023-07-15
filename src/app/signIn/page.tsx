@@ -1,14 +1,10 @@
 'use client'
 
 import dynamic from 'next/dynamic';
-const Background = dynamic(() => import('@signIn/background'), {
-  ssr: false
-});
 
-// import Background from '@signIn/background';
-import SocialSignInForm from '@signIn/socialSignInForm';
-import Header from '@signIn/header';
-import Footer from 'src/app/footer';
+const Background = dynamic(() => import('@signIn/background'), { ssr: false });
+const SocialSignInForm = dynamic(() => import('@signIn/socialSignInForm'));
+const Header = dynamic(() => import('@signIn/header'));
 
 const SignIn: React.FC = () => {
 

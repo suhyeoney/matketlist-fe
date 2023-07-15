@@ -1,14 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@font-face {
+/* @font-face {
   font-family: 'Tenada';
-  src: url('/fonts/Tenada.ttf');
-}
-@font-face {
+  src: url('/fonts/Tenada.woff');
+} */
+/* @font-face {
   font-family: 'NanumGothic';
   src: url('/fonts/NanumGothic.ttf');
-}
+} */
 
 :root {
   --foreground-rgb: 0, 0, 0;

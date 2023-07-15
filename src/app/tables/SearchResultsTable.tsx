@@ -7,6 +7,7 @@ import { setSearchAddressModalOpen } from '@features/modalControl/modalControlSl
 import { useEffect, useState } from 'react';
 import image1 from '@assets/icons/choose-from-list.png';
 import LoadingSpinner03 from '@spinners/loadingSpinner03';
+import Image from 'next/image';
 
 type SearchResultsTableProps = {
   data: any[],
@@ -94,7 +95,7 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
       tablet:w-[700px] h-[450px]
       mobile:w-[300px] h-[400px]
     ">
-      <table className="table text-sm font-['NanumGothic']">
+      <table className="table text-sm">
         <thead>
           <tr className="sticky z-10">
             <th className="sticky top-0 px-6 mt-2 text-center">매장명</th>
@@ -153,7 +154,7 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
               mobile:w-[50px]
             ">
               <button className="
-                  font-['NanumGothic'] btn btn-ghost bg-red-100
+                  btn btn-ghost bg-red-100
                   laptop:w-[60px] h-[60px]
                   tablet:w-[60px] h-[60px]
                   mobile:w-[50px] h-[50px] p-1
@@ -161,8 +162,9 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
                 disabled={ isRegistering }
                 onClick={ () => registerMatjip(e) }
               >
-                <img 
+                <Image 
                   src={ image1.src } 
+                  alt=""
                   className="
                     laptop:w-[30px] h-[30px]
                     tablet:w-[30px] h-[30px]

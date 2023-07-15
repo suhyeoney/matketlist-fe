@@ -1,20 +1,18 @@
 'use client'
 
-import { useSelector } from 'react-redux';
-import SearchAddressModal from '@modals/searchAddressModal';
-import useNaverMap from '@hooks/useNaverMap';
-import MatjipInputbox from './matjipInputbox';
+import dynamic from 'next/dynamic';
 
-import ReduxTest from './reduxTest';
+const Header = dynamic(() => import('@main/header'));
+const MatjipInputbox = dynamic(() => import('@main/matjipInputbox'));
+const MyMatjipList = dynamic(() => import('@modals/myMatjipList'));
+
+import SearchAddressModal from '@modals/searchAddressModal';
+import LoadingSpinner03 from '@spinners/loadingSpinner03';
+
+import { useSelector } from 'react-redux';
+import useNaverMap from '@hooks/useNaverMap';
 import { RootState } from '@store/store';
 import { useEffect, useState } from 'react';
-import LoadingSpinner01 from '@spinners/loadingSpinner01';
-import Header from './header';
-import { GetServerSideProps } from 'next';
-import { QueryClient, dehydrate } from 'react-query';
-import MainService from '@services/main.service';
-import MyMatjipList from '@modals/myMatjipList';
-import LoadingSpinner03 from '@spinners/loadingSpinner03';
 
 const Main: React.FC = () => {
 
