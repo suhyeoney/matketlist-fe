@@ -6,7 +6,8 @@ const Header = dynamic(() => import('@main/header'));
 const MatjipInputbox = dynamic(() => import('@main/matjipInputbox'));
 const LoadingSpinner03 = dynamic(() => import('@spinners/loadingSpinner03'));
 const MyMatjipList = dynamic(() => import('@modals/myMatjipList'));
-const SearchAddressModal = dynamic(() => import('@modals/searchAddressModal'));
+
+import SearchAddressModal from '@modals/searchAddressModal';
 
 import { useSelector } from 'react-redux';
 import useNaverMap from '@hooks/useNaverMap';
