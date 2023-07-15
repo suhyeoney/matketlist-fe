@@ -82,6 +82,7 @@ const ResponsiveMapSize = () => {
       }
 
     case 'chrome':
+    case 'crios':
       // 소형 모바일
       if(width >= 300 && width < 360) {
         if(height < 570) {
