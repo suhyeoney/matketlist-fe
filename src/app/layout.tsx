@@ -26,9 +26,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <meta httpEquiv="Cache-Control" content="no-cache, no-store, must-revalidate"></meta>
+        {/* <meta httpEquiv="Cache-Control" content="no-cache, no-store, must-revalidate"></meta>
         <meta httpEquiv="Pragma" content="no-cache"></meta>
-        <meta httpEquiv="Expires" content="0"></meta>
+        <meta httpEquiv="Expires" content="0"></meta> */}
         <Script
           src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_MAP_KEY}`}
           // strategy="beforeInteractive"
