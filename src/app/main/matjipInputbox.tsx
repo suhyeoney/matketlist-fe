@@ -60,7 +60,8 @@ const MatjipInputbox:React.FC = () => {
   //   console.log('modalControl.isMatjipInfoModalOpen', modalControl.isMatjipInfoModalOpen);
   // }, [ modalControl.isMatjipInfoModalOpen ]);
 
-  console.log(useWindowSize());
+  console.log('width', useWindowSize().width);
+  console.log('height', useWindowSize().height);
 
   return (
     <>
