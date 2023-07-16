@@ -28,7 +28,7 @@ const Main: React.FC = () => {
   useNaverMap(mapObj, setMapObj);
 
   useEffect(() => {
-    // console.log('>>>> mapObj', mapObj);
+    console.log('>>>> mapObj', mapObj);
     if(mapObj !== null && mapObj !== undefined) {
       if(Object.keys(mapObj).length > 0) {
         setMapStyle('border-[1px] border-gray-200');
