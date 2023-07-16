@@ -18,6 +18,7 @@ const Background: React.FC = () => {
         loop 
         autoPlay 
         muted
+        playsInline
         // poster={ useWindowSize().width < 1024 ? poster2.src : poster1.src }
         className="fixed min-w-full min-h-full right-0 bottom-0"
       >
