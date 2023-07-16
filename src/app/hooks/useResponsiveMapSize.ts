@@ -20,6 +20,10 @@ const ResponsiveMapSize = (
   useEffect(() => {
     switch(browserName) {
       case 'ios':
+      case 'safari':
+      case 'edge':
+      case 'edge-ios':
+      case 'kakaotalk':
         // 소형 모바일
         if(width >= 300 && width < 360) {
           if(height < 570) {
@@ -104,6 +108,7 @@ const ResponsiveMapSize = (
 
       case 'chrome':
       case 'crios':
+      case 'firefox':
         // 소형 모바일
         if(width >= 300 && width < 360) {
           if(height < 570) {
