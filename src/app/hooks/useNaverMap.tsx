@@ -13,7 +13,8 @@ import image3 from '@assets/icons/my-matjip-list.png';
 
 
 const NaverMap = (
-    mapObj: naver.maps.Map | undefined | null, setMapObj: React.Dispatch<React.SetStateAction<naver.maps.Map | undefined | null>>) => {
+    mapObj: naver.maps.Map | undefined | null, 
+    setMapObj: React.Dispatch<React.SetStateAction<naver.maps.Map | undefined | null>>) => {
   const mapRef = useRef<HTMLElement | null | any>(null);
   const [myLocation, setMyLocation] = useState<
     { latitude: number; longitude: number } | string

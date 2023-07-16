@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 import useNaverMap from '@hooks/useNaverMap';
 import { RootState } from '@store/store';
 import { useEffect, useState } from 'react';
-import responsiveMapSize from '@utils/responsiveMapSize';
+import useResponsiveMapSize from '@hooks/useResponsiveMapSize';
 
 const Main: React.FC = () => {
 
@@ -22,7 +22,9 @@ const Main: React.FC = () => {
 
   const [ mapObj, setMapObj ] = useState<naver.maps.Map | undefined | null>(null);
   const [ mapStyle, setMapStyle ] = useState<string>('');
+  const [ mapSize, setMapSize ] = useState<string>('');
 
+  useResponsiveMapSize(mapSize, setMapSize);
   useNaverMap(mapObj, setMapObj);
 
   useEffect(() => {
@@ -71,10 +73,11 @@ const Main: React.FC = () => {
         mobile:gap-5
       ">
         <MatjipInputbox/>
-        <div id="map" className={`
-          z-0 self-center ${ mapStyle } ${ responsiveMapSize() }
-        `}></div> 
-        {/* <ReduxTest /> */}
+        <div className={`${ mapSize }`}>
+          <div id="map" className={`
+            z-0 self-center ${ mapStyle } w-[100%] h-[100%]
+          `}></div>
+        </div>
         { modalControl.isSearchAddressModalOpen ? <SearchAddressModal /> : null }
         { modalControl.isMyMatjipListOpen ? <MyMatjipList /> : null }
 
