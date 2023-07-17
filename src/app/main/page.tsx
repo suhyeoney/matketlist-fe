@@ -51,7 +51,7 @@ const Main: React.FC = () => {
   return (
     <div 
       data-theme={ environmentVariables.backgroundMode === 'L' ? 'lemonade' : 'dark' }
-      className="h-screen overflow-y-auto"
+      className="h-screen h-[100%]"
     >
       { Object.keys(mapObj ?? {}).length === 0 ? 
         <>
