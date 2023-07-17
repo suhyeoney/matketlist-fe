@@ -14,6 +14,7 @@ import useNaverMap from '@hooks/useNaverMap';
 import { RootState } from '@store/store';
 import { useEffect, useState } from 'react';
 import useResponsiveMapSize from '@hooks/useResponsiveMapSize';
+import { useWindowSize } from '@hooks/useWindowSize';
 
 const Main: React.FC = () => {
 
@@ -22,10 +23,19 @@ const Main: React.FC = () => {
 
   const [ mapObj, setMapObj ] = useState<naver.maps.Map | undefined | null>(null);
   const [ mapStyle, setMapStyle ] = useState<string>('');
-  const [ mapSize, setMapSize ] = useState<string>('');
-
-  useResponsiveMapSize(mapSize, setMapSize);
+  const [ mapSize, setMapSize ] = useState<{ width: number, height: number }>({ width: 0, height: 0 });
+  // useResponsiveMapSize(mapSize, setMapSize);
   useNaverMap(mapObj, setMapObj);
+
+  const windowSize = useWindowSize();
+
+  useEffect(() => {
+    // console.log('mapSize', mapSize);
+    setMapSize({
+      width: windowSize.width,
+      height: windowSize.height,
+    });
+  }, [ windowSize ]);
 
   useEffect(() => {
     console.log('>>>> mapObj', mapObj);
@@ -73,11 +83,12 @@ const Main: React.FC = () => {
         mobile:gap-5
       ">
         <MatjipInputbox/>
-        <div className={`${ mapSize }`}>
-          <div id="map" className={`
-            z-0 self-center ${ mapStyle } w-[100%] h-[100%]
-          `}></div>
-        </div>
+        <div id="map" 
+        style={{width: `${ mapSize.width * 0.8 }px`, height: `${ mapSize.height * 0.7 }px`}}
+        className={`
+          z-0 self-center  w-[90%] h-[90%]
+          ${ mapStyle }
+        `}></div>
         { modalControl.isSearchAddressModalOpen ? <SearchAddressModal /> : null }
         { modalControl.isMyMatjipListOpen ? <MyMatjipList /> : null }
 
