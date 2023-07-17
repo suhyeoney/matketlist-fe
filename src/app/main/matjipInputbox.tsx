@@ -60,7 +60,8 @@ const MatjipInputbox:React.FC = () => {
   //   console.log('modalControl.isMatjipInfoModalOpen', modalControl.isMatjipInfoModalOpen);
   // }, [ modalControl.isMatjipInfoModalOpen ]);
 
-  console.log(useWindowSize());
+  console.log('width', useWindowSize().width);
+  console.log('height', useWindowSize().height);
 
   return (
     <>
@@ -74,8 +75,8 @@ const MatjipInputbox:React.FC = () => {
         { useWindowSize().width >= 768 ?
           <span className={`
           ${ Tenada.className } h-[48px] text-center p-[10px] rounded-md flex justify-center items-center 
-          laptop:text-base 
-          tablet:text-sm tablet:bg-yellow-300
+          laptop:text-base bg-yellow-300 
+          tablet:text-sm bg-yellow-300
           mobile:text-[0px] 
         `}>나만의 맛집 추가하기</span> : null
         }

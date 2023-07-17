@@ -13,7 +13,8 @@ import { useSelector } from 'react-redux';
 import useNaverMap from '@hooks/useNaverMap';
 import { RootState } from '@store/store';
 import { useEffect, useState } from 'react';
-import { getResponsiveMapSize } from '@utils/responsiveUtils';
+import useResponsiveMapSize from '@hooks/useResponsiveMapSize';
+import { useWindowSize } from '@hooks/useWindowSize';
 
 const Main: React.FC = () => {
 
@@ -22,11 +23,22 @@ const Main: React.FC = () => {
 
   const [ mapObj, setMapObj ] = useState<naver.maps.Map | undefined | null>(null);
   const [ mapStyle, setMapStyle ] = useState<string>('');
-
+  const [ mapSize, setMapSize ] = useState<{ width: number, height: number }>({ width: 0, height: 0 });
+  // useResponsiveMapSize(mapSize, setMapSize);
   useNaverMap(mapObj, setMapObj);
 
+  const windowSize = useWindowSize();
+
   useEffect(() => {
-    // console.log('>>>> mapObj', mapObj);
+    // console.log('mapSize', mapSize);
+    setMapSize({
+      width: windowSize.width,
+      height: windowSize.height,
+    });
+  }, [ windowSize ]);
+
+  useEffect(() => {
+    console.log('>>>> mapObj', mapObj);
     if(mapObj !== null && mapObj !== undefined) {
       if(Object.keys(mapObj).length > 0) {
         setMapStyle('border-[1px] border-gray-200');
@@ -39,7 +51,7 @@ const Main: React.FC = () => {
   return (
     <div 
       data-theme={ environmentVariables.backgroundMode === 'L' ? 'lemonade' : 'dark' }
-      className="h-screen"
+      className="h-screen overflow-y-hidden"
     >
       { Object.keys(mapObj ?? {}).length === 0 ? 
         <>
@@ -71,10 +83,12 @@ const Main: React.FC = () => {
         mobile:gap-5
       ">
         <MatjipInputbox/>
-        <div id="map" className={`
-          z-0 self-center ${ mapStyle } ${ getResponsiveMapSize() }
-        `}></div> 
-        {/* <ReduxTest /> */}
+        <div id="map" 
+        style={{width: `${ mapSize.width * 0.9 }px`, height: `${ mapSize.height * 0.6 }px`}}
+        className={`
+          z-0 self-center  w-[90%] h-[90%]
+          ${ mapStyle }
+        `}></div>
         { modalControl.isSearchAddressModalOpen ? <SearchAddressModal /> : null }
         { modalControl.isMyMatjipListOpen ? <MyMatjipList /> : null }
 
