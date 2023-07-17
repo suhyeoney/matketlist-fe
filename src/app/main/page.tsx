@@ -84,7 +84,7 @@ const Main: React.FC = () => {
       ">
         <MatjipInputbox/>
         <div id="map" 
-        style={{width: `${ mapSize.width * 0.8 }px`, height: `${ mapSize.height * 0.7 }px`}}
+        style={{width: `${ mapSize.width * 0.9 }px`, height: `${ mapSize.height * 0.6 }px`}}
         className={`
           z-0 self-center  w-[90%] h-[90%]
           ${ mapStyle }
