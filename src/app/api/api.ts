@@ -16,6 +16,6 @@ export const get = <T, >(url: string, payload: object | number | string, instanc
   }
 };
 
-export const post = (url: string, payload: object | number | string, instance: AxiosInstance) => {
-  return instance.post(url, payload);
+export const post =<T, > (url: string, payload: object | number | string, instance: AxiosInstance) => {
+  return instance.post<T>(url, payload);
 };
