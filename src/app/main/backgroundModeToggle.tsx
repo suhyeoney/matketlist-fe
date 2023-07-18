@@ -19,24 +19,26 @@ const BackgroundModeToggle:React.FC = () => {
 
   const toggle = () => {
     const backgroundMode = environmentVariables.backgroundMode;
-    const globalObj = {
-      backgroundMode: '',
-    };
-    if(backgroundMode === 'L') {
-      dispatch(backgroundModeToggle('D'));
-      globalObj.backgroundMode = 'D';
-    }
-    else {
-      dispatch(backgroundModeToggle('L'));
-      globalObj.backgroundMode = 'L';
-    }
-    localStorage.setItem('matket-environment-variables', JSON.stringify(globalObj));
+    dispatch(backgroundModeToggle(!backgroundMode));
+
+    // const globalObj = {
+    //   backgroundMode: '',
+    // };
+    // if(backgroundMode === 'L') {
+    //   dispatch(backgroundModeToggle('D'));
+    //   globalObj.backgroundMode = 'D';
+    // }
+    // else {
+    //   dispatch(backgroundModeToggle('L'));
+    //   globalObj.backgroundMode = 'L';
+    // }
+    // localStorage.setItem('matket-environment-variables', JSON.stringify(globalObj));
   };
 
   const renderBackgroundModeIcon = useCallback(() => {
     const backgroundMode = environmentVariables.backgroundMode;
     switch(backgroundMode) {
-      case 'L':
+      case true:
         return (
           <Image
             src={ image1.src }
@@ -46,7 +48,7 @@ const BackgroundModeToggle:React.FC = () => {
             className="w-[20px] h-[20px]"
           />
         );
-      case 'D':
+      case false:
         return (
           <Image 
             src={ image2.src }

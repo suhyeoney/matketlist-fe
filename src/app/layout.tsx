@@ -30,9 +30,11 @@ export default function RootLayout({
         <meta httpEquiv="Pragma" content="no-cache"></meta>
         <meta httpEquiv="Expires" content="0"></meta> */}
         <meta name="apple-mobile-web-app-capable" content="yes"></meta>
+        <link rel='icon' href='/favicon.ico'/>
+        {/* <Script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js"></Script> */}
+        {/* Naver Map Script : afterInteractive */}
         <Script
           src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_MAP_KEY}`}
-          strategy="beforeInteractive"
         ></Script>
       </head>
       <body>

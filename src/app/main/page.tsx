@@ -9,12 +9,14 @@ const MyMatjipList = dynamic(() => import('@modals/myMatjipList'));
 import SearchAddressModal from '@modals/searchAddressModal';
 import LoadingSpinner03 from '@spinners/loadingSpinner03';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import useNaverMap from '@hooks/useNaverMap';
 import { RootState } from '@store/store';
 import { useEffect, useState } from 'react';
 import useResponsiveMapSize from '@hooks/useResponsiveMapSize';
 import { useWindowSize } from '@hooks/useWindowSize';
+import SignInService from '@services/signIn.service';
+import { accessTokenSetting } from '@features/environmentVariables/environmentVariablesSlice';
 
 const Main: React.FC = () => {
 
@@ -26,8 +28,27 @@ const Main: React.FC = () => {
   const [ mapSize, setMapSize ] = useState<{ width: number, height: number }>({ width: 0, height: 0 });
   // useResponsiveMapSize(mapSize, setMapSize);
   useNaverMap(mapObj, setMapObj);
-
   const windowSize = useWindowSize();
+  const dispatch = useDispatch();
+
+  const fetchAccessToken = async (code: string, state: string) => {
+    const access_token = await SignInService.getTokenNaverApi(code, state);
+    console.log(access_token);
+    dispatch(accessTokenSetting(access_token));
+    console.log(environmentVariables);
+    // localStorage.setItem('matket-environment-variables', JSON.stringify(environmentVariables));
+  };
+
+  useEffect(() => {
+    // localStorage 초기화 설정
+    // localStorage.setItem('matket-environment-variables', JSON.stringify(environmentVariables));
+
+    const urlParams = new URL(location.href).searchParams;
+    const code = urlParams.get('code') ?? '';
+    const state = urlParams.get('state') ?? '';
+    fetchAccessToken(code, state);
+
+  }, []);
 
   useEffect(() => {
     // console.log('mapSize', mapSize);
@@ -50,7 +71,7 @@ const Main: React.FC = () => {
 
   return (
     <div 
-      data-theme={ environmentVariables.backgroundMode === 'L' ? 'lemonade' : 'dark' }
+      data-theme={ environmentVariables.backgroundMode ? 'lemonade' : 'dark' }
       className="h-screen overflow-y-hidden"
     >
       { Object.keys(mapObj ?? {}).length === 0 ? 
