@@ -12,6 +12,7 @@ const NAVER_API_HOST_URL = 'https://nid.naver.com';
 const NAVER_API_AUTH_ENDPOINT = '/oauth2.0/authorize';
 const NAVER_API_TOKEN_ENDPOINT = '/oauth2.0/token';
 const NAVER_CALLBACK_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:3000/main' : 'https://matketlist.site/main';
+// const NAVER_CALLBACK_URL = 'http://localhost:3000/main';
 
 
 const authorizeNaverApi = () => {

@@ -56,11 +56,16 @@ const Main: React.FC = () => {
       console.log('>>>> fetchAccessToken : false');
       router.push('/signIn');
       alert('허용되지 않은 접근입니다.');
+      setAuthorized(false);
     } else {
       console.log('>>>> fetchAccessToken : true');
       setAuthorized(true);
     }
   }, []);
+
+  useEffect(() => {
+    console.log('isAuthorized', isAuthorized);
+  }, [ isAuthorized ]);
 
   useEffect(() => {
     // console.log('mapSize', mapSize);
@@ -71,7 +76,7 @@ const Main: React.FC = () => {
   }, [ windowSize ]);
 
   useEffect(() => {
-    // console.log('>>>> mapObj', mapObj);
+    console.log('>>>> mapObj', mapObj);
     if(mapObj !== null && mapObj !== undefined) {
       if(Object.keys(mapObj).length > 0) {
         setMapStyle('border-[1px] border-gray-200');
