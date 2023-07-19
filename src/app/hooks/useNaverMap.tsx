@@ -77,7 +77,7 @@ const NaverMap = (
         setMyLocation({ latitude: 37.4862618, longitude: 127.1222903 });
       }
     }
-  }, []);
+  }, [ isAuthorized ]);
 
   useEffect(() => {
     setArrMatjipLocation([ ...location.arrLocation ]);
