@@ -69,7 +69,7 @@ const MatjipInputbox:React.FC = () => {
         flex flex-row justify-center items-center border-[1px] border-solid border-grey rounded-md p-[10px]
         laptop:gap-[20px]
         tablet:gap-[20px]
-        mobile:gap-[20px]
+        mobile:gap-[10px]
         smallest:gap-[5px]
       ">
         { useWindowSize().width >= 768 ?
