@@ -22,6 +22,4 @@ const Footer: React.FC = () => {
   );
 };
 
-// ${ typeof window !== undefined && JSON.parse(localStorage.getItem('matket-environment-variables') || '{}')?.backgroundMode === 'L' ? 'text-black' : 'text-white' }
-
 export default Footer;
