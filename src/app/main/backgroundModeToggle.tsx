@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback } from 'react';
 import image1 from '@assets/icons/light-mode.png';
 import image2 from '@assets/icons/dark-mode.png';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,7 +12,6 @@ const BackgroundModeToggle:React.FC = () => {
 
   // page view 에서 backgroundMode state를 관리하자니... backgroundModeToggle 컴포넌트까지 props로 두번 넘기는 것이 
   // 번거로워 redux에서 관리하는 것으로 진행
-
   const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
 
   const dispatch = useDispatch();
@@ -20,19 +19,6 @@ const BackgroundModeToggle:React.FC = () => {
   const toggle = () => {
     const backgroundMode = environmentVariables.backgroundMode;
     dispatch(backgroundModeToggle(!backgroundMode));
-
-    // const globalObj = {
-    //   backgroundMode: '',
-    // };
-    // if(backgroundMode === 'L') {
-    //   dispatch(backgroundModeToggle('D'));
-    //   globalObj.backgroundMode = 'D';
-    // }
-    // else {
-    //   dispatch(backgroundModeToggle('L'));
-    //   globalObj.backgroundMode = 'L';
-    // }
-    // localStorage.setItem('matket-environment-variables', JSON.stringify(globalObj));
   };
 
   const renderBackgroundModeIcon = useCallback(() => {
