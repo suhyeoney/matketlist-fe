@@ -20,7 +20,7 @@ const Background: React.FC = () => {
         muted 
         playsInline 
         // poster={ useWindowSize().width < 1024 ? poster2.src : poster1.src }
-        className="fixed min-w-full min-h-full right-0 bottom-0"
+        className="fixed min-w-full min-h-full right-0 bottom-0 pointer-events-none"
       >
         <source src={ useWindowSize().width < 1024 ? video1_narrow : video1_wide } type="video/mp4" />
       </video>
