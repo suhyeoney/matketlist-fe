@@ -19,6 +19,7 @@ import SignInService from '@services/signIn.service';
 import { accessTokenSetting } from '@features/environmentVariables/environmentVariablesSlice';
 import { isEmpty } from '@utils/stringUtils';
 import { useRouter } from 'next/navigation';
+import FlowingText01 from '@flowingTexts/flowingText01';
 
 const Main: React.FC = () => {
 
@@ -90,9 +91,10 @@ const Main: React.FC = () => {
     <>
     { isAuthorized ?
       <div 
-        data-theme={ environmentVariables.backgroundMode ? 'lemonade' : 'dark' }
-        className="h-screen overflow-y-hidden"
-      >
+        className={`
+          h-screen overflow-hidden
+          ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
+      `}>
         { Object.keys(mapObj ?? {}).length === 0 ? 
           <>
             <div className="flex justify-center items-center absolute z-20 w-full h-full opacity-50 bg-gray-700"></div>
@@ -122,6 +124,7 @@ const Main: React.FC = () => {
           tablet:gap-5
           mobile:gap-5
         ">
+          <FlowingText01 text={ '[ Notice ] 여러분만의 맛집 버킷을 관리해보세요 🥰' } />
           <MatjipInputbox/>
           <div id="map" 
           style={{width: `${ mapSize.width * 0.9 }px`, height: `${ mapSize.height * 0.6 }px`}}

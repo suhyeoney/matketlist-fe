@@ -1,6 +1,6 @@
 'use client'
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SearchMatjipInfo } from '@dataTypes/matjip';
 import LoadingSpinner01 from '@spinners/loadingSpinner01';
 import { setSearchAddressModalOpen } from '@features/modalControl/modalControlSlice';
@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import image1 from '@assets/icons/choose-from-list.png';
 import LoadingSpinner03 from '@spinners/loadingSpinner03';
 import Image from 'next/image';
+import { RootState } from '@store/store';
 
 type SearchResultsTableProps = {
   data: any[],
@@ -27,6 +28,7 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
   registerMatjip 
 }) => {
 
+  const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
   const dispatch = useDispatch();
 
   const SIZE_PER_PAGE = 5;
@@ -77,7 +79,12 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
 
   const btnShowMore =
     <tr>
-      <td colSpan={3} className="px-0">
+      <td 
+        colSpan={3} 
+        className={`
+          px-0
+          ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
+        `}>
         <div 
           className="flex justify-center items-center border-[1px] border-grey-700 font-bold mx-5 py-1 cursor-pointer"
           onClick={ () => setPage(page + 1) }
@@ -89,29 +96,36 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
     </tr>;
 
   const resultTable = 
-    <div className="
+    <div className={`
       overflow-y-scroll scrollbar-hide
       laptop:w-[700px] h-[450px]
       tablet:w-[700px] h-[450px]
       mobile:w-[300px] h-[400px]
       smallest:w-[250px]
-    ">
-      <table className="
+    `}>
+      <table className={`
         table 
         laptop:text-sm
         tablet:text-sm
         mobile:text-sm
         smallest:text-[6px]
-      ">
+      `}>
         <thead>
           <tr className="sticky z-10">
-            <th className="sticky top-0 px-6 py-2 mt-2 text-center rounded-tl-[7px]">매장명</th>
-            <th className="sticky top-0 px-6 py-2 mt-2 text-center">주소</th>
-            <th className="
+            <th className={`
+              sticky top-0 px-6 py-2 mt-2 text-center rounded-tl-[7px]
+              ${ environmentVariables.backgroundMode ? 'bg-[#2A303C]' : 'bg-white' }
+            `}>매장명</th>
+            <th className={`
+              sticky top-0 px-6 py-2 mt-2 text-center
+              ${ environmentVariables.backgroundMode ? 'bg-[#2A303C]' : 'bg-white' }
+            `}>주소</th>
+            <th className={`
               sticky top-0 px-5 py-2 mt-2 rounded-tr-[7px]
+              ${ environmentVariables.backgroundMode ? 'bg-[#2A303C]' : 'bg-white' }
               mobile:w-[60px]
               smallest:w-[40px]
-            "></th>
+            `}></th>
           </tr>
         </thead>
         <tbody>
@@ -119,17 +133,20 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
             (e: SearchMatjipInfo, idx: number) => idx < SIZE_PER_PAGE * page)?.map(
             (e: SearchMatjipInfo, idx: number) => (
           <tr key={ idx } className="py-10">
-            <td className="p-0">
-              <div 
+            <td className={
+              `p-0
+              ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
+            `}>
+              <div
                 id="name-tooltip"
                 data-tip={ e?.name } 
-                className="
+                className={`
                   tooltip tooltip-accent tooltip-top before:max-w-fit hover:cursor-default hover:underline hover:decoration-dotted
                   laptop:w-[200px]
                   tablet:w-[200px] 
                   mobile:w-[80px]
                   smallest:w-[40px]
-                ">
+                `}>
                 <p className="
                   text-left font-bold 
                   laptop:px-7 truncate ...
@@ -139,7 +156,10 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
                 ">{ e?.name }</p>
               </div>
             </td>
-            <td className="p-0">
+            <td className={
+              `p-0
+              ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
+            `}>
               <div
                 id="address-tooltip"
                 data-tip={ e?.address } 
@@ -159,20 +179,21 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
                 ">{ e?.address }</p>
               </div>
             </td>
-            <td className="
+            <td className={`
               flex justify-center items-center p-0 py-5
+              ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
               laptop:w-[130px]
               tablet:w-[130px]
               mobile:w-[50px]
               smallest:w-[30px]
-            ">
-              <button className="
+            `}>
+              <button className={`
                   btn btn-ghost bg-red-100
                   laptop:w-[60px] h-[60px]
                   tablet:w-[60px] h-[60px]
                   mobile:w-[50px] h-[50px] p-1
                   smallest:w-[30px]
-                "
+                `}
                 disabled={ isRegistering }
                 onClick={ () => registerMatjip(e) }
               >

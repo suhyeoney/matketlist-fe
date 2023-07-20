@@ -24,6 +24,7 @@ const MatjipInputbox:React.FC = () => {
 
   const location = useSelector((state: RootState) => state.location);
   const modalControl = useSelector((state: RootState) => state.modalControl);
+  const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
   // const inputControl = useSelector((state: RootState) => state.inputControl);
   const dispatch = useDispatch();
 
@@ -87,10 +88,11 @@ const MatjipInputbox:React.FC = () => {
             placeholder={ useWindowSize().width >= 768 ? '맛집 상호명 입력' : '나만의 맛집 추가하기' } 
             onFocus={ () => document.querySelector('#footer')?.classList.add('hidden') }
             onBlur={ () => document.querySelector('#footer')?.classList.remove('hidden') }
-            className="
-              input input-bordered
+            className={`
+              input input-bordered 
+              ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
               smallest:w-[170px]
-            "/>
+            `}/>
         </div>
         <button 
           onClick={ onSearchBtnClick }

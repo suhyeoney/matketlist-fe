@@ -54,7 +54,13 @@ const BackgroundModeToggle:React.FC = () => {
         { renderBackgroundModeIcon() }
       </div>
       <div>
-        <input type="checkbox" className="toggle" onClick={ toggle } />
+        <input 
+          type="checkbox" onClick={ toggle }
+          defaultChecked={ !environmentVariables.backgroundMode }
+          className={`
+            toggle
+            ${ environmentVariables.backgroundMode ? '' : 'bg-white' }
+        `}/>
       </div>
     </div>
   );

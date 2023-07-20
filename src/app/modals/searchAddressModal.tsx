@@ -165,19 +165,20 @@ const SearchAddressModal: React.FC = () => {
       className="container flex justify-center mx-auto"
     >
       <div
-        className="absolute inset-0 flex items-center justify-center bg-gray-700 bg-opacity-50"
+        className="absolute z-20 inset-0 flex items-center justify-center bg-gray-700 bg-opacity-50"
       >
-        <div className="
-          px-5 py-1 bg-white divide-y divide-gray-500 border-2 border-slate-950
+        <div className={`
+          px-5 py-1 divide-y divide-gray-500 border-2 border-slate-950
+          ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
           laptop:w-[800px] h-[580px] 
           tablet:w-[800px] h-[580px] 
           mobile:w-[350px] h-[500px]   
-        ">
+        `}>
           <div 
             className="flex items-center justify-between py-3"
           >
-            <h3 className="
-              font-['Tenada'] 
+          <h3 className="
+            font-['Tenada'] 
               laptop:text-2xl
               tablet:text-2xl
               mobile:text-1xl

@@ -25,6 +25,7 @@
       "@assets/*": ["src/app/assets/*"],
       "@dataTypes/*": ["src/app/dataTypes/*"],
       "@features/*": ["src/app/features/*"],
+      "@flowingTexts/*": ["src/app/flowingTexts/*"],
       "@hooks/*": ["src/app/hooks/*"],
       "@main/*": ["src/app/main/*"],
       "@modals/*": ["src/app/modals/*"],
