@@ -7,7 +7,8 @@
     "build": "next build",
     "prestart": "npm run build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "pm2": "pm2"
   },
   "dependencies": {
     "@react-rxjs/core": "^0.10.4",
@@ -33,6 +34,7 @@
     "lodash": "^4.17.21",
     "next": "13.4.1",
     "next-videos": "^1.4.1",
+    "pm2": "^5.3.0",
     "postcss": "8.4.23",
     "react": "18.2.0",
     "react-dom": "18.2.0",
