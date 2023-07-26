@@ -49,12 +49,24 @@ const BackgroundModeToggle:React.FC = () => {
 
   // 배경 dark / light 모드는 로컬 스토리지를 통해 저장 예정
   return (
-    <div className="flex flex-col items-center justify-center gap-[10px] p-[10px]">
+    <div className="
+      flex flex-col items-center justify-center p-[10px]
+      laptop:gap-[10px] 
+      tablet:gap-[10px] 
+      mobile:gap-[10px] 
+      smallest:gap-[2px] 
+    ">
       <div className="item-center">
         { renderBackgroundModeIcon() }
       </div>
       <div>
-        <input type="checkbox" className="toggle" onClick={ toggle } />
+        <input 
+          type="checkbox" onClick={ toggle }
+          defaultChecked={ !environmentVariables.backgroundMode }
+          className={`
+            toggle
+            ${ environmentVariables.backgroundMode ? '' : 'bg-white' }
+        `}/>
       </div>
     </div>
   );

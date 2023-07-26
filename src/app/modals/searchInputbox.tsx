@@ -1,5 +1,8 @@
 'use client'
 
+import { RootState } from '@store/store';
+import { useSelector } from 'react-redux';
+
 type SearchInputboxProps = {
   setKeyword: (payload: string) => void,
   placeholder: string,
@@ -7,6 +10,8 @@ type SearchInputboxProps = {
 
 const SearchInputbox: React.FC<SearchInputboxProps> = ({ setKeyword, placeholder  }) => {
     
+  const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
+
   const onInputKeywordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     setKeyword(inputValue);
@@ -20,13 +25,14 @@ const SearchInputbox: React.FC<SearchInputboxProps> = ({ setKeyword, placeholder
         onChange={ (e: React.ChangeEvent<HTMLInputElement>) => onInputKeywordChange(e) }
         onFocus={ () => document.querySelector('#footer')?.classList.add('hidden') }
         onBlur={ () => document.querySelector('#footer')?.classList.remove('hidden') }
-        className="
+        className={`
           input input-bordered input-info 
+          ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
           laptop:w-[200px] h-[40px]
           tablet:w-[200px] h-[40px]
           mobile:w-[200px] h-[40px]
           smallest:w-[150px] h-[35px] mr-8
-        "/>
+        `}/>
     </>
   );
 };
