@@ -52,17 +52,19 @@ module.exports = {
       },
       flowing: {
         '0%': {
-          transform: 'translateX(200%)'
+          transform: 'translateX(200%)',
+          right: '0'
         },
         '100%': {
-          transform: 'translateX(-200%)'
+          transform: 'translateX(-200%)',
+          left: '0'
         },
       },
     },
     animation: {
       rotate: 'rotate 1.5s linear infinite',
       ping: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
-      flowing: 'flowing 12s linear infinite',
+      flowing: 'flowing 20s linear infinite',
     },
   },
   plugins: [

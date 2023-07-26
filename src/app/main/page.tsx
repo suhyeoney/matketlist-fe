@@ -20,6 +20,7 @@ import { accessTokenSetting } from '@features/environmentVariables/environmentVa
 import { isEmpty } from '@utils/stringUtils';
 import { useRouter } from 'next/navigation';
 import FlowingText01 from '@flowingTexts/flowingText01';
+import { data } from '@utils/dataForNotice/data';
 
 const Main: React.FC = () => {
 
@@ -123,8 +124,9 @@ const Main: React.FC = () => {
           laptop:gap-5
           tablet:gap-5
           mobile:gap-5
+          smallest:gap-0
         ">
-          <FlowingText01 text={ '[ Notice ] 여러분만의 맛집 버킷을 관리해보세요 🥰' } />
+          <FlowingText01 textList={ data ?? [] } />
           <MatjipInputbox/>
           <div id="map" 
           style={{width: `${ mapSize.width * 0.9 }px`, height: `${ mapSize.height * 0.6 }px`}}

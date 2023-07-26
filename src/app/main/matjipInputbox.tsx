@@ -67,11 +67,11 @@ const MatjipInputbox:React.FC = () => {
   return (
     <>
       <div className="
-        flex flex-row justify-center items-center border-[1px] border-solid border-grey rounded-md p-[10px]
-        laptop:gap-[20px]
-        tablet:gap-[20px]
-        mobile:gap-[10px]
-        smallest:gap-[5px]
+        flex flex-row justify-center items-center 
+        laptop:gap-[20px] p-[10px] border-[1px] border-solid border-grey 
+        tablet:gap-[20px] p-[10px] border-[1px] border-solid border-grey 
+        mobile:gap-[10px] p-[10px] border-[1px] border-solid border-grey 
+        smallest:gap-[5px] border-transparent m-0
       ">
         { useWindowSize().width >= 768 ?
           <span className={`
