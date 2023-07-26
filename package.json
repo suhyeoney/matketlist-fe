@@ -7,7 +7,8 @@
     "build": "next build",
     "prestart": "npm run build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "pm2": "pm2"
   },
   "dependencies": {
     "@react-rxjs/core": "^0.10.4",
