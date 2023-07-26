@@ -65,7 +65,7 @@ const BackgroundModeToggle:React.FC = () => {
           defaultChecked={ !environmentVariables.backgroundMode }
           className={`
             toggle
-            ${ environmentVariables.backgroundMode ? '' : 'bg-white' }
+            ${ environmentVariables.backgroundMode ? '' : 'bg-yellow-400' }
         `}/>
       </div>
     </div>
