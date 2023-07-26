@@ -28,7 +28,7 @@ input[type="search"]::-webkit-search-cancel-button {
   /* background-image: url('../app/assets/icons/like-it.png'); */
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;

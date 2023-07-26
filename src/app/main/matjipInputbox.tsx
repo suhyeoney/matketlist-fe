@@ -24,6 +24,7 @@ const MatjipInputbox:React.FC = () => {
 
   const location = useSelector((state: RootState) => state.location);
   const modalControl = useSelector((state: RootState) => state.modalControl);
+  const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
   // const inputControl = useSelector((state: RootState) => state.inputControl);
   const dispatch = useDispatch();
 
@@ -66,11 +67,11 @@ const MatjipInputbox:React.FC = () => {
   return (
     <>
       <div className="
-        flex flex-row justify-center items-center border-[1px] border-solid border-grey rounded-md p-[10px]
-        laptop:gap-[20px]
-        tablet:gap-[20px]
-        mobile:gap-[10px]
-        smallest:gap-[5px]
+        flex flex-row justify-center items-center 
+        laptop:gap-[20px] p-[10px] border-[1px] border-solid border-grey 
+        tablet:gap-[20px] p-[10px] border-[1px] border-solid border-grey 
+        mobile:gap-[10px] p-[10px] border-[1px] border-solid border-grey 
+        smallest:gap-[5px] border-transparent m-0
       ">
         { useWindowSize().width >= 768 ?
           <span className={`
@@ -87,10 +88,11 @@ const MatjipInputbox:React.FC = () => {
             placeholder={ useWindowSize().width >= 768 ? '맛집 상호명 입력' : '나만의 맛집 추가하기' } 
             onFocus={ () => document.querySelector('#footer')?.classList.add('hidden') }
             onBlur={ () => document.querySelector('#footer')?.classList.remove('hidden') }
-            className="
-              input input-bordered
+            className={`
+              input input-bordered 
+              ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
               smallest:w-[170px]
-            "/>
+            `}/>
         </div>
         <button 
           onClick={ onSearchBtnClick }
