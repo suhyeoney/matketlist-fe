@@ -57,13 +57,6 @@ const MatjipInputbox:React.FC = () => {
 
   }, [ location.arrLocation ]);
 
-  // useEffect(() => {
-  //   console.log('modalControl.isMatjipInfoModalOpen', modalControl.isMatjipInfoModalOpen);
-  // }, [ modalControl.isMatjipInfoModalOpen ]);
-
-  console.log('width', useWindowSize().width);
-  console.log('height', useWindowSize().height);
-
   return (
     <>
       <div className="
@@ -96,7 +89,7 @@ const MatjipInputbox:React.FC = () => {
         </div>
         <button 
           onClick={ onSearchBtnClick }
-          disabled={ modalControl.isMatjipInfoModalOpen ? true : false }
+          // disabled={ modalControl.isMatjipInfoModalOpen ? true : false }
           className={`
           ${ Tenada.className } text-white text-[17px] btn w-[100px] border-violet-500 bg-violet-500
         `}><span className="pr-2">🔍</span>검색</button>

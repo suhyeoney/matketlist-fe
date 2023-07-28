@@ -23,16 +23,17 @@ const nextConfig = {
 
     config.resolve = {
       alias: {
+        '@animations': path.resolve(__dirname, 'src/app/animations'),
         '@api': path.resolve(__dirname, 'src/app/api'),
         '@assets': path.resolve(__dirname, 'src/app/assets'),
         '@dataTypes': path.resolve(__dirname, 'src/app/dataTypes'),
         '@features': path.resolve(__dirname, 'src/app/features'),
-        '@flowingTexts': path.resolve(__dirname, 'src/app/flowingTexts'),
         '@hooks': path.resolve(__dirname, 'src/app/hooks'),
         '@main': path.resolve(__dirname, 'src/app/main'),
         '@modals': path.resolve(__dirname, 'src/app/modals'),
         '@services': path.resolve(__dirname, 'src/app/services'),
         '@signIn': path.resolve(__dirname, 'src/app/signIn'),
+        '@sliders': path.resolve(__dirname, 'src/app/sliders'),
         '@spinners': path.resolve(__dirname, 'src/app/spinners'),
         '@store': path.resolve(__dirname, 'src/app/store'),
         '@tables': path.resolve(__dirname, 'src/app/tables'),

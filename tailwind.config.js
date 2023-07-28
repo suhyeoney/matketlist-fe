@@ -18,8 +18,8 @@ module.exports = {
       screens: { // min-width 기준
         'laptop': { 'min': '1024px' },
         'tablet': { 'min': '768px', 'max': '1023px' },
-        'mobile': { 'min': '350px', 'max': '767px' },
-        'smallest': { 'max': '349px' },
+        'mobile': { 'min': '330px', 'max': '767px' },
+        'smallest': { 'max': '329px' },
       },
       extend: {
         fontFamily:{

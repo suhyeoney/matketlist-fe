@@ -8,7 +8,7 @@ import image1 from '@assets/icons/you-are-here.png';
 import image2 from '@assets/icons/like-it.png';
 import { SearchMatjipInfo } from '@dataTypes/matjip';
 import { removeLocation } from '@features/location/locationSlice';
-import { setMatjipInfoModalOpen, setMyMatjipListOpen } from '@features/modalControl/modalControlSlice';
+import { setMatjipInfoModalOpen, setMyMatjipSlidersOpen } from '@features/modalControl/modalControlSlice';
 import image3 from '@assets/icons/my-matjip-list.png';
 
 
@@ -94,7 +94,7 @@ const NaverMap = (
           alert('맛집 목록이 비어있어요... :( ');
           return;
         }
-        dispatch(setMyMatjipListOpen(true));
+        dispatch(setMyMatjipSlidersOpen(true));
         // TODO : 등록되어 있는 목록 모달 개발 예정
       });
     }

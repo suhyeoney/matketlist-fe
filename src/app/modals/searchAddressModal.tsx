@@ -161,60 +161,67 @@ const SearchAddressModal: React.FC = () => {
   }, [ keyword ]);
 
   return (
-    <div 
-      className="container flex justify-center mx-auto"
-    >
-      <div
-        className="absolute z-20 inset-0 flex items-center justify-center bg-gray-700 bg-opacity-50"
+    <>
+      { modalControl.isSearchAddressModalOpen ?
+        <>
+          <div className="flex justify-center items-center absolute z-10 w-screen h-screen opacity-50 bg-gray-700"></div>
+        </> : null
+      }
+      <div 
+        className="container flex justify-center mx-auto"
       >
-        <div className={`
-          px-5 py-1 divide-y divide-gray-500 border-2 border-slate-950
-          ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
-          laptop:w-[800px] h-[580px] 
-          tablet:w-[800px] h-[580px] 
-          mobile:w-[350px] h-[500px]   
-        `}>
-          <div 
-            className="flex items-center justify-between py-3"
-          >
-          <h3 className="
-            font-['Tenada'] 
-              laptop:text-2xl
-              tablet:text-2xl
-              mobile:text-1xl
-            ">🦐 검색 결과</h3>
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 cursor-pointer" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor" onClick={ closeModal }>
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </div>
-          <div className="flex flex-col justify-center items-center">
-            <Subscribe>
-              <div className="
-                flex justify-end w-full py-3
-                laptop:pr-20
-                tablet:pr-20
-                mobile:pr-[20px]
-              ">
-                <SearchInputbox 
-                  setKeyword={ setKeyword } 
-                  placeholder={ '검색 결과 내 키워드로 조회' } 
+        <div
+          className="absolute z-20 inset-0 flex items-center justify-center bg-gray-700 bg-opacity-50"
+        >
+          <div className={`
+            px-5 py-1 divide-y divide-gray-500 border-2 border-slate-950
+            ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
+            laptop:w-[800px] h-[580px] 
+            tablet:w-[800px] h-[580px] 
+            mobile:w-[350px] h-[500px]   
+          `}>
+            <div 
+              className="flex items-center justify-between py-3"
+            >
+            <h3 className="
+              font-['Tenada'] 
+                laptop:text-2xl
+                tablet:text-2xl
+                mobile:text-1xl
+              ">🦐 검색 결과</h3>
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 cursor-pointer" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor" onClick={ closeModal }>
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                      d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div className="flex flex-col justify-center items-center">
+              <Subscribe>
+                <div className="
+                  flex justify-end w-full py-3
+                  laptop:pr-20
+                  tablet:pr-20
+                  mobile:pr-[20px]
+                ">
+                  <SearchInputbox 
+                    setKeyword={ setKeyword } 
+                    placeholder={ '검색 결과 내 키워드로 조회' } 
+                  />
+                </div>
+                <SearchResultsTable 
+                  data={ searchResultsCopy } 
+                  page={ page }
+                  isRegistering={ isRegistering }
+                  setData={ setSearchResultsCopy } 
+                  setPage={ setPage }
+                  registerMatjip={ registerMatjip } 
                 />
-              </div>
-              <SearchResultsTable 
-                data={ searchResultsCopy } 
-                page={ page }
-                isRegistering={ isRegistering }
-                setData={ setSearchResultsCopy } 
-                setPage={ setPage }
-                registerMatjip={ registerMatjip } 
-              />
-            </Subscribe>
+              </Subscribe>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
 	);
 };
 
