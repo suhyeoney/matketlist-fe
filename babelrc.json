@@ -10,16 +10,17 @@
             "./src"
           ],
           "alias": {
+            "@animations": "./src/app/animations",
             "@api": "./src/app/api",
             "@assets": "./src/app/assets",
             "@dataTypes": "./src/app/dataTypes",
             "@features": "./src/app/features",
-            "@flowingTexts": "./src/app/flowingTexts",
             "@hooks": "./src/app/hooks",
             "@main": "./src/app/main",
             "@modals": "./src/app/modals",
             "@services": "./src/app/services",
             "@signIn": "./src/app/signIn",
+            "@sliders": "./src/app/sliders",            
             "@spinners": "./src/app/spinners",
             "@store": "./src/app/store",
             "@tables": "./src/app/tables",

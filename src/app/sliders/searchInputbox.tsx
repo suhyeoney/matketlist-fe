@@ -15,11 +15,8 @@ const Tenada = localFont({
   src: '../assets/fonts/Tenada.woff'
 });
 
-const MatjipInputbox:React.FC = () => {
+const SearchInputbox:React.FC = () => {
 
-  const latitudeRef = useRef<HTMLInputElement | null>(null);
-  const longitudeRef = useRef<HTMLInputElement | null>(null);
-  
   const matjipRef = useRef<HTMLInputElement | null>(null);
 
   const location = useSelector((state: RootState) => state.location);
@@ -27,35 +24,6 @@ const MatjipInputbox:React.FC = () => {
   const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
   // const inputControl = useSelector((state: RootState) => state.inputControl);
   const dispatch = useDispatch();
-
-  const onSearchBtnClick = useCallback((e: React.MouseEvent<HTMLElement>) => {
-    const inputValue = matjipRef.current?.value;
-    if(!inputValue) {
-      alert('검색할 맛집 상호명을 입력해주세요.');
-      return;
-    }
-    dispatch(setSearchAddressModalOpen(true));
-    dispatch(storeInputMajip(matjipRef.current?.value));    
-  }, []);
-
-  const onMatjipInputTouchEnd = useCallback((e: React.TouchEvent<HTMLElement>) => {
-    console.log(e);
-  }, []);
-
-  const onAddBtnClick = useCallback((e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-
-    const inputLatitude = Number(latitudeRef.current?.value);
-    const inputLongitude = Number(longitudeRef.current?.value);
-    
-    const newLocation = {
-      latitude: inputLatitude,
-      longitude: inputLongitude
-    };
-
-    dispatch(addLocation(newLocation));
-
-  }, [ location.arrLocation ]);
 
   return (
     <>
@@ -66,36 +34,23 @@ const MatjipInputbox:React.FC = () => {
         mobile:gap-[10px] p-[10px] border-[1px] border-solid border-grey 
         smallest:gap-[5px] border-transparent m-0
       ">
-        { useWindowSize().width >= 768 ?
-          <span className={`
-          ${ Tenada.className } h-[48px] text-center p-[10px] rounded-md flex justify-center items-center 
-          laptop:text-base bg-yellow-300 
-          tablet:text-sm bg-yellow-300
-          mobile:text-[0px] 
-        `}>나만의 맛집 추가하기</span> : null
-        }
-        <div className="flex flex-row gap-[20px]">
+        <div className="flex ">
           <input 
             type="search" 
             ref={ matjipRef } 
-            placeholder={ useWindowSize().width >= 768 ? '맛집 상호명 입력' : '나만의 맛집 추가하기' } 
+            placeholder={ useWindowSize().width >= 768 ? '맛집 상호명 입력' : '목록 내 검색하기' } 
             onFocus={ () => document.querySelector('#footer')?.classList.add('hidden') }
             onBlur={ () => document.querySelector('#footer')?.classList.remove('hidden') }
             className={`
               input input-bordered 
               ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C] border-white' }
+              mobile:w-[200px]
               smallest:w-[170px]
             `}/>
         </div>
-        <button 
-          onClick={ onSearchBtnClick }
-          // disabled={ modalControl.isMatjipInfoModalOpen ? true : false }
-          className={`
-          ${ Tenada.className } text-white text-[17px] btn w-[100px] border-violet-500 bg-violet-500
-        `}><span className="pr-2">🔍</span>검색</button>
       </div>      
     </>
   );
 }
 
-export default MatjipInputbox;
+export default SearchInputbox;
