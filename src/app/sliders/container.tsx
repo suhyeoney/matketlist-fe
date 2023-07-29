@@ -9,6 +9,7 @@ import { data } from '@utils/dataForRegion/data';
 import { setMyMatjipSlidersOpen } from '@features/modalControl/modalControlSlice';
 import localFont from 'next/font/local';
 import RegionSelectbox from '@main/regionSelectbox';
+import SearchInputbox from '@sliders/searchInputbox';
 
 type MatjipSlidersProps = {
   size : { width: number, height: number },
@@ -85,7 +86,10 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
   };
 
   const closeModal = () => {
-		dispatch(setMyMatjipSlidersOpen(false));
+    document.querySelector('#matjipCardsWrapper')?.classList.replace('animate-openFromRight', 'animate-closeToRight');
+    setTimeout(() => {
+      dispatch(setMyMatjipSlidersOpen(false));
+    }, 1000);
 	};
 
   const observeSliders = () => {
@@ -160,10 +164,10 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
         id="matjipCardsWrapper"
         style={{
           width: `${ size.width >= size.height ? size.width * 0.6 : size.width * 0.9  }px`, 
-          height: `${ size.width >= size.height ? size.height * 0.6 : size.height * 0.7 }px`
+          height: `${ size.width >= size.height ? size.height * 0.7 : size.width >= 330 ? size.height * 0.7 : size.height * 0.9 }px`
         }}
         className={`
-          absolute z-40 border-4 border-gray-400 flex flex-col gap-3
+          absolute z-40 border-4 border-gray-400 flex flex-col gap-3 animate-openFromRight
           ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
           laptop:p-5
           tablet:p-5
@@ -191,6 +195,7 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
           flex flex-row items-center justify-between h-[15%] border-2 border-gray-300 rounded-[10px] p-2
         ">
           <RegionSelectbox />
+          <SearchInputbox />
         </div>
         <div 
           className="
@@ -211,7 +216,7 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
         </div>
         { matjipListData.map((e: CardDataType, idx: number) => {
           return (
-            <Card key={ idx } data={ e } setPosition={ setPosition } />
+            <Card key={ idx } data={ e } setPosition={ setPosition } closeModal={ closeModal } />
           );
         })}
         <div className={`

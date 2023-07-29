@@ -13,6 +13,7 @@ const Header: React.FC = () => {
         laptop:text-7xl h-[350px] 
         tablet:text-6xl h-[200px] 
         mobile:text-5xl h-[200px] 
+        smallest:text-5xl h-[200px]
       `}>
         맛킷 리스트
       </div>

@@ -99,7 +99,7 @@ const Main: React.FC = () => {
     { isAuthorized ?
       <div 
         className={`
-          h-screen overflow-hidden
+          h-screen overflow-hidden animate-showPage
           ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
       `}>
         { Object.keys(mapObj ?? {}).length === 0 ? 

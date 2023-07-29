@@ -39,7 +39,13 @@ const SearchAddressModal: React.FC = () => {
   const keyword = useKeyword();
 
 	const closeModal = () => {
-		dispatch(setSearchAddressModalOpen(false));
+    // DOM에서 모달 엘리먼트가 닫혀서 사라지면, hideModal 에니메이션이 동작할 수 없으므로 
+    // 엘리먼트가 실제로 사라지기 전까지 짧게 인터벌을 주고 그 인터벌 사이에 클래스를 
+    // hideModal 에니메이션으로 replace 시킴
+    document.querySelector('#searchAddressModalWrapper')?.classList.replace('animate-showModal', 'animate-hideModal');
+    setTimeout(() => {
+      dispatch(setSearchAddressModalOpen(false));
+    }, 500);
 	};
 
   const fetchResults = async () => {
@@ -121,10 +127,10 @@ const SearchAddressModal: React.FC = () => {
       website: getWebsiteUrl ?? '-',
       userRegisterDate: getToday(),
     }));
-    dispatch(setSearchAddressModalOpen(false));
-    dispatch(storeInputMajip(null));
     alert('맛집이 정상적으로 등록되었습니다.');
+    dispatch(storeInputMajip(null));
     setRegisteringStatus(false);
+    closeModal();
   };
 
 	useEffect(() => {
@@ -170,17 +176,18 @@ const SearchAddressModal: React.FC = () => {
         </> : null
       }
       <div 
-        className="container flex justify-center mx-auto"
-      >
+        className="container flex justify-center mx-auto">
         <div
           className="absolute z-20 inset-0 flex items-center justify-center bg-gray-700 bg-opacity-50"
         >
-          <div className={`
-            px-5 py-1 divide-y divide-gray-500 border-2 border-slate-950
-            ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
-            laptop:w-[800px] h-[580px] 
-            tablet:w-[800px] h-[580px] 
-            mobile:w-[350px] h-[500px]   
+          <div 
+            id="searchAddressModalWrapper"
+            className={`
+              px-5 py-1 divide-y divide-gray-500 border-2 border-slate-950 animate-showModal
+              ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
+              laptop:w-[800px] h-[580px] 
+              tablet:w-[800px] h-[580px] 
+              mobile:w-[350px] h-[500px]   
           `}>
             <div 
               className="flex items-center justify-between py-3"
