@@ -83,8 +83,8 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
         colSpan={3} 
         className={`
           px-0
-          ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
-        `}>
+          ${ environmentVariables.backgroundMode ? 'bg-white text-[#2A303C]' : 'bg-[#2A303C] text-white' }
+          `}>
         <div 
           className="flex justify-center items-center border-[1px] border-grey-700 font-bold mx-5 py-1 cursor-pointer"
           onClick={ () => setPage(page + 1) }
@@ -114,15 +114,15 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
           <tr className="sticky z-10">
             <th className={`
               sticky top-0 px-6 py-2 mt-2 text-center rounded-tl-[7px]
-              ${ environmentVariables.backgroundMode ? 'bg-[#2A303C]' : 'bg-white' }
+              ${ environmentVariables.backgroundMode ? 'bg-[#2A303C] text-white' : 'bg-white text-[#2A303C]' }
             `}>매장명</th>
             <th className={`
               sticky top-0 px-6 py-2 mt-2 text-center
-              ${ environmentVariables.backgroundMode ? 'bg-[#2A303C]' : 'bg-white' }
+              ${ environmentVariables.backgroundMode ? 'bg-[#2A303C] text-white' : 'bg-white text-[#2A303C]' }
             `}>주소</th>
             <th className={`
               sticky top-0 px-5 py-2 mt-2 rounded-tr-[7px]
-              ${ environmentVariables.backgroundMode ? 'bg-[#2A303C]' : 'bg-white' }
+              ${ environmentVariables.backgroundMode ? 'bg-[#2A303C] text-white' : 'bg-white text-[#2A303C]' }
               mobile:w-[60px]
               smallest:w-[40px]
             `}></th>
@@ -135,7 +135,7 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
           <tr key={ idx } className="py-10">
             <td className={
               `p-0
-              ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
+              ${ environmentVariables.backgroundMode ? 'bg-white text-[#2A303C]' : 'bg-[#2A303C] text-white' }
             `}>
               <div
                 id="name-tooltip"
@@ -158,7 +158,7 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
             </td>
             <td className={
               `p-0
-              ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
+              ${ environmentVariables.backgroundMode ? 'bg-white text-[#2A303C]' : 'bg-[#2A303C] text-white' }
             `}>
               <div
                 id="address-tooltip"
@@ -181,7 +181,7 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
             </td>
             <td className={`
               flex justify-center items-center p-0 py-5
-              ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
+              ${ environmentVariables.backgroundMode ? 'bg-white text-[#2A303C]' : 'bg-[#2A303C] text-white' }
               laptop:w-[130px]
               tablet:w-[130px]
               mobile:w-[50px]

@@ -75,15 +75,16 @@ const MatjipInputbox:React.FC = () => {
         `}>나만의 맛집 추가하기</span> : null
         }
         <div className="flex flex-row gap-[20px]">
-          <input 
+          <input
             type="search" 
             ref={ matjipRef } 
             placeholder={ useWindowSize().width >= 768 ? '맛집 상호명 입력' : '나만의 맛집 추가하기' } 
             onFocus={ () => document.querySelector('#footer')?.classList.add('hidden') }
             onBlur={ () => document.querySelector('#footer')?.classList.remove('hidden') }
             className={`
+              searchInput
               input input-bordered 
-              ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C] border-white' }
+              ${ environmentVariables.backgroundMode ? 'bg-white focus:text-black' : 'bg-[#2A303C] border-white focus:text-white' }
               smallest:w-[170px]
             `}/>
         </div>
