@@ -1,5 +1,7 @@
 'use client'
 
+import localFont from 'next/font/local';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@store/store';
 import { setSearchAddressModalOpen } from '@features/modalControl/modalControlSlice';
@@ -22,6 +24,10 @@ const [ useKeyword, keyword$ ] = bind(
     debounceTime(300),
     distinctUntilChanged()
   ), '');
+
+const Tenada = localFont({
+  src: '../assets/fonts/Tenada.woff'
+});
   
 const SearchAddressModal: React.FC = () => {
 
@@ -183,8 +189,8 @@ const SearchAddressModal: React.FC = () => {
           <div 
             id="searchAddressModalWrapper"
             className={`
-              px-5 py-1 divide-y divide-gray-500 border-2 border-slate-950 animate-showModal
-              ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
+              px-5 py-1 divide-y divide-gray-500 border-2 animate-showModal
+              ${ environmentVariables.backgroundMode ? 'bg-white border-slate-950' : 'bg-[#2A303C] border-white' }
               laptop:w-[800px] h-[580px] 
               tablet:w-[800px] h-[580px] 
               mobile:w-[350px] h-[500px]   
@@ -192,12 +198,13 @@ const SearchAddressModal: React.FC = () => {
             <div 
               className="flex items-center justify-between py-3"
             >
-            <h3 className="
-              font-['Tenada'] 
-                laptop:text-2xl
-                tablet:text-2xl
-                mobile:text-1xl
-              ">🦐 검색 결과</h3>
+            <h3 className={`
+              ${ Tenada.className }
+              ${ environmentVariables.backgroundMode ? 'text-[#2A303C]' : 'text-white' } 
+              laptop:text-2xl
+              tablet:text-2xl
+              mobile:text-1xl
+            `}>🦐 검색 결과</h3>
               <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 cursor-pointer" fill="none" viewBox="0 0 24 24"
                   stroke="currentColor" onClick={ closeModal }>
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
