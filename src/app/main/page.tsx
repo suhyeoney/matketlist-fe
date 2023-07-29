@@ -135,7 +135,7 @@ const Main: React.FC = () => {
             z-0 self-center  w-[90%] h-[90%]
             ${ mapStyle }
           `}></div>
-          { modalControl.isSearchAddressModalOpen ? <SearchAddressModal /> : null }
+          { modalControl.isSearchAddressModalOpen ? <SearchAddressModal  size={ mapSize } /> : null }
           { modalControl.isMyMatjipSlidersOpen ? <MatjipSliders size={ mapSize } setPosition={ setPosition }  /> : null }
 
         </div>

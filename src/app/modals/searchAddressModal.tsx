@@ -25,11 +25,15 @@ const [ useKeyword, keyword$ ] = bind(
     distinctUntilChanged()
   ), '');
 
+type SearchAddressModalProps = {
+  size : { width: number, height: number },
+};
+
 const Tenada = localFont({
   src: '../assets/fonts/Tenada.woff'
 });
   
-const SearchAddressModal: React.FC = () => {
+const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
 
   const [ searchResultsOrigin, setSearchResultsOrigin ] = useState<any>(undefined);
   const [ searchResultsCopy, setSearchResultsCopy ] = useState<any>(undefined);
@@ -191,9 +195,6 @@ const SearchAddressModal: React.FC = () => {
             className={`
               px-5 py-1 divide-y divide-gray-500 border-2 animate-showModal
               ${ environmentVariables.backgroundMode ? 'bg-white border-slate-950' : 'bg-[#2A303C] border-white' }
-              laptop:w-[800px] h-[580px] 
-              tablet:w-[800px] h-[580px] 
-              mobile:w-[350px] h-[500px]   
           `}>
             <div 
               className="flex items-center justify-between py-3"
@@ -206,18 +207,17 @@ const SearchAddressModal: React.FC = () => {
               mobile:text-1xl
             `}>🦐 검색 결과</h3>
               <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 cursor-pointer" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor" onClick={ closeModal }>
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                      d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                stroke={`${ environmentVariables.backgroundMode ? '#2A303C' : 'white' }`} 
+                onClick={ closeModal }
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
             <div className="flex flex-col justify-center items-center">
               <Subscribe>
                 <div className="
-                  flex justify-end w-full py-3
-                  laptop:pr-20
-                  tablet:pr-20
-                  mobile:pr-[20px]
+                  flex items-center justify-center w-full py-3
                 ">
                   <SearchInputbox 
                     setKeyword={ setKeyword } 
