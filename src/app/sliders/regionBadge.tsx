@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 
 type RegionType = {
   key: string,
-  name: string,
+  name: string | string[],
 } | undefined;
 
 type RegionBadgeProps = {
@@ -40,11 +40,11 @@ const RegionBadge: React.FC<RegionBadgeProps> = ({ id, regionData }) => {
       setLeftPadding(modalWidth * 0.3);
       setTopPadding(0);
     }else if(windowSize.width >= 330 && windowSize.width < 768) {
-      setLeftPadding(modalWidth * 0.1);
-      setTopPadding(10);
+      setLeftPadding(modalWidth * 0.13);
+      setTopPadding(5);
     } else {
-      setLeftPadding(modalWidth * 0.1);
-      setTopPadding(10);
+      setLeftPadding(modalWidth * 0.13);
+      setTopPadding(5);
     }
   }, [ modalWidth ]);
 
@@ -108,7 +108,7 @@ const RegionBadge: React.FC<RegionBadgeProps> = ({ id, regionData }) => {
     return (
       <span
         style={{ 
-          left: `${ id * 224 + leftPadding }px`, 
+          left: `${ id * ((windowWidth < 330 ? 150 : 200) + 24) + leftPadding }px`, 
           top: `${ topPadding }px`,
           borderRadius: `30% 70% 70% 30% / 30% 30% 70% 70%` 
         }}

@@ -7,7 +7,7 @@ import { RootState } from '@store/store';
 
 type RegionType = {
   key: string,
-  name: string,
+  name: string | string[],
 } | undefined;
 
 const RegionSelectbox:React.FC = () => {

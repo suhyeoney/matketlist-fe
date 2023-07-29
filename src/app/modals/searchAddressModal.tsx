@@ -13,6 +13,7 @@ import { createSignal } from '@react-rxjs/utils';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { addLocation } from '@features/location/locationSlice';
 import { storeInputMajip } from '@features/inputControl/inputControlSlice';
+import { getToday } from '@utils/dateUtils';
 
 // rxjs
 const [ keywordChange$, setKeyword ] = createSignal<string>();
@@ -84,8 +85,8 @@ const SearchAddressModal: React.FC = () => {
     
     setRegisteringStatus(true);
 
-    console.log('*** latitude: ', e.latitude);
-    console.log('*** longitude: ', e.longitude);
+    // console.log('*** latitude: ', e.latitude);
+    // console.log('*** longitude: ', e.longitude);
 
     const inputLatitude = e.latitude;
     const inputLongitude = e.longitude;
@@ -118,6 +119,7 @@ const SearchAddressModal: React.FC = () => {
       placeId: inputPlaceId, 
       phoneNumber: getPhoneNumber ?? '-',
       website: getWebsiteUrl ?? '-',
+      userRegisterDate: getToday(),
     }));
     dispatch(setSearchAddressModalOpen(false));
     dispatch(storeInputMajip(null));

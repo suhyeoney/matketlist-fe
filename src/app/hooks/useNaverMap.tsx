@@ -153,7 +153,7 @@ const NaverMap = (
           '</div>',
         ];
         let PING_HTML_ARRAY = [
-          '<div class="absolute top-0 right-0 -mr-1 -mt-1 w-4 h-4 rounded-full bg-red-400"></div>',
+          `<div class="absolute top-0 right-0 -mr-1 -mt-1 w-4 h-4 rounded-full bg-red-400"><span class="text-black font-bold">${ location.cntLocation }</span></div>`,
           '<div id="list-ping" class="absolute top-0 right-0 -mr-1 -mt-1 w-4 h-4 rounded-full bg-red-400 animate-ping"></div>',
         ].join('');
 

@@ -16,7 +16,7 @@ type MatjipSlidersProps = {
 
 type RegionType = {
   key: string,
-  name: string,
+  name: string | string[],
 } | undefined;
 
 type CardDataType = {
@@ -26,6 +26,7 @@ type CardDataType = {
   longitude: number,
   address: string,
   region: RegionType,
+  userRegisterDate: string,
 };
 
 const Tenada = localFont({
@@ -41,14 +42,39 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size }) => {
   const dispatch = useDispatch();
 
   const [ matjipListData, setMatjipListData ] = useState<CardDataType[]>();
+  const [ currentCardSequence, setCurrentCardSequence ] = useState<number>(0);
 
   const convertWithRegionCode = (address: string) => {
-    const upperCityName = address.split(' ')[0];
+    const arrAddress = address.split(' ');
+    const upperCityName = arrAddress[0];
+    const remains = arrAddress.filter((e: string, idx: number) => idx > 0);
     let val = { key: '', name: '' };
     data.forEach((region: RegionType) => {
-      if(region !== undefined && upperCityName.includes(region?.name)) {
-        val.key = region.key;
-        val.name = region.name;
+      if(region !== undefined) {
+        switch(typeof region.name) {
+          case 'string':
+            if(upperCityName.includes(region?.name) || remains.includes(region?.name)) {
+                val.key = region.key;
+                val.name = region.name;
+            }
+            break;
+          case 'object':
+            if(region.name.find((e: string) => e === upperCityName)) {
+              val.key = region.key;
+              val.name = region.name[1];
+            } else {
+              region.name.forEach((e: string) => {
+                remains.find((x: string) => {
+                  if(e === x) {
+                    val.key = region.key;
+                    val.name = region.name[1];
+                    return;
+                  }
+                });
+              });
+            }
+            break;
+        }
       }
     });
     return val;
@@ -64,10 +90,11 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size }) => {
 
     const io = new IntersectionObserver((
       entries: IntersectionObserverEntry[], observer: IntersectionObserver)=> {
-        console.log('entries target ids', entries.map(({ target, ...rest }) => (target.getAttribute('id'))));
+        // console.log('entries target ids', entries.map(({ target, ...rest }) => (target.getAttribute('id'))));
         if(entries[0].isIntersecting) {
           const currentId = Number(entries[0].target.id.split('card-')[1]);
-          console.log('currentId', currentId); // 맨 오른쪽 카드를 entry의 첫번째 원소로 인식하고 있다.
+          // console.log('currentId', currentId); // 맨 오른쪽 카드를 entry의 첫번째 원소로 인식하고 있다.
+          setCurrentCardSequence(currentId + 1);
           matjipCards.forEach((card: Element, idx: number) => {
             if(idx !== currentId) {
               matjipCards[idx].classList.remove('border-double');
@@ -100,20 +127,21 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size }) => {
   useEffect(() => {
     setMatjipListData([
       ...location.arrLocation.map((e: SearchMatjipInfo, idx: number) => {
-        const obj = { id: 0, name: '', latitude: 0, longitude: 0, address: '', region: { key: '', name: '' } };
+        const obj = { id: 0, name: '', latitude: 0, longitude: 0, address: '', region: { key: '', name: '' }, userRegisterDate: '' };
         obj.id = idx;
         obj.name = e.name ?? '';
         obj.latitude = e.latitude;
         obj.longitude = e.longitude;
         obj.address = e.address ?? '';
         obj.region = e.address ? convertWithRegionCode(e.address) : { key: '', name: '' };
+        obj.userRegisterDate = e.userRegisterDate;
         return obj;
       }) 
     ]);
   }, [ location.arrLocation ]);
 
   useEffect(() => {
-    console.log('cardData', matjipListData);
+    // console.log('cardData', matjipListData);
     observeSliders();
   }, [ matjipListData ]);
 
@@ -158,7 +186,6 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size }) => {
         <div className="
           flex flex-row items-center justify-between h-[15%] border-2 border-gray-300 rounded-[10px] p-2
         ">
-          <span className="font-semibold">Total : { location.cntLocation } </span>
           <RegionSelectbox />
         </div>
         <div 
@@ -167,7 +194,7 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size }) => {
             w-full h-full overflow-x-auto
         ">
         <div className={`
-          snap-center shrink-0 h-[90%]
+          snap-center shrink-0 h-[100%]
           laptop:w-[35%]
           tablet:w-[30%]
           mobile:w-[10%]
@@ -184,7 +211,7 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size }) => {
           );
         })}
         <div className={`
-          snap-center shrink-0 bg-gray-100 h-[90%]
+          snap-center shrink-0 h-[100%]
           laptop:w-[35%]
           tablet:w-[30%]
           mobile:w-[10%]
@@ -196,8 +223,12 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size }) => {
             className="shrink-0"></div>
         </div>
       </div>
+      <div className="flex items-center justify-center">
+        <span className="font-semibold">{ currentCardSequence } / { location.cntLocation }</span>
+      </div>
       </> : null
       }
+
       </div>
     </>
   );
