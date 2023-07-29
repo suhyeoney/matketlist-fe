@@ -10,12 +10,15 @@ import { SearchMatjipInfo } from '@dataTypes/matjip';
 import { removeLocation } from '@features/location/locationSlice';
 import { setMatjipInfoModalOpen, setMyMatjipSlidersOpen } from '@features/modalControl/modalControlSlice';
 import image3 from '@assets/icons/my-matjip-list.png';
+import { moveToMapToggle } from '@features/environmentVariables/environmentVariablesSlice';
 
 
 const NaverMap = (
     mapObj: naver.maps.Map | undefined | null, 
     setMapObj: React.Dispatch<React.SetStateAction<naver.maps.Map | undefined | null>>,
-    isAuthorized: boolean) => {
+    position: { latitude: number; longitude: number },
+    isAuthorized: boolean,  
+  ) => {
   const mapRef = useRef<HTMLElement | null | any>(null);
   const [myLocation, setMyLocation] = useState<
     { latitude: number; longitude: number } | string
@@ -26,6 +29,7 @@ const NaverMap = (
   const [ badgeObj, setBadgeObj ] = useState<naver.maps.CustomControl | undefined | null>(null);
 
   const location = useSelector((state: RootState) => state.location);
+  const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
 
   const dispatch = useDispatch();
 
@@ -196,7 +200,9 @@ const NaverMap = (
           const marker = mapRef.current = new naver.maps.Marker({
             position: new naver.maps.LatLng(x.latitude, x.longitude),
             clickable: true,
-            animation: index === arrMatjipLocation.length -1 ? naver.maps.Animation.DROP : undefined,
+            animation: !environmentVariables.moveToMap  && index === arrMatjipLocation.length -1 ? 
+              naver.maps.Animation.DROP : environmentVariables.moveToMap && x.latitude === position.latitude && x.longitude === position.longitude ? 
+              naver.maps.Animation.BOUNCE : undefined,
             icon: {
               url: image2.src,
               size: new naver.maps.Size(30, 30), // 마커 크기
@@ -255,14 +261,18 @@ const NaverMap = (
             }
           });
 
-          if(index === arrMatjipLocation.length - 1) {
+          if(!environmentVariables.moveToMap && index === arrMatjipLocation.length - 1) {
             map.setCenter(new naver.maps.LatLng(x.latitude, x.longitude));
           }
         });
+        if(environmentVariables.moveToMap) {
+          map.setCenter(new naver.maps.LatLng(position.latitude, position.longitude));
+          dispatch(moveToMapToggle(false));
+        }
       }
     } else {}
-  }, [ myLocation, arrMatjipLocation ]);
-
+  }, [ myLocation, arrMatjipLocation, position ]);
+  
   return {
     myLocation,
   };

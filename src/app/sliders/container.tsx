@@ -11,7 +11,11 @@ import localFont from 'next/font/local';
 import RegionSelectbox from '@main/regionSelectbox';
 
 type MatjipSlidersProps = {
-  size : { width: number, height: number }
+  size : { width: number, height: number },
+  setPosition: React.Dispatch<React.SetStateAction<{
+    latitude: number;
+    longitude: number;
+  }>>
 }
 
 type RegionType = {
@@ -33,7 +37,7 @@ const Tenada = localFont({
   src: '../assets/fonts/Tenada.woff'
 });
 
-const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size }) => {
+const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
 
   const modalControl = useSelector((state: RootState) => state.modalControl);
   const location = useSelector((state: RootState) => state.location);
@@ -207,7 +211,7 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size }) => {
         </div>
         { matjipListData.map((e: CardDataType, idx: number) => {
           return (
-            <Card key={ idx } data={ e } />
+            <Card key={ idx } data={ e } setPosition={ setPosition } />
           );
         })}
         <div className={`

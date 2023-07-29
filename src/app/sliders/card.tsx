@@ -6,6 +6,9 @@ import RegionBadge from '@sliders/regionBadge';
 import { getDiffBetweenTwoDays } from '@utils/dateUtils';
 import image1 from '@assets/icons/move-to-map.png';
 import image2 from '@assets/icons/share.png';
+import { useDispatch } from 'react-redux';
+import { setMyMatjipSlidersOpen } from '@features/modalControl/modalControlSlice';
+import { moveToMapToggle } from '@features/environmentVariables/environmentVariablesSlice';
 
 type RegionType = {
   key: string,
@@ -24,10 +27,31 @@ type CardDataType = {
 
 type CardProps = {
   data: CardDataType,
+  setPosition: React.Dispatch<React.SetStateAction<{
+    latitude: number;
+    longitude: number;
+  }>>
 };
 
-const Card: React.FC<CardProps> = ({ data }) => {
-  
+const Card: React.FC<CardProps> = ({ data, setPosition }) => {  
+
+  const dispatch = useDispatch();
+
+  const moveToMap = (name: string, latitude: number, longitude: number) => {
+    const result = window.confirm(`${ name } 위치를 지도에서 확인해보시겠어요? (확인 클릭 시, 지도로 이동합니다.)`);
+    if(result) {
+      dispatch(setMyMatjipSlidersOpen(false));
+      dispatch(moveToMapToggle(true))
+      setPosition(prev => { return {
+        ...prev,
+        latitude: latitude,
+        longitude: longitude,
+      }});
+    } else {
+      return;
+    }
+  };
+
   return (
     <div 
       id={`card-${ data.id }`}
@@ -51,7 +75,7 @@ const Card: React.FC<CardProps> = ({ data }) => {
           { getDiffBetweenTwoDays(data.userRegisterDate) }
         </div>
         <div className="flex flex-row items-center justify-center">
-          <button id="btn-map" className="flex items-center justify-center float-left w-[48%]">
+          <button id="btn-map" className="flex items-center justify-center float-left w-[48%]" onClick={ () => moveToMap(data.name, data.latitude, data.longitude) }>
             <Image
                 src={ image1.src }
                 alt=""

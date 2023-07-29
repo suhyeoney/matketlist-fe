@@ -25,6 +25,7 @@ import MatjipSliders from '@sliders/container';
 
 const Main: React.FC = () => {
 
+  const locations = useSelector((state: RootState) => state.location);
   const modalControl = useSelector((state: RootState) => state.modalControl);
   const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
 
@@ -32,8 +33,12 @@ const Main: React.FC = () => {
   const [ mapStyle, setMapStyle ] = useState<string>('');
   const [ mapSize, setMapSize ] = useState<{ width: number, height: number }>({ width: 0, height: 0 });
   const [ isAuthorized, setAuthorized ] = useState<boolean>(false);
+  const [ position, setPosition ] = useState<{ latitude: number; longitude: number }>({ 
+    latitude:  locations.arrLocation.length > 0 ? locations.arrLocation[locations.arrLocation.length - 1].latitude : 0, 
+    longitude: locations.arrLocation.length > 0 ? locations.arrLocation[locations.arrLocation.length - 1].longitude : 0, 
+  });
   // useResponsiveMapSize(mapSize, setMapSize);
-  useNaverMap(mapObj, setMapObj, isAuthorized);
+  useNaverMap(mapObj, setMapObj, position, isAuthorized);
   const windowSize = useWindowSize();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -131,7 +136,7 @@ const Main: React.FC = () => {
             ${ mapStyle }
           `}></div>
           { modalControl.isSearchAddressModalOpen ? <SearchAddressModal /> : null }
-          { modalControl.isMyMatjipSlidersOpen ? <MatjipSliders size={ mapSize }  /> : null }
+          { modalControl.isMyMatjipSlidersOpen ? <MatjipSliders size={ mapSize } setPosition={ setPosition }  /> : null }
 
         </div>
       </div> : null }
