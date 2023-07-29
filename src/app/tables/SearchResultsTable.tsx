@@ -225,10 +225,8 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
       return isLoading;
     }
     if(data !== undefined && data.length > 0) {
-      console.log('>>>>> resultTable');
       return resultTable;
     }
-    // return isLoading;
   };
     
   return (

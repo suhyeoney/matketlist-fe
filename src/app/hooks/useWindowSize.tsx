@@ -9,9 +9,9 @@ export const useWindowSize = () => {
     height: typeof window !== 'undefined' ? window.innerHeight : 0,
   });
 
-  useEffect(() => {
-    console.log(windowSize);
-  }, [ windowSize ]);
+  // useEffect(() => {
+  //   console.log(windowSize);
+  // }, [ windowSize ]);
 
   useEffect(() => {
     window.addEventListener('resize', handleResize);

@@ -18,8 +18,8 @@ module.exports = {
       screens: { // min-width 기준
         'laptop': { 'min': '1024px' },
         'tablet': { 'min': '768px', 'max': '1023px' },
-        'mobile': { 'min': '350px', 'max': '767px' },
-        'smallest': { 'max': '349px' },
+        'mobile': { 'min': '330px', 'max': '767px' },
+        'smallest': { 'max': '329px' },
       },
       extend: {
         fontFamily:{
@@ -60,11 +60,52 @@ module.exports = {
           left: '0'
         },
       },
+      show: {
+        '0%': {
+          opacity: '0',
+        },
+        '100%': {
+          opacity: '1',
+        },
+      },
+      hide: {
+        '0%': {
+          opacity: '1',
+        },
+        '100%': {
+          opacity: '0',
+        },
+      },
+      slideFromRight: {
+        '0%': {
+          opacity: '0',
+          transform: 'translateX(200%)',
+        },
+        '100%': {
+          opacity: '1',
+          transform: 'translateX(0%)',
+        },
+      },
+      slideToRight: {
+        '0%': {
+          opacity: '1',
+          transform: 'translateX(0%)',
+        },
+        '100%': {
+          opacity: '0',
+          transform: 'translateX(200%)',
+        },
+      },
     },
     animation: {
       rotate: 'rotate 1.5s linear infinite',
       ping: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
       flowing: 'flowing 20s linear infinite',
+      showPage: 'show 1s linear',
+      showModal: 'show 0.5s linear',
+      hideModal: 'hide 0.5s linear',
+      openFromRight: 'slideFromRight 1s linear',
+      closeToRight: 'slideToRight 1s linear',
     },
   },
   plugins: [

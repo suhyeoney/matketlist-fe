@@ -19,11 +19,13 @@ import SignInService from '@services/signIn.service';
 import { accessTokenSetting } from '@features/environmentVariables/environmentVariablesSlice';
 import { isEmpty } from '@utils/stringUtils';
 import { useRouter } from 'next/navigation';
-import FlowingText01 from '@flowingTexts/flowingText01';
+import FlowingText01 from '@animations/flowingText01';
 import { data } from '@utils/dataForNotice/data';
+import MatjipSliders from '@sliders/container';
 
 const Main: React.FC = () => {
 
+  const locations = useSelector((state: RootState) => state.location);
   const modalControl = useSelector((state: RootState) => state.modalControl);
   const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
 
@@ -31,8 +33,12 @@ const Main: React.FC = () => {
   const [ mapStyle, setMapStyle ] = useState<string>('');
   const [ mapSize, setMapSize ] = useState<{ width: number, height: number }>({ width: 0, height: 0 });
   const [ isAuthorized, setAuthorized ] = useState<boolean>(false);
+  const [ position, setPosition ] = useState<{ latitude: number; longitude: number }>({ 
+    latitude:  locations.arrLocation.length > 0 ? locations.arrLocation[locations.arrLocation.length - 1].latitude : 0, 
+    longitude: locations.arrLocation.length > 0 ? locations.arrLocation[locations.arrLocation.length - 1].longitude : 0, 
+  });
   // useResponsiveMapSize(mapSize, setMapSize);
-  useNaverMap(mapObj, setMapObj, isAuthorized);
+  useNaverMap(mapObj, setMapObj, position, isAuthorized);
   const windowSize = useWindowSize();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -93,13 +99,13 @@ const Main: React.FC = () => {
     { isAuthorized ?
       <div 
         className={`
-          h-screen overflow-hidden
+          h-screen overflow-hidden animate-showPage
           ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
       `}>
         { Object.keys(mapObj ?? {}).length === 0 ? 
           <>
             <div className="flex justify-center items-center absolute z-20 w-full h-full opacity-50 bg-gray-700"></div>
-            <div className="flex justify-center items-center absolute z-40 w-full h-full ">
+            <div className="flex justify-center items-center absolute z-40 w-full h-full">
               <div className="inline-block align-middle leading-normal text-white font-bold">
                 {/* <LoadingSpinner01 color={ 'purple' } depth={ '500' } thickness={ '4' } text={ '지도 영역을 불러오고 있습니다.' } /> */}
                 <LoadingSpinner03 cubeText={ 'MATKET' } infoText={ '지도 영역을 불러오고 있습니다.' } />
@@ -113,11 +119,6 @@ const Main: React.FC = () => {
             <LoadingSpinner03 cubeText={ 'MATKET' } infoText={ '지도 영역을 불러오고 있습니다.' } />
           </div>
         </div> */}
-        { modalControl.isSearchAddressModalOpen ?
-          <>
-            <div className="flex justify-center items-center w-full h-full absolute z-10"></div>
-          </> : null
-        }
         <Header />
         <div className="
           flex flex-col justify-center items-center relative z-10 
@@ -135,7 +136,7 @@ const Main: React.FC = () => {
             ${ mapStyle }
           `}></div>
           { modalControl.isSearchAddressModalOpen ? <SearchAddressModal /> : null }
-          { modalControl.isMyMatjipListOpen ? <MyMatjipList /> : null }
+          { modalControl.isMyMatjipSlidersOpen ? <MatjipSliders size={ mapSize } setPosition={ setPosition }  /> : null }
 
         </div>
       </div> : null }

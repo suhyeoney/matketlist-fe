@@ -10,4 +10,5 @@ export interface SearchMatjipInfo {
   phoneNumber: string, // 대표전화번호
   placeId: string, // 장소 고유 ID
   website: string, // 대표홈페이지 URL 
-  }
+  userRegisterDate : string, // 내가 맛집목록에 추가한 일자  
+}

@@ -8,14 +8,17 @@ import image1 from '@assets/icons/you-are-here.png';
 import image2 from '@assets/icons/like-it.png';
 import { SearchMatjipInfo } from '@dataTypes/matjip';
 import { removeLocation } from '@features/location/locationSlice';
-import { setMatjipInfoModalOpen, setMyMatjipListOpen } from '@features/modalControl/modalControlSlice';
+import { setMatjipInfoModalOpen, setMyMatjipSlidersOpen } from '@features/modalControl/modalControlSlice';
 import image3 from '@assets/icons/my-matjip-list.png';
+import { moveToMapToggle } from '@features/environmentVariables/environmentVariablesSlice';
 
 
 const NaverMap = (
     mapObj: naver.maps.Map | undefined | null, 
     setMapObj: React.Dispatch<React.SetStateAction<naver.maps.Map | undefined | null>>,
-    isAuthorized: boolean) => {
+    position: { latitude: number; longitude: number },
+    isAuthorized: boolean,  
+  ) => {
   const mapRef = useRef<HTMLElement | null | any>(null);
   const [myLocation, setMyLocation] = useState<
     { latitude: number; longitude: number } | string
@@ -26,6 +29,7 @@ const NaverMap = (
   const [ badgeObj, setBadgeObj ] = useState<naver.maps.CustomControl | undefined | null>(null);
 
   const location = useSelector((state: RootState) => state.location);
+  const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
 
   const dispatch = useDispatch();
 
@@ -94,7 +98,7 @@ const NaverMap = (
           alert('맛집 목록이 비어있어요... :( ');
           return;
         }
-        dispatch(setMyMatjipListOpen(true));
+        dispatch(setMyMatjipSlidersOpen(true));
         // TODO : 등록되어 있는 목록 모달 개발 예정
       });
     }
@@ -153,8 +157,11 @@ const NaverMap = (
           '</div>',
         ];
         let PING_HTML_ARRAY = [
-          '<div class="absolute top-0 right-0 -mr-1 -mt-1 w-4 h-4 rounded-full bg-red-400"></div>',
-          '<div id="list-ping" class="absolute top-0 right-0 -mr-1 -mt-1 w-4 h-4 rounded-full bg-red-400 animate-ping"></div>',
+          `<div class="absolute top-0 right-0 -mr-1 -mt-1 w-4 h-4 rounded-full bg-red-400">`,
+          `<span class="absolute z-12 text-[10px] text-black font-bold">${ location.cntLocation > 10 ? '10+' : location.cntLocation }</span>`,
+          `</div>`,
+          `<div id="list-ping" class="absolute top-0 right-0 -mr-1 -mt-1 w-4 h-4 rounded-full bg-red-400 animate-ping">`,
+          `</div>`
         ].join('');
 
         let totalPingHtmlString = '';
@@ -196,7 +203,9 @@ const NaverMap = (
           const marker = mapRef.current = new naver.maps.Marker({
             position: new naver.maps.LatLng(x.latitude, x.longitude),
             clickable: true,
-            animation: index === arrMatjipLocation.length -1 ? naver.maps.Animation.DROP : undefined,
+            animation: !environmentVariables.moveToMap  && index === arrMatjipLocation.length -1 ? 
+              naver.maps.Animation.DROP : environmentVariables.moveToMap && x.latitude === position.latitude && x.longitude === position.longitude ? 
+              naver.maps.Animation.BOUNCE : undefined,
             icon: {
               url: image2.src,
               size: new naver.maps.Size(30, 30), // 마커 크기
@@ -255,14 +264,18 @@ const NaverMap = (
             }
           });
 
-          if(index === arrMatjipLocation.length - 1) {
+          if(!environmentVariables.moveToMap && index === arrMatjipLocation.length - 1) {
             map.setCenter(new naver.maps.LatLng(x.latitude, x.longitude));
           }
         });
+        if(environmentVariables.moveToMap) {
+          map.setCenter(new naver.maps.LatLng(position.latitude, position.longitude));
+          dispatch(moveToMapToggle(false));
+        }
       }
     } else {}
-  }, [ myLocation, arrMatjipLocation ]);
-
+  }, [ myLocation, arrMatjipLocation, position ]);
+  
   return {
     myLocation,
   };
