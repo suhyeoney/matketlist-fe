@@ -164,7 +164,7 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
         id="matjipCardsWrapper"
         style={{
           width: `${ size.width >= size.height ? size.width * 0.6 : size.width * 0.9  }px`, 
-          height: `${ size.width >= size.height ? size.height * 0.7 : size.width >= 330 ? size.height * 0.7 : size.height * 0.9 }px`
+          height: `${ size.width >= size.height ? size.height * 0.7 : size.width >= 375 ? size.height * 0.7 : size.height * 0.85 }px`
         }}
         className={`
           absolute z-40 border-4 border-gray-400 flex flex-col gap-3 animate-openFromRight

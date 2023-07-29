@@ -42,10 +42,8 @@ const SearchInputbox:React.FC = () => {
             onFocus={ () => document.querySelector('#footer')?.classList.add('hidden') }
             onBlur={ () => document.querySelector('#footer')?.classList.remove('hidden') }
             className={`
-              input input-bordered 
+              input input-bordered w-[100%]
               ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C] border-white' }
-              mobile:w-[200px]
-              smallest:w-[170px]
             `}/>
         </div>
       </div>      

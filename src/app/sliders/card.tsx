@@ -78,14 +78,17 @@ const Card: React.FC<CardProps> = ({ data, setPosition, closeModal }) => {
         <div className="
           h-[60px] font-semibold bg-white text-black p-1 rounded-[10px]
           text-center px-3 truncate ...
-          laptop:text-[18px] pt-3
-          tablet:text-[18px] pt-3
-          mobile:text-[18px] top-0
-          smallest:text-[11px] top-0
+          laptop:text-[15px]
+          tablet:text-[15px]
+          mobile:text-[15px]
+          smallest:text-[15px]
       ">{ data.name }</div>
         <div className="
-          h-[90px] font-medium bg-white text-black p-1 rounded-[10px]
-          smallest:text-[12px]
+          font-medium bg-white text-black p-2 rounded-[10px] truncate ...
+          laptop:h-[90px]
+          tablet:h-[90px] 
+          mobile:h-[90px] 
+          smallest:h-[60px] text-[12px] 
         ">{ data.address }</div>
         <div className="
           h-[30px] font-medium bg-white text-center text-gray-300 p-1 rounded-[10px]
@@ -104,12 +107,7 @@ const Card: React.FC<CardProps> = ({ data, setPosition, closeModal }) => {
               alt=""
               width="30"
               height="30"
-              className="
-                laptop:w-[30px] h-[30px] 
-                tablet:w-[30px] h-[30px] 
-                mobile:w-[30px] h-[30px] 
-                smallest:w-[20px] h-[20px]
-              "/>
+              className="w-[30px] h-[30px]"/>
           </button>
           <button 
             id="btn-share" 
