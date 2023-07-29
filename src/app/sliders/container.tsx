@@ -1,5 +1,7 @@
 'use client'
 
+import localFont from 'next/font/local';
+
 import Card from '@sliders/card';
 import { RootState } from '@store/store';
 import { useEffect, useRef, useState } from 'react';
@@ -7,7 +9,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SearchMatjipInfo } from '@dataTypes/matjip';
 import { data } from '@utils/dataForRegion/data';
 import { setMyMatjipSlidersOpen } from '@features/modalControl/modalControlSlice';
-import localFont from 'next/font/local';
 import RegionSelectbox from '@main/regionSelectbox';
 import SearchInputbox from '@sliders/searchInputbox';
 
@@ -164,11 +165,11 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
         id="matjipCardsWrapper"
         style={{
           width: `${ size.width >= size.height ? size.width * 0.6 : size.width * 0.9  }px`, 
-          height: `${ size.width >= size.height ? size.height * 0.7 : size.width >= 330 ? size.height * 0.7 : size.height * 0.9 }px`
+          height: `${ size.width >= size.height ? size.height * 0.7 : size.width >= 375 ? size.height * 0.7 : size.height * 0.85 }px`
         }}
         className={`
-          absolute z-40 border-4 border-gray-400 flex flex-col gap-3 animate-openFromRight
-          ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
+          absolute z-40 border-2 flex flex-col gap-3 animate-openFromRight
+          ${ environmentVariables.backgroundMode ? 'bg-white border-slate-950' : 'bg-[#2A303C] border-white' }
           laptop:p-5
           tablet:p-5
           mobile:p-2
@@ -179,12 +180,15 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
         `}>
           <h3 className={`
             ${ Tenada.className }
+            ${ environmentVariables.backgroundMode ? 'text-[#2A303C]' : 'text-white' } 
             laptop:text-2xl
             tablet:text-2xl
             mobile:text-1xl
           `}>🦐 내 맛집 목록</h3>
           <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 cursor-pointer" fill="none" viewBox="0 0 24 24"
-            stroke="currentColor" onClick={ closeModal }>
+            stroke={`${ environmentVariables.backgroundMode ? '#2A303C' : 'white' }`} 
+            onClick={ closeModal }
+          >
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                 d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
