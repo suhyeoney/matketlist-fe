@@ -18,7 +18,7 @@ const SearchInputbox: React.FC<SearchInputboxProps> = ({ setKeyword, placeholder
   };  
 
   return (
-    <>
+    <div className="flex items-center justify-center w-full py-3">
       <input 
         type="text" 
         placeholder={ placeholder }
@@ -33,7 +33,7 @@ const SearchInputbox: React.FC<SearchInputboxProps> = ({ setKeyword, placeholder
           mobile:w-[200px] h-[40px]
           smallest:w-[150px] h-[35px] mr-8
         `}/>
-    </>
+    </div>
   );
 };
 

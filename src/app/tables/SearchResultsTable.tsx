@@ -97,11 +97,11 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
 
   const resultTable = 
     <div className={`
-      overflow-y-scroll scrollbar-hide
+      overflow-y-scroll 
       laptop:w-[700px] h-[450px]
       tablet:w-[700px] h-[450px]
       mobile:w-[300px] h-[400px]
-      smallest:w-[250px]
+      smallest:w-[250px] h-[250px]
     `}>
       <table className={`
         table 
