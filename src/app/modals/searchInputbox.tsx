@@ -28,6 +28,7 @@ const SearchInputbox: React.FC<SearchInputboxProps> = ({ setKeyword, placeholder
         className={`
           searchInput
           input input-bordered input-info 
+          ${ environmentVariables.backgroundMode ? 'bg-white focus:text-black' : 'bg-[#2A303C] border-white focus:text-white' }
           laptop:w-[200px] h-[40px]
           tablet:w-[200px] h-[40px]
           mobile:w-[200px] h-[40px]
