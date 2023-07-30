@@ -11,6 +11,7 @@ import Image from 'next/image';
 import { RootState } from '@store/store';
 
 type SearchResultsTableProps = {
+  size : { width: number, height: number },
   data: any[],
   page: number,
   isRegistering: boolean,
@@ -20,6 +21,7 @@ type SearchResultsTableProps = {
 };
 
 const SearchResultsTable: React.FC<SearchResultsTableProps> = ({ 
+  size,
   data, 
   page, 
   isRegistering,
@@ -31,7 +33,7 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
   const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
   const dispatch = useDispatch();
 
-  const SIZE_PER_PAGE = 5;
+  const SIZE_PER_PAGE = 4;
   // const [ foldedData, setFoldedData ] = useState<any[]>([]);
 
   // CSS default : tooltip tailwind class 적용 상태.
@@ -86,7 +88,7 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
           ${ environmentVariables.backgroundMode ? 'bg-white text-[#2A303C]' : 'bg-[#2A303C] text-white' }
           `}>
         <div 
-          className="flex justify-center items-center border-[1px] border-grey-700 font-bold mx-5 py-1 cursor-pointer"
+          className="flex justify-center items-center border-[1px] border-grey-700 font-bold mx-5 py-1 m-1 cursor-pointer"
           onClick={ () => setPage(page + 1) }
         >더 보기
         </div>
@@ -96,37 +98,47 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
     </tr>;
 
   const resultTable = 
-    <div className={`
-      overflow-y-scroll 
-      laptop:w-[700px] h-[450px]
-      tablet:w-[700px] h-[450px]
-      mobile:w-[300px] h-[400px]
-      smallest:w-[250px] h-[250px]
+    <div 
+      style={{
+        width: `${ size.width >= size.height ? size.width * 0.4 : size.width * 0.8  }px`, 
+        height: `${ size.width >= size.height ? size.height * 0.4 : size.width >= 375 ? size.height * 0.8 : size.height * 0.8 }px`
+      }}
+      className={`
+        overflow-y-scroll scrollbar-hide
     `}>
+      {/* ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' } */}
       <table className={`
-        table 
         laptop:text-sm
         tablet:text-sm
         mobile:text-sm
         smallest:text-[6px]
       `}>
         <thead>
-          <tr className="sticky z-10">
+         <tr className={`
+          sticky z-10
+          bg-[bg-[#2A303C]]
+          `}>
             <th className={`
-              sticky top-0 px-6 py-2 mt-2 text-center rounded-tl-[7px]
-              ${ environmentVariables.backgroundMode ? 'bg-[#2A303C] text-white' : 'bg-white text-[#2A303C]' }
+              sticky top-0 px-6 py-3 mt-2 text-center rounded-0
+              ${ environmentVariables.backgroundMode ? 'bg-[#2A303C] text-white border border-[#2A303C]' : 
+              'bg-white text-[#2A303C] border border-white' }
             `}>매장명</th>
-            <th className={`
-              sticky top-0 px-6 py-2 mt-2 text-center
-              ${ environmentVariables.backgroundMode ? 'bg-[#2A303C] text-white' : 'bg-white text-[#2A303C]' }
+            <th 
+              colSpan={ 2 }
+              className={`
+                  sticky top-0 px-6 py-3 mt-2 text-center rounded-0
+                  ${ environmentVariables.backgroundMode ? 'bg-[#2A303C] text-white border border-[#2A303C]' : 
+                  'bg-white text-[#2A303C] border border-white' }
             `}>주소</th>
-            <th className={`
+            {/* <th className={`
               sticky top-0 px-5 py-2 mt-2 rounded-tr-[7px]
-              ${ environmentVariables.backgroundMode ? 'bg-[#2A303C] text-white' : 'bg-white text-[#2A303C]' }
+              ${ environmentVariables.backgroundMode ? 'bg-white text-[#2A303C] border border-white' : 
+              'bg-[#2A303C] text-white border border-[#2A303C]' }
               mobile:w-[60px]
               smallest:w-[40px]
-            `}></th>
+            `}></th> */}
           </tr>
+
         </thead>
         <tbody>
           { data?.filter(
@@ -135,15 +147,15 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
           <tr key={ idx } className="py-10">
             <td className={
               `p-0
-              ${ environmentVariables.backgroundMode ? 'bg-white text-[#2A303C]' : 'bg-[#2A303C] text-white' }
+              ${ environmentVariables.backgroundMode ? 'bg-white text-[#2A303C] border border-[#2A303C]' : 'bg-[#2A303C] text-white border border-white' }
             `}>
               <div
                 id="name-tooltip"
                 data-tip={ e?.name } 
                 className={`
                   tooltip tooltip-accent tooltip-top before:max-w-fit hover:cursor-default hover:underline hover:decoration-dotted
-                  laptop:w-[200px]
-                  tablet:w-[200px] 
+                  laptop:w-[130px]
+                  tablet:w-[100px] 
                   mobile:w-[80px]
                   smallest:w-[40px]
                 `}>
@@ -158,15 +170,15 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
             </td>
             <td className={
               `p-0
-              ${ environmentVariables.backgroundMode ? 'bg-white text-[#2A303C]' : 'bg-[#2A303C] text-white' }
+              ${ environmentVariables.backgroundMode ? 'bg-white text-[#2A303C] border border-[#2A303C]' : 'bg-[#2A303C] text-white border border-white' }
             `}>
               <div
                 id="address-tooltip"
                 data-tip={ e?.address } 
                 className="
                   tooltip tooltip-info tooltip-top before:max-w-fit hover:cursor-default hover:underline hover:decoration-dotted
-                  laptop:w-[300px]
-                  tablet:w-[300px]
+                  laptop:w-[200px]
+                  tablet:w-[200px]
                   mobile:w-[150px]
                   smallest:w-[100px] 
                 ">
@@ -181,18 +193,18 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
             </td>
             <td className={`
               flex justify-center items-center p-0 py-5
-              ${ environmentVariables.backgroundMode ? 'bg-white text-[#2A303C]' : 'bg-[#2A303C] text-white' }
-              laptop:w-[130px]
-              tablet:w-[130px]
+              ${ environmentVariables.backgroundMode ? 'bg-white text-[#2A303C] border border-[#2A303C]' : 'bg-[#2A303C] text-white border border-white' }
+              laptop:w-[85px]
+              tablet:w-[85px]
               mobile:w-[50px]
               smallest:w-[30px]
             `}>
               <button className={`
                   btn btn-ghost bg-red-100
-                  laptop:w-[60px] h-[60px]
-                  tablet:w-[60px] h-[60px]
-                  mobile:w-[50px] h-[50px] p-1
-                  smallest:w-[30px]
+                  laptop:w-[40px] h-[40px]
+                  tablet:w-[40px] h-[40px]
+                  mobile:w-[30px] h-[30px] p-1
+                  smallest:w-[20px]
                 `}
                 disabled={ isRegistering }
                 onClick={ () => registerMatjip(e) }

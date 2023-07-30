@@ -192,6 +192,10 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
         >
           <div 
             id="searchAddressModalWrapper"
+            style={{
+              width: `${ size.width >= size.height ? size.width * 0.6 : size.width * 0.9  }px`, 
+              height: `${ size.width >= size.height ? size.height * 0.7 : size.width >= 375 ? size.height * 1.1 : size.height * 1.1 }px`
+            }}
             className={`
               px-5 py-1 divide-y divide-gray-500 border-2 animate-showModal
               ${ environmentVariables.backgroundMode ? 'bg-white border-slate-950' : 'bg-[#2A303C] border-white' }
@@ -225,6 +229,7 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
                   />
                 </div>
                 <SearchResultsTable 
+                  size={ size }
                   data={ searchResultsCopy } 
                   page={ page }
                   isRegistering={ isRegistering }
