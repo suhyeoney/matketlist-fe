@@ -193,7 +193,7 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
           <div 
             id="searchAddressModalWrapper"
             style={{
-              width: `${ size.width >= size.height ? size.width * 0.6 : size.width * 0.9  }px`, 
+              width: `${ size.width >= size.height ? 600 : size.width * 0.9  }px`, 
               height: `${ size.width >= size.height ? size.height * 0.7 : size.width >= 375 ? size.height * 1.1 : size.height * 1.1 }px`
             }}
             className={`
@@ -221,7 +221,7 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
             <div className="flex flex-col justify-center items-center">
               <Subscribe>
                 <div className="
-                  flex items-center justify-center w-full py-3
+                  flex items-center justify-center w-full
                 ">
                   <SearchInputbox 
                     setKeyword={ setKeyword } 

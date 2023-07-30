@@ -32,7 +32,7 @@ const SearchInputbox: React.FC<SearchInputboxProps> = ({ setKeyword, placeholder
           laptop:w-[200px] h-[40px]
           tablet:w-[200px] h-[40px]
           mobile:w-[200px] h-[40px]
-          smallest:w-[150px] h-[35px] mr-8
+          smallest:w-[150px] h-[35px]
         `}/>
     </div>
   );
