@@ -104,7 +104,7 @@ const SearchResultsTable: React.FC<SearchResultsTableProps> = ({
         height: `${ size.width >= size.height ? size.height * 0.4 : size.width >= 375 ? size.height * 0.8 : size.height * 0.8 }px`
       }}
       className={`
-        overflow-y-scroll scrollbar-hide
+        flex items-center justify-center overflow-y-scroll scrollbar-hide
     `}>
       {/* ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' } */}
       <table className={`
