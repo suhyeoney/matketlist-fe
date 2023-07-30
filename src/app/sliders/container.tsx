@@ -237,7 +237,12 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
         </div>
       </div>
       <div className="flex items-center justify-center">
-        <span className="font-semibold">{ currentCardSequence } / { location.cntLocation }</span>
+        <span className={`
+          font-semibold
+          ${ environmentVariables.backgroundMode ? 'text-[#2A303C]' : 'text-white' }
+        `}>
+          { currentCardSequence } / { location.cntLocation }
+        </span>
       </div>
       </> : null
       }
