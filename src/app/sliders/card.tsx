@@ -5,10 +5,11 @@ import Image from 'next/image';
 import RegionBadge from '@sliders/regionBadge';
 import { getDiffBetweenTwoDays } from '@utils/dateUtils';
 import image1 from '@assets/icons/move-to-map.png';
-import image2 from '@assets/icons/share.png';
+import image2 from '@assets/icons/remove-btn.png';
+import image3 from '@assets/icons/share.png';
 import { useDispatch } from 'react-redux';
-import { setMyMatjipSlidersOpen } from '@features/modalControl/modalControlSlice';
 import { moveToMapToggle } from '@features/environmentVariables/environmentVariablesSlice';
+import { removeLocation } from '@features/location/locationSlice';
 
 type RegionType = {
   key: string,
@@ -17,6 +18,7 @@ type RegionType = {
 
 type CardDataType = {
   id: number,
+  placeId: string,
   name: string,
   latitude: number,
   longitude: number,
@@ -26,6 +28,7 @@ type CardDataType = {
 };
 
 type CardProps = {
+  dataKey: number,
   data: CardDataType,
   setPosition: React.Dispatch<React.SetStateAction<{
     latitude: number;
@@ -34,7 +37,7 @@ type CardProps = {
   closeModal: () => void,
 };
 
-const Card: React.FC<CardProps> = ({ data, setPosition, closeModal }) => {  
+const Card: React.FC<CardProps> = ({ dataKey, data, setPosition, closeModal }) => {  
 
   const dispatch = useDispatch();
 
@@ -53,13 +56,22 @@ const Card: React.FC<CardProps> = ({ data, setPosition, closeModal }) => {
     }
   };
 
+  const removeData = (data: CardDataType) => {
+    const result = window.confirm(`해당 맛집을 목록에서 해제하시겠어요?`);
+    if(result) {
+      dispatch(removeLocation(data.placeId));
+    } else {
+      return;
+    }
+  };
+
   const openSnsSharing = (data: CardDataType) => {
 
   };
 
   return (
     <div 
-      id={`card-${ data.id }`}
+      id={`card-${ dataKey }`}
       className="matjipCard snap-center shrink-0
       laptop:w-[200px] h-[90%]
       tablet:w-[200px] h-[90%]
@@ -68,13 +80,13 @@ const Card: React.FC<CardProps> = ({ data, setPosition, closeModal }) => {
       first:pl-8 last:pr-8 
     ">
       <div className="
-        shrink-0 shadow-xl w-full h-full flex flex-col rounded-[10px] p-3 bg-gradient-to-r from-purple-500 to-pink-500
-        laptop:gap-3
-        tablet:gap-3
-        mobile:gap-3 
-        smallest:gap-2 
+        shrink-0 shadow-xl w-full h-full flex flex-col rounded-[10px] bg-gradient-to-r from-purple-500 to-pink-500
+        laptop:gap-7
+        tablet:gap-6 
+        mobile:gap-3 p-3
+        smallest:gap-1 p-3
       ">
-        <RegionBadge id={ data.id } regionData={ data.region } />
+        <RegionBadge id={ dataKey } regionData={ data.region } />
         <div className="
           h-[60px] font-semibold bg-white text-black p-1 rounded-[10px]
           text-center px-3 truncate ...
@@ -100,7 +112,7 @@ const Card: React.FC<CardProps> = ({ data, setPosition, closeModal }) => {
           <button 
             id="btn-map"
             onClick={ () => moveToMap(data) } 
-            className="flex items-center justify-center float-left w-[48%]
+            className="flex items-center justify-center float-left w-[33%]
             ">
             <Image
               src={ image1.src }
@@ -110,12 +122,24 @@ const Card: React.FC<CardProps> = ({ data, setPosition, closeModal }) => {
               className="w-[30px] h-[30px]"/>
           </button>
           <button 
-            id="btn-share" 
-            onClick={ () => openSnsSharing(data) } 
-            className="flex items-center justify-center float-right w-[48%]
-          ">
+            id="btn-remove"
+            onClick={ () => removeData(data) } 
+            className="flex items-center justify-center w-[33%]
+            ">
             <Image
               src={ image2.src }
+              alt=""
+              width="30"
+              height="30"
+              className="w-[30px] h-[30px]"/>
+          </button>
+          <button 
+            id="btn-share" 
+            onClick={ () => openSnsSharing(data) } 
+            className="flex items-center justify-center float-right w-[33%]
+          ">
+            <Image
+              src={ image3.src }
               alt=""
               width="30"
               height="30"

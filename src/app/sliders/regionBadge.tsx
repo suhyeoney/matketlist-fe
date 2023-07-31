@@ -52,55 +52,55 @@ const RegionBadge: React.FC<RegionBadgeProps> = ({ id, regionData }) => {
     const regionCode = regionData?.key;
     let badgeStyle = 'absolute w-[45px] h-[45px] flex items-center justify-center rounded-full text-white border-2 border-white ';
     switch(regionCode) {
-      case '00001':
+      case 'RC001':
         badgeStyle += 'bg-red-500 ';
         break;
-      case '00002':
+      case 'RC002':
         badgeStyle += 'bg-red-500 ';
         break;
-      case '00003':
+      case 'RC003':
         badgeStyle += 'bg-red-500 ';
         break;
-      case '00004':
+      case 'RC004':
         badgeStyle += 'bg-purple-500 ';
         break;
-      case '00005':
+      case 'RC005':
         badgeStyle += 'bg-orange-500 ';
         break;
-      case '00006':
+      case 'RC006':
         badgeStyle += 'bg-purple-500 ';
         break;
-      case '00007':
+      case 'RC007':
         badgeStyle += 'bg-blue-500 ';
         break;
-      case '00008':
+      case 'RC008':
         badgeStyle += 'bg-blue-500 ';
         break;
-      case '00009':
+      case 'RC009':
         badgeStyle += 'bg-orange-500 ';
         break;
-      case '00010':
+      case 'RC010':
         badgeStyle += 'bg-blue-500 ';
         break;
-      case '00011':
+      case 'RC011':
         badgeStyle += 'bg-blue-500 ';
         break;
-      case '00012':
+      case 'RC012':
         badgeStyle += 'bg-blue-500 ';
         break;
-      case '00013':
+      case 'RC013':
         badgeStyle += 'bg-blue-500 ';
         break;
-      case '00014':
+      case 'RC014':
         badgeStyle += 'bg-blue-500 ';
         break;
-      case '00015':
+      case 'RC015':
         badgeStyle += 'bg-orange-500 ';
         break;
-      case '00016':
+      case 'RC016':
         badgeStyle += 'bg-orange-500 ';
         break;
-      case '00017':
+      case 'RC017':
         badgeStyle += 'bg-red-500 ';
         break;
       

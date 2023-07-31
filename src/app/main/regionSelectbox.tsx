@@ -1,37 +1,36 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { data } from '@utils/dataForRegion/data';
 import { useSelector } from 'react-redux';
 import { RootState } from '@store/store';
 
 type RegionType = {
   key: string,
   name: string | string[],
-} | undefined;
+};
 
-const RegionSelectbox:React.FC = () => {
+type RegionSelectboxProps = {
+  data: RegionType[],
+  setRegionCode: React.Dispatch<React.SetStateAction<string>>,
+};
+
+const RegionSelectbox:React.FC<RegionSelectboxProps> = ({ data, setRegionCode }) => {
 
   const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
-  const [ region, setRegion ] = useState<RegionType>(data[0]);
-
-  useMemo(() => {
-    if(region) {
-      console.log(region);
-    }
-  }, [ region ]);
 
   return (
     <>
       <select 
-        onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setRegion(data.find((x: RegionType) => x?.name === e?.currentTarget?.value))}
+        onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+          const selectedIndex = e.target.options.selectedIndex;
+          setRegionCode(e.target.options[selectedIndex].getAttribute('data-key') ?? 'RC000');
+        }}
         className={`
           select select-bordered w-[100px] h-[90%]
           ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
         `}>
         { data.map((e: RegionType) => {
           return (
-            <option key={ e?.key }>{ typeof e?.name === 'string' ? e?.name : e?.name[0] }</option>
+            <option key={ e?.key } data-key={ e?.key }>{ typeof e?.name === 'string' ? e?.name : e?.name[0] }</option>
           );
         })}
       </select>

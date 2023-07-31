@@ -4,13 +4,13 @@ import localFont from 'next/font/local';
 
 import Card from '@sliders/card';
 import { RootState } from '@store/store';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SearchMatjipInfo } from '@dataTypes/matjip';
-import { data } from '@utils/dataForRegion/data';
 import { setMyMatjipSlidersOpen } from '@features/modalControl/modalControlSlice';
 import RegionSelectbox from '@main/regionSelectbox';
 import SearchInputbox from '@sliders/searchInputbox';
+import { data } from '@utils/dataForRegion/data';
 
 type MatjipSlidersProps = {
   size : { width: number, height: number },
@@ -23,10 +23,11 @@ type MatjipSlidersProps = {
 type RegionType = {
   key: string,
   name: string | string[],
-} | undefined;
+};
 
 type CardDataType = {
   id: number,
+  placeId: string,
   name: string,
   latitude: number,
   longitude: number,
@@ -47,6 +48,7 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
 
   const dispatch = useDispatch();
 
+  const [ regionCode, setRegionCode ] = useState<string>(data[0]?.key);
   const [ matjipListData, setMatjipListData ] = useState<CardDataType[]>();
   const [ currentCardSequence, setCurrentCardSequence ] = useState<number>(0);
 
@@ -130,14 +132,16 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
     }
   };
 
-  // useEffect(() => {
-  // }, []);
+  useEffect(() => {
+    console.log('regionCode', regionCode);
+  }, [ regionCode ]);
 
   useEffect(() => {
     setMatjipListData([
       ...location.arrLocation.map((e: SearchMatjipInfo, idx: number) => {
-        const obj = { id: 0, name: '', latitude: 0, longitude: 0, address: '', region: { key: '', name: '' }, userRegisterDate: '' };
+        const obj = { id: 0, placeId: '', name: '', latitude: 0, longitude: 0, address: '', region: { key: '', name: '' }, userRegisterDate: '' };
         obj.id = idx;
+        obj.placeId = e.placeId;
         obj.name = e.name ?? '';
         obj.latitude = e.latitude;
         obj.longitude = e.longitude;
@@ -145,13 +149,16 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
         obj.region = e.address ? convertWithRegionCode(e.address) : { key: '', name: '' };
         obj.userRegisterDate = e.userRegisterDate;
         return obj;
-      }) 
+      }).filter((e: any) => regionCode !== 'RC000' ? e.region.key === regionCode : true) 
     ]);
-  }, [ location.arrLocation ]);
+  }, [ location.arrLocation, regionCode ]);
 
   useEffect(() => {
-    // console.log('cardData', matjipListData);
-    observeSliders();
+    if(matjipListData !== undefined && matjipListData?.length > 0) {
+      observeSliders();
+    } else {
+      setCurrentCardSequence(0);
+    }
   }, [ matjipListData ]);
 
   return (
@@ -198,7 +205,7 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
         <div className="
           flex flex-row items-center justify-between h-[15%] border-2 border-gray-300 rounded-[10px] p-2
         ">
-          <RegionSelectbox />
+          <RegionSelectbox data={ data } setRegionCode={ setRegionCode } />
           <SearchInputbox />
         </div>
         <div 
@@ -220,7 +227,7 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
         </div>
         { matjipListData.map((e: CardDataType, idx: number) => {
           return (
-            <Card key={ idx } data={ e } setPosition={ setPosition } closeModal={ closeModal } />
+            <Card key={ idx } dataKey={ idx } data={ e } setPosition={ setPosition } closeModal={ closeModal } />
           );
         })}
         <div className={`
@@ -241,7 +248,7 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
           font-semibold
           ${ environmentVariables.backgroundMode ? 'text-[#2A303C]' : 'text-white' }
         `}>
-          { currentCardSequence } / { location.cntLocation }
+          { currentCardSequence } / {matjipListData.length }
         </span>
       </div>
       </> : null
