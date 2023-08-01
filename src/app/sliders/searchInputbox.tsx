@@ -1,29 +1,21 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '@store/store';
-import { addLocation } from '@features/location/locationSlice';
-import SearchAddressModal from '@modals/searchAddressModal';
-import { setSearchAddressModalOpen } from '@features/modalControl/modalControlSlice';
-import { storeInputMajip } from '@features/inputControl/inputControlSlice';
-import { LocationType } from '@dataTypes/location';
-import { useWindowSize } from '@hooks/useWindowSize';
-import localFont from 'next/font/local';
 
-const Tenada = localFont({
-  src: '../assets/fonts/Tenada.woff'
-});
+type SearchInputboxProps = {
+  setKeyword: (payload: string) => void,
+  placeholder: string,
+};
 
-const SearchInputbox:React.FC = () => {
+const SearchInputbox:React.FC<SearchInputboxProps> = ({ setKeyword, placeholder }) => {
 
-  const matjipRef = useRef<HTMLInputElement | null>(null);
-
-  const location = useSelector((state: RootState) => state.location);
-  const modalControl = useSelector((state: RootState) => state.modalControl);
   const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
-  // const inputControl = useSelector((state: RootState) => state.inputControl);
-  const dispatch = useDispatch();
+
+  const onInputKeywordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+    setKeyword(inputValue);
+  };  
 
   return (
     <>
@@ -37,8 +29,8 @@ const SearchInputbox:React.FC = () => {
         <div className="flex ">
           <input 
             type="search" 
-            ref={ matjipRef } 
-            placeholder={ useWindowSize().width >= 768 ? '맛집 상호명 입력' : '목록 내 검색하기' } 
+            placeholder={ placeholder } 
+            onChange={ (e: React.ChangeEvent<HTMLInputElement>) => onInputKeywordChange(e) }
             onFocus={ () => document.querySelector('#footer')?.classList.add('hidden') }
             onBlur={ () => document.querySelector('#footer')?.classList.remove('hidden') }
             className={`
