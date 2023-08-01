@@ -11,6 +11,18 @@ import { setMyMatjipSlidersOpen } from '@features/modalControl/modalControlSlice
 import RegionSelectbox from '@main/regionSelectbox';
 import SearchInputbox from '@sliders/searchInputbox';
 import { data } from '@utils/dataForRegion/data';
+import { createSignal } from '@react-rxjs/utils';
+import { Subscribe, bind } from '@react-rxjs/core';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { useWindowSize } from '@hooks/useWindowSize';
+
+// rxjs
+const [ keywordChange$, setKeyword ] = createSignal<string>();
+const [ useKeyword, keyword$ ] = bind(
+  keywordChange$.pipe(
+    debounceTime(300),
+    distinctUntilChanged()
+  ), '');
 
 type MatjipSlidersProps = {
   size : { width: number, height: number },
@@ -47,6 +59,8 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
   const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
 
   const dispatch = useDispatch();
+  const keyword = useKeyword();
+  const windowSize = useWindowSize();
 
   const [ regionCode, setRegionCode ] = useState<string>(data[0]?.key);
   const [ matjipListData, setMatjipListData ] = useState<CardDataType[]>();
@@ -62,8 +76,8 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
         switch(typeof region.name) {
           case 'string':
             if(upperCityName.includes(region?.name) || remains.includes(region?.name)) {
-                val.key = region.key;
-                val.name = region.name;
+              val.key = region.key;
+              val.name = region.name;
             }
             break;
           case 'object':
@@ -92,13 +106,13 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
     document.querySelector('#matjipCardsWrapper')?.classList.replace('animate-openFromRight', 'animate-closeToRight');
     setTimeout(() => {
       dispatch(setMyMatjipSlidersOpen(false));
+      setCurrentCardSequence(0);
     }, 1000);
 	};
 
   const observeSliders = () => {
-    const matjipCards = document.querySelectorAll('.matjipCard');
+    let matjipCards = document.querySelectorAll('.matjipCard');
     // const matjipCardsWrapper = document.querySelector('#matjipCardsWrapper');
-
     const io = new IntersectionObserver((
       entries: IntersectionObserverEntry[], observer: IntersectionObserver)=> {
         // console.log('entries target ids', entries.map(({ target, ...rest }) => (target.getAttribute('id'))));
@@ -130,28 +144,39 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
     for(const e of matjipCards) {
       io.observe(e);
     }
-  };
 
-  useEffect(() => {
-    console.log('regionCode', regionCode);
-  }, [ regionCode ]);
+  };
 
   useEffect(() => {
     setMatjipListData([
       ...location.arrLocation.map((e: SearchMatjipInfo, idx: number) => {
-        const obj = { id: 0, placeId: '', name: '', latitude: 0, longitude: 0, address: '', region: { key: '', name: '' }, userRegisterDate: '' };
-        obj.id = idx;
-        obj.placeId = e.placeId;
-        obj.name = e.name ?? '';
-        obj.latitude = e.latitude;
-        obj.longitude = e.longitude;
-        obj.address = e.address ?? '';
-        obj.region = e.address ? convertWithRegionCode(e.address) : { key: '', name: '' };
-        obj.userRegisterDate = e.userRegisterDate;
+        let obj = { 
+          id: 0, 
+          placeId: '', 
+          name: '', 
+          latitude: 0, 
+          longitude: 0, 
+          address: '', 
+          region: { 
+            key: '', 
+            name: ''
+          }, 
+          userRegisterDate: '' 
+        };
+        obj['id'] = idx;
+        obj['placeId'] = e.placeId;
+        obj['name'] = e.name ?? '';
+        obj['latitude'] = e.latitude;
+        obj['longitude'] = e.longitude;
+        obj['address'] = e.address ?? '';
+        obj['region'] = e.address ? convertWithRegionCode(e.address) : { key: '', name: '' };
+        obj['userRegisterDate'] = e.userRegisterDate;
         return obj;
-      }).filter((e: any) => regionCode !== 'RC000' ? e.region.key === regionCode : true) 
+      }).filter((e: any) => regionCode !== 'RC000' ? e.region.key === regionCode : true)
+      .filter((x: any) => keyword?.length > 0 ?
+       x.name?.includes(keyword) || x.address?.includes(keyword) : true)
     ]);
-  }, [ location.arrLocation, regionCode ]);
+  }, [ location.arrLocation, regionCode, keyword ]);
 
   useEffect(() => {
     if(matjipListData !== undefined && matjipListData?.length > 0) {
@@ -159,6 +184,7 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
     } else {
       setCurrentCardSequence(0);
     }
+
   }, [ matjipListData ]);
 
   return (
@@ -200,60 +226,65 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
               d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </div>
-        { matjipListData !== undefined ? 
-        <>
-        <div className="
-          flex flex-row items-center justify-between h-[15%] border-2 border-gray-300 rounded-[10px] p-2
-        ">
-          <RegionSelectbox data={ data } setRegionCode={ setRegionCode } />
-          <SearchInputbox />
-        </div>
-        <div 
-          className="
-            relative snap-mandatory snap-x flex gap-6 pt-2
-            w-full h-full overflow-x-auto
-        ">
-        <div className={`
-          snap-center shrink-0 h-[100%]
-          laptop:w-[35%]
-          tablet:w-[30%]
-          mobile:w-[10%]
-          smallest:w-[10%]
-          ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
-        `}>
-          <div 
-            // style={{width: `${ (size.width >= size.height ? size.width * 0.6 : size.width * 0.9) / 4 }px`}} 
-            className="shrink-0"></div>
-        </div>
-        { matjipListData.map((e: CardDataType, idx: number) => {
-          return (
-            <Card key={ idx } dataKey={ idx } data={ e } setPosition={ setPosition } closeModal={ closeModal } />
-          );
-        })}
-        <div className={`
-          snap-center shrink-0 h-[100%]
-          laptop:w-[35%]
-          tablet:w-[30%]
-          mobile:w-[10%]
-          smallest:w-[10%]
-          ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
-        `}>
-          <div 
-            // style={{width: `${ (size.width >= size.height ? size.width * 0.6 : size.width * 0.9) / 4 }px`}} 
-            className="shrink-0"></div>
-        </div>
-      </div>
-      <div className="flex items-center justify-center">
-        <span className={`
-          font-semibold
-          ${ environmentVariables.backgroundMode ? 'text-[#2A303C]' : 'text-white' }
-        `}>
-          { currentCardSequence } / {matjipListData.length }
-        </span>
-      </div>
-      </> : null
-      }
-
+          { matjipListData !== undefined ? 
+          <>
+              <div className="
+                flex flex-row items-center justify-between h-[15%] border-2 border-gray-300 rounded-[10px] p-2
+              ">
+                <RegionSelectbox data={ data } setRegionCode={ setRegionCode } />
+                <Subscribe>
+                  <SearchInputbox 
+                    setKeyword={ setKeyword } 
+                    placeholder={ windowSize.width >= 768 ? '맛집 상호명 입력' : '목록 내 검색하기' } 
+                  />
+                </Subscribe>
+              </div>
+              <div 
+                className="
+                  relative snap-mandatory snap-x flex gap-6 pt-2
+                  w-full h-full overflow-x-auto
+              ">
+              <div className={`
+                snap-center shrink-0 h-[100%]
+                laptop:w-[35%]
+                tablet:w-[30%]
+                mobile:w-[10%]
+                smallest:w-[10%]
+                ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
+              `}>
+                <div 
+                  // style={{width: `${ (size.width >= size.height ? size.width * 0.6 : size.width * 0.9) / 4 }px`}} 
+                  className="shrink-0"></div>
+              </div>
+              { matjipListData.map((e: CardDataType, idx: number) => {
+                return (
+                  <Card key={ idx } dataKey={ idx } data={ e } setPosition={ setPosition } closeModal={ closeModal } />
+                );
+              })}
+              <div className={`
+                snap-center shrink-0 h-[100%]
+                laptop:w-[35%]
+                tablet:w-[30%]
+                mobile:w-[10%]
+                smallest:w-[10%]
+                ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
+              `}>
+                <div 
+                  // style={{width: `${ (size.width >= size.height ? size.width * 0.6 : size.width * 0.9) / 4 }px`}} 
+                  className="shrink-0"></div>
+              </div>
+            </div>
+            <div className="flex items-center justify-center">
+              <span className={`
+                font-semibold
+                ${ environmentVariables.backgroundMode ? 'text-[#2A303C]' : 'text-white' }
+              `}>
+                { currentCardSequence } / {matjipListData.length }
+              </span>
+            </div>
+        </> 
+        : null
+        }
       </div>
     </>
   );

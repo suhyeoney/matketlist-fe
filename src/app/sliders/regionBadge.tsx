@@ -62,7 +62,7 @@ const RegionBadge: React.FC<RegionBadgeProps> = ({ id, regionData }) => {
         badgeStyle += 'bg-red-500 ';
         break;
       case 'RC004':
-        badgeStyle += 'bg-purple-500 ';
+        badgeStyle += 'bg-green-500 ';
         break;
       case 'RC005':
         badgeStyle += 'bg-orange-500 ';
@@ -106,7 +106,7 @@ const RegionBadge: React.FC<RegionBadgeProps> = ({ id, regionData }) => {
       
     }
     return (
-      <span
+      <div
         style={{ 
           left: `${ id * ((windowWidth < 330 ? 150 : 200) + 24) + leftPadding }px`, 
           top: `${ topPadding }px`,
@@ -115,7 +115,7 @@ const RegionBadge: React.FC<RegionBadgeProps> = ({ id, regionData }) => {
         className={`${ badgeStyle }`}
       >
         { regionData?.name }
-      </span>
+      </div>
     );
   };
 

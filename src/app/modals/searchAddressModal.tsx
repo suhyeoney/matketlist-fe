@@ -101,9 +101,6 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
     
     setRegisteringStatus(true);
 
-    // console.log('*** latitude: ', e.latitude);
-    // console.log('*** longitude: ', e.longitude);
-
     const inputLatitude = e.latitude;
     const inputLongitude = e.longitude;
     const inputName = e.name;
@@ -111,7 +108,8 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
     const inputIconUrl = e.iconUrl;
     const inputPlaceId = e.placeId;
 
-    const isDuplicated = location.arrLocation.find((e: SearchMatjipInfo) => { return e.latitude === inputLatitude && e.longitude === inputLongitude });
+    const isDuplicated = location.arrLocation.find(
+      (e: SearchMatjipInfo) => { return e.latitude === inputLatitude && e.longitude === inputLongitude });
     if(isDuplicated) {
       alert('해당 맛집은 이미 등록되어 있습니다.');
       setRegisteringStatus(false);
