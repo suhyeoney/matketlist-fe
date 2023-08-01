@@ -20,7 +20,7 @@ const SearchInputbox: React.FC<SearchInputboxProps> = ({ setKeyword, placeholder
   return (
     <div className="flex items-center justify-center w-full py-3">
       <input 
-        type="text" 
+        type="search" 
         placeholder={ placeholder }
         onChange={ (e: React.ChangeEvent<HTMLInputElement>) => onInputKeywordChange(e) }
         onFocus={ () => document.querySelector('#footer')?.classList.add('hidden') }

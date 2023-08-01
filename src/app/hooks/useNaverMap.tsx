@@ -129,8 +129,16 @@ const NaverMap = (
         // Naver Map 생성
         const map = mapRef.current = new naver.maps.Map('map', {
           center: new naver.maps.LatLng(currentPosition[0], currentPosition[1]),
+          zoom: 11,
           zoomControl: true,
           mapDataControl: true,
+          draggable: true,
+          pinchZoom: true,
+          scrollWheel: true,
+          keyboardShortcuts: true,
+          disableDoubleTapZoom: false,
+          disableDoubleClickZoom: false,
+          disableTwoFingerTapZoom: false
         });
 
         setMapObj(map);
