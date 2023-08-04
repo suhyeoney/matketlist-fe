@@ -96,6 +96,26 @@ module.exports = {
           transform: 'translateX(200%)',
         },
       },
+      bounce: {
+        '0%': {
+          opacity: '1',
+          visibility: 'hidden',
+          transform: 'translateY(-10%)'
+        },
+        '100%': {
+          opacity: '0',
+          visibility: 'visible',
+          transform: 'translateY(20%)'
+        }
+      },
+      hideFloatBtn: {
+        '0%': {
+          opacity: 1,
+        },
+        '100%': {
+          opacity: 0,
+        }
+      },
     },
     animation: {
       rotate: 'rotate 1.5s linear infinite',
@@ -106,6 +126,8 @@ module.exports = {
       hideModal: 'hide 0.5s linear',
       openFromRight: 'slideFromRight 1s linear',
       closeToRight: 'slideToRight 1s linear',
+      bounce: 'bounce 1s linear infinite',
+      hideFloatBtn: 'hideFloatBtn 1s linear',
     },
   },
   plugins: [

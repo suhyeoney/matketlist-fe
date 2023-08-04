@@ -6,7 +6,8 @@ const Header = dynamic(() => import('@main/header'));
 const MatjipInputbox = dynamic(() => import('@main/matjipInputbox'));
 const MyMatjipList = dynamic(() => import('@modals/myMatjipList'));
 
-import SearchAddressModal from '@modals/searchAddressModal';
+import SearchAddressModal from '@modals/searchAddressModalNew';
+// import SearchAddressModal from '@modals/searchAddressModal';
 import LoadingSpinner03 from '@spinners/loadingSpinner03';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -135,7 +136,7 @@ const Main: React.FC = () => {
             z-0 self-center  w-[90%] h-[90%]
             ${ mapStyle }
           `}></div>
-          { modalControl.isSearchAddressModalOpen ? <SearchAddressModal  size={ mapSize } /> : null }
+          { modalControl.isSearchAddressModalOpen ? <SearchAddressModal size={ mapSize } /> : null }
           { modalControl.isMyMatjipSlidersOpen ? <MatjipSliders size={ mapSize } setPosition={ setPosition }  /> : null }
 
         </div>
