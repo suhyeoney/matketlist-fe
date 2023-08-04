@@ -6,7 +6,8 @@ const Header = dynamic(() => import('@main/header'));
 const MatjipInputbox = dynamic(() => import('@main/matjipInputbox'));
 const MyMatjipList = dynamic(() => import('@modals/myMatjipList'));
 
-import SearchAddressModal from '@modals/searchAddressModal';
+import SearchAddressModal from '@modals/searchAddressModalNew';
+// import SearchAddressModal from '@modals/searchAddressModal';
 import LoadingSpinner03 from '@spinners/loadingSpinner03';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -43,7 +44,7 @@ const Main: React.FC = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const fetchAccessToken = () => {
+  const fetchAccessToken = async () => {
     const urlParams = new URL(location.href).searchParams;
     const code = urlParams.get('code') ?? '';
     const state = urlParams.get('state') ?? '';
@@ -53,8 +54,12 @@ const Main: React.FC = () => {
       return false;
     } else {
       console.log('>>>> 콜백 URL임');
-      const access_token = SignInService.getTokenNaverApi(code, state);
-      dispatch(accessTokenSetting(access_token));
+      console.log('code', code);
+      console.log('state', state);
+      const access_token = await SignInService.getTokenNaverApi(code, state);
+      if(access_token !== undefined) {
+        dispatch(accessTokenSetting(access_token));
+      }
       return true;
     }
   };
@@ -97,7 +102,8 @@ const Main: React.FC = () => {
   return (
     <>
     { isAuthorized ?
-      <div 
+      <div
+        id="mainPage" 
         className={`
           h-screen overflow-hidden animate-showPage
           ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
@@ -135,7 +141,7 @@ const Main: React.FC = () => {
             z-0 self-center  w-[90%] h-[90%]
             ${ mapStyle }
           `}></div>
-          { modalControl.isSearchAddressModalOpen ? <SearchAddressModal  size={ mapSize } /> : null }
+          { modalControl.isSearchAddressModalOpen ? <SearchAddressModal size={ mapSize } /> : null }
           { modalControl.isMyMatjipSlidersOpen ? <MatjipSliders size={ mapSize } setPosition={ setPosition }  /> : null }
 
         </div>

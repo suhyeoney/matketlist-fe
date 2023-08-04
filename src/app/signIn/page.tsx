@@ -9,7 +9,10 @@ const Header = dynamic(() => import('@signIn/header'));
 const SignIn: React.FC = () => {
 
   return (
-    <div className="flex flex-col h-screen items-center gap-12">
+    <div 
+      id="signInPage"
+      className="flex flex-col h-screen items-center gap-12 animate-showPage"
+    >
       <Background />
       <Header />
       <SocialSignInForm />

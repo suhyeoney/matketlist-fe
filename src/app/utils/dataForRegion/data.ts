@@ -7,7 +7,7 @@ type RegionType = {
 
 export const data: RegionType[] = [
   { key: 'RC000', name: '전국' },
-  { key: 'RC001', name: '서울' },
+  { key: 'RC001', name: [ '서울특별시', '서울' ] },
   { key: 'RC002', name: '경기' },
   { key: 'RC003', name: [ '인천광역시', '인천' ] },
   { key: 'RC004', name: [ '부산광역시', '부산' ] },
