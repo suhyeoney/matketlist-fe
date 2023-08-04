@@ -44,7 +44,7 @@ const Main: React.FC = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const fetchAccessToken = () => {
+  const fetchAccessToken = async () => {
     const urlParams = new URL(location.href).searchParams;
     const code = urlParams.get('code') ?? '';
     const state = urlParams.get('state') ?? '';
@@ -54,8 +54,12 @@ const Main: React.FC = () => {
       return false;
     } else {
       console.log('>>>> 콜백 URL임');
-      const access_token = SignInService.getTokenNaverApi(code, state);
-      dispatch(accessTokenSetting(access_token));
+      console.log('code', code);
+      console.log('state', state);
+      const access_token = await SignInService.getTokenNaverApi(code, state);
+      if(access_token !== undefined) {
+        dispatch(accessTokenSetting(access_token));
+      }
       return true;
     }
   };

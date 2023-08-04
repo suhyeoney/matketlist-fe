@@ -17,7 +17,7 @@ const SignOut: React.FC<SignOutProps> = ({ signOut }) => {
         alt=""
         width="40"
         height="40"
-        className="w-[40px] h-[40px]"
+        className="w-[40px] h-[40px] hover:cursor-pointer"
         onClick={ () => signOut() }
       ></Image>
     </>
