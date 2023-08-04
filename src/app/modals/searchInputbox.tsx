@@ -27,12 +27,12 @@ const SearchInputbox: React.FC<SearchInputboxProps> = ({ setKeyword, placeholder
         onBlur={ () => document.querySelector('#footer')?.classList.remove('hidden') }
         className={`
           searchInput
-          input input-bordered input-info 
+          input input-bordered input-info w-[100%]
           ${ environmentVariables.backgroundMode ? 'bg-white focus:text-black' : 'bg-[#2A303C] border-white focus:text-white' }
-          laptop:w-[200px] h-[40px]
-          tablet:w-[200px] h-[40px]
-          mobile:w-[200px] h-[40px]
-          smallest:w-[150px] h-[35px]
+          laptop:h-[40px]
+          tablet:h-[40px]
+          mobile:h-[40px]
+          smallest:h-[35px]
         `}/>
     </div>
   );

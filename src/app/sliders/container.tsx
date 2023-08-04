@@ -46,6 +46,7 @@ type CardDataType = {
   address: string,
   region: RegionType,
   userRegisterDate: string,
+  compoundCode: string,
 };
 
 const Tenada = localFont({
@@ -66,11 +67,30 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
   const [ matjipListData, setMatjipListData ] = useState<CardDataType[]>();
   const [ currentCardSequence, setCurrentCardSequence ] = useState<number>(0);
 
-  const convertWithRegionCode = (address: string) => {
+  const convertWithRegionCode = (address: string, compoundCode: string) => {
     const arrAddress = address.split(' ');
     const upperCityName = arrAddress[0];
     const remains = arrAddress.filter((e: string, idx: number) => idx > 0);
     let val = { key: '', name: '' };
+    if(compoundCode !== undefined && (compoundCode.includes('특별시') || compoundCode.includes('광역시'))) {
+      let found = data.find(e => e.name.includes(compoundCode.split(' ')[1].substring(0, 2)));
+      if(found !== undefined) {
+        if(typeof found?.name === 'string') {
+          return { 
+            key: found.key,
+            name: found.name,
+          };
+        } else {
+          return { 
+            key: found.key,
+            name: found.name[1]
+          };
+        }
+      }
+    }
+    if(address.includes('Seoul')) {
+      return { key: 'RC001', name: '서울' };
+    }
     data.forEach((region: RegionType) => {
       if(region !== undefined) {
         switch(typeof region.name) {
@@ -135,12 +155,8 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
           });
         }
       }, 
-      { 
-        threshold: 0,
-        root: null,
-        rootMargin: `0% -50% 0% -50%`
-        // rootMargin: `0px ${ Math.abs(size.width - 100 / 2) }px 0px ${ Math.abs(size.width - 100 / 2) }px`
-    });
+      { threshold: 0, root: null, rootMargin: `0% -50% 0% -50%` }
+    );
     for(const e of matjipCards) {
       io.observe(e);
     }
@@ -161,7 +177,8 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
             key: '', 
             name: ''
           }, 
-          userRegisterDate: '' 
+          userRegisterDate: '' ,
+          compoundCode: '',
         };
         obj['id'] = idx;
         obj['placeId'] = e.placeId;
@@ -169,8 +186,9 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
         obj['latitude'] = e.latitude;
         obj['longitude'] = e.longitude;
         obj['address'] = e.address ?? '';
-        obj['region'] = e.address ? convertWithRegionCode(e.address) : { key: '', name: '' };
+        obj['region'] = e.address ? convertWithRegionCode(e.address, e.compoundCode) : { key: '', name: '' };
         obj['userRegisterDate'] = e.userRegisterDate;
+        obj['compoundCode'] = e.compoundCode;
         return obj;
       }).filter((e: any) => regionCode !== 'RC000' ? e.region.key === regionCode : true)
       .filter((x: any) => keyword?.length > 0 ?
