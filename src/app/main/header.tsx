@@ -1,8 +1,12 @@
+import localFont from 'next/font/local';
+import { useRouter } from 'next/navigation';
+
 import RegionSelectbox from '@main/regionSelectbox';
 import BackgroundModeToggle from '@main/backgroundModeToggle';
-import localFont from 'next/font/local';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@store/store';
+import SignOut from '@main/signout';
+import { accessTokenSetting } from '@features/environmentVariables/environmentVariablesSlice';
 
 const Tenada = localFont({
   src: '../assets/fonts/Tenada.woff'
@@ -11,10 +15,20 @@ const Tenada = localFont({
 const Header: React.FC = () => {
 
   const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
+  const dispatch = useDispatch();
+  const navigator = useRouter();
+
+  const signOut = () => {
+    document.querySelector('#mainPage')?.classList.replace('animate-showPage', 'animate-closePage');
+    setTimeout(() => {
+      navigator.push('/signIn');
+      // dispatch(accessTokenSetting(''));
+    }, 1000);
+  };
 
   return (
     <div className="
-      flex flex-row items-center justify-center relative z-0
+      flex flex-row items-center justify-center gap-3 relative z-0
       smallest:h-[75px]
     ">
       <div className={`
@@ -27,8 +41,11 @@ const Header: React.FC = () => {
       `}>
         맛킷 리스트
       </div>
-      <div>
-        <BackgroundModeToggle />
+      <div className="flex items-center justify-center">
+        <div className="flex flex-row items-center gap-3">
+          <BackgroundModeToggle />
+          <SignOut  signOut={ signOut } />
+        </div>
       </div>
       {/* <RegionSelectbox /> */}
     </div>

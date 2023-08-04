@@ -5,16 +5,8 @@ import Image from 'next/image';
 import image1 from '@assets/icons/naver-signin-btn.png';
 import image2 from '@assets/icons/kakao-signin-btn.png';
 import SignInService from '@services/signIn.service';
-import { defaultInstance } from '@api/axios';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-
-type ResponseConnectionType = {
-  code: string,
-  state: string,
-  error: string,
-  error_description: string
-};
 
 const SocialSignInForm: React.FC = () => {
 
@@ -22,10 +14,11 @@ const SocialSignInForm: React.FC = () => {
 
   useEffect(() => {
     setLoaded(true);
+    // document.querySelector('#signInPage')?.classList.replace('animate-showPage', 'animate-closePage');
   }, []);
 
  const signInNaver = () => {
-    return SignInService.authorizeNaverApi();
+    return SignInService.authorizeNaverApi();     
   };
 
   return (

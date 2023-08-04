@@ -98,7 +98,8 @@ const Main: React.FC = () => {
   return (
     <>
     { isAuthorized ?
-      <div 
+      <div
+        id="mainPage" 
         className={`
           h-screen overflow-hidden animate-showPage
           ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }

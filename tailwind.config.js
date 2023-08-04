@@ -68,6 +68,14 @@ module.exports = {
           opacity: '1',
         },
       },
+      close: {
+        '0%': {
+          opacity: '1',
+        },
+        '100%': {
+          opacity: '0',
+        },
+      },
       hide: {
         '0%': {
           opacity: '1',
@@ -122,6 +130,7 @@ module.exports = {
       ping: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
       flowing: 'flowing 20s linear infinite',
       showPage: 'show 1s linear',
+      closePage: 'close 1s linear',
       showModal: 'show 0.5s linear',
       hideModal: 'hide 0.5s linear',
       openFromRight: 'slideFromRight 1s linear',
