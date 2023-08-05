@@ -89,18 +89,18 @@ const Card: React.FC<CardProps> = ({ dataKey, data, setPosition, closeModal }) =
         <RegionBadge id={ dataKey } regionData={ data.region } />
         <div className="
           h-[60px] font-semibold bg-white text-black p-1 rounded-[10px]
-          text-center px-3 truncate ...
-          laptop:text-[15px]
-          tablet:text-[15px]
-          mobile:text-[15px]
-          smallest:text-[15px]
+          text-center px-3 
+          laptop:text-[15px] whitespace-normal
+          tablet:text-[15px] whitespace-normal
+          mobile:text-[15px] whitespace-normal
+          smallest:text-[15px] truncate ...
       ">{ data.name }</div>
         <div className="
-          font-medium bg-white text-black p-2 rounded-[10px] truncate ...
-          laptop:h-[90px]
-          tablet:h-[90px] 
-          mobile:h-[90px] 
-          smallest:h-[60px] text-[12px] 
+          font-medium bg-white text-black p-2 rounded-[10px] 
+          laptop:h-[90px] whitespace-normal
+          tablet:h-[90px]  whitespace-normal
+          mobile:h-[90px] whitespace-normal
+          smallest:h-[60px] text-[12px] truncate ...
         ">{ data.address }</div>
         <div className="
           h-[30px] font-medium bg-white text-center text-gray-300 p-1 rounded-[10px]

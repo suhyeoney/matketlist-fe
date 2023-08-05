@@ -104,7 +104,7 @@ module.exports = {
           transform: 'translateX(200%)',
         },
       },
-      bounce: {
+      bounceHide: {
         '0%': {
           opacity: '1',
           visibility: 'hidden',
@@ -114,6 +114,17 @@ module.exports = {
           opacity: '0',
           visibility: 'visible',
           transform: 'translateY(20%)'
+        }
+      },
+      bounceDefault: {
+        '0%': {
+          transform: 'translateY(-5%)'
+        },
+        '50%': {
+          transform: 'translateY(5%)'
+        },
+        '100%': {
+          transform: 'translateY(-5%)'
         }
       },
       hideFloatBtn: {
@@ -135,8 +146,9 @@ module.exports = {
       hideModal: 'hide 0.5s linear',
       openFromRight: 'slideFromRight 1s linear',
       closeToRight: 'slideToRight 1s linear',
-      bounce: 'bounce 1s linear infinite',
+      bounceHide: 'bounceHide 1s linear infinite',
       hideFloatBtn: 'hideFloatBtn 1s linear',
+      bounceDefault: 'bounceDefault 1.5s linear infinite',
     },
   },
   plugins: [

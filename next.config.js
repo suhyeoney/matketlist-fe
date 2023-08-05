@@ -28,6 +28,7 @@ const nextConfig = {
         '@assets': path.resolve(__dirname, 'src/app/assets'),
         '@dataTypes': path.resolve(__dirname, 'src/app/dataTypes'),
         '@features': path.resolve(__dirname, 'src/app/features'),
+        '@hashtags': path.resolve(__dirname, 'src/app/hashtags'),
         '@hooks': path.resolve(__dirname, 'src/app/hooks'),
         '@main': path.resolve(__dirname, 'src/app/main'),
         '@modals': path.resolve(__dirname, 'src/app/modals'),

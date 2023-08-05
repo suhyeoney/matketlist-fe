@@ -1,13 +1,14 @@
 'use client'
 
 import localFont from 'next/font/local';
+import Image from 'next/image';
 
 import Card from '@sliders/card';
 import { RootState } from '@store/store';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SearchMatjipInfo } from '@dataTypes/matjip';
-import { setMyMatjipSlidersOpen } from '@features/modalControl/modalControlSlice';
+import { setHashtagTreeOpen, setMyMatjipSlidersOpen } from '@features/modalControl/modalControlSlice';
 import RegionSelectbox from '@main/regionSelectbox';
 import SearchInputbox from '@sliders/searchInputbox';
 import { data } from '@utils/dataForRegion/data';
@@ -15,6 +16,8 @@ import { createSignal } from '@react-rxjs/utils';
 import { Subscribe, bind } from '@react-rxjs/core';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { useWindowSize } from '@hooks/useWindowSize';
+import image1 from '@assets/icons/hashtag-btn.png';
+import HashtagTree from '@hashtags/container';
 
 // rxjs
 const [ keywordChange$, setKeyword ] = createSignal<string>();
@@ -126,9 +129,21 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
     document.querySelector('#matjipCardsWrapper')?.classList.replace('animate-openFromRight', 'animate-closeToRight');
     setTimeout(() => {
       dispatch(setMyMatjipSlidersOpen(false));
+      dispatch(setHashtagTreeOpen(false));
       setCurrentCardSequence(0);
     }, 1000);
 	};
+
+  const openHashtagTree = () => {
+    dispatch(setHashtagTreeOpen(true));
+  };
+
+  const closeHashtagTree = () => {
+    document.querySelector('#hashtagTree')?.classList.replace('animate-openFromRight', 'animate-closeToRight');
+    setTimeout(() => {
+      dispatch(setHashtagTreeOpen(false));
+    }, 1000);
+  };
 
   const observeSliders = () => {
     let matjipCards = document.querySelectorAll('.matjipCard');
@@ -271,7 +286,6 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
                 ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
               `}>
                 <div 
-                  // style={{width: `${ (size.width >= size.height ? size.width * 0.6 : size.width * 0.9) / 4 }px`}} 
                   className="shrink-0"></div>
               </div>
               { matjipListData.map((e: CardDataType, idx: number) => {
@@ -288,7 +302,6 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
                 ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
               `}>
                 <div 
-                  // style={{width: `${ (size.width >= size.height ? size.width * 0.6 : size.width * 0.9) / 4 }px`}} 
                   className="shrink-0"></div>
               </div>
             </div>
@@ -303,6 +316,22 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
         </> 
         : null
         }
+        { modalControl.isHashtagTreeOpen ? <HashtagTree closeHashtagTree={ closeHashtagTree } /> : null }
+        <div 
+          className="
+          absolute z-15 bottom-3 right-3 rounded-full bg-orange-200 border-4 border-orange-400 
+          p-3 animate-bounceDefault hover:cursor-pointer
+          "
+          onClick={ () => openHashtagTree()  }
+        >
+          <Image
+            src={ image1.src }
+            alt=""
+            width="25"
+            height="25"
+            className="w-[25px] h-[25px]"
+          />
+        </div>
       </div>
     </>
   );
