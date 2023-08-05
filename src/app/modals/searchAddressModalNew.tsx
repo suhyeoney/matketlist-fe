@@ -38,6 +38,7 @@ type ResultsDataTagType = {
   phoneNumber: string,
   placeId: string,
   compoundCode: string,
+  hashtags: string[],
 };
 
 type SearchAddressModalProps = {
@@ -91,6 +92,7 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
           phoneNumber: '',
           placeId: '',
           compoundCode: '',
+          hashtags: [],
         };
         newObj['address'] = e.formatted_address.includes('대한민국') ? e.formatted_address.replace('대한민국', '') : e.formatted_address;
         newObj['name'] = e.name;
@@ -99,6 +101,7 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
         newObj['longitude'] = e.geometry.location.lng;
         newObj['placeId'] = e.place_id;
         newObj['compoundCode'] = e.plus_code ? e.plus_code.compound_code : '';
+        newObj['hashtags'] = e.hashtags;
 
         return newObj;
       });
@@ -154,6 +157,7 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
         website: getWebsiteUrl ?? '-',
         userRegisterDate: getToday(),
         compoundCode: inputCompoundCode,
+        hashtags: [''], 
       }));
       alert('맛집이 정상적으로 등록되었습니다.');
       dispatch(storeInputMajip(null));
@@ -172,7 +176,8 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
     const io = new IntersectionObserver((
       entries: IntersectionObserverEntry[], observer: IntersectionObserver)=> {
         const currentId = Number(entries[0].target.id.split('resultTag-')[1]);
-        if(currentId === searchResultsOrigin?.length) {
+        console.log('currentId', currentId);
+        if(searchResultsOrigin !== undefined && currentId >= searchResultsOrigin?.length - 1) {
           floatBtn?.classList.remove('animate-bounceHide');
           floatBtn?.classList.add('animate-hideFloatBtn');
         } else {
@@ -258,7 +263,7 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
                 </Subscribe>
                 <div 
                   id="searchAddressResultContainer"
-                  style={{ height: size.height * 0.5 }}
+                  style={{ height: size.width >= 390 ? size.height * 0.5 : size.height * 0.6 }}
                   className="
                     relative flex flex-col
                     w-full overflow-y-scroll border

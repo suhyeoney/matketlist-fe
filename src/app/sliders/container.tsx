@@ -50,6 +50,7 @@ type CardDataType = {
   region: RegionType,
   userRegisterDate: string,
   compoundCode: string,
+  hashtags: string[],
 };
 
 const Tenada = localFont({
@@ -194,6 +195,7 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
           }, 
           userRegisterDate: '' ,
           compoundCode: '',
+          hashtags: ['']
         };
         obj['id'] = idx;
         obj['placeId'] = e.placeId;
@@ -204,6 +206,7 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
         obj['region'] = e.address ? convertWithRegionCode(e.address, e.compoundCode) : { key: '', name: '' };
         obj['userRegisterDate'] = e.userRegisterDate;
         obj['compoundCode'] = e.compoundCode;
+        obj['hashtags'] = e.hashtags;
         return obj;
       }).filter((e: any) => regionCode !== 'RC000' ? e.region.key === regionCode : true)
       .filter((x: any) => keyword?.length > 0 ?
@@ -316,7 +319,7 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
         </> 
         : null
         }
-        { modalControl.isHashtagTreeOpen ? <HashtagTree closeHashtagTree={ closeHashtagTree } /> : null }
+        { modalControl.isHashtagTreeOpen ? <HashtagTree size={ size } closeHashtagTree={ closeHashtagTree } /> : null }
         <div 
           className="
           absolute z-15 bottom-3 right-3 rounded-full bg-orange-200 border-4 border-orange-400 
