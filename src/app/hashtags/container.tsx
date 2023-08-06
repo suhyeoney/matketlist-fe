@@ -25,6 +25,7 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
   const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
   const [ cntHashtag, setCntHashtag ] = useState<number>(0); // 현재 로컬 해시태그 개수 (저장 전)
   const [ hashtagList, setHashtagList ] = useState<HashtagType[]>([]); // 현재 로컬 해시태그 목록 (저장 전)
+  const [ isValidResult, setValidationResult ] = useState<boolean>(false);
 
   const dispatch = useDispatch();
 
@@ -35,36 +36,44 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
   const minusHashtag = (dataKey: number) => {
     setHashtagList([ ...hashtagList.filter((x: HashtagType) => x.id !== dataKey) ]);
   };
-  
-  const onInputTextChange =  (e: React.ChangeEvent<HTMLInputElement>, dataKey: number)  => {
-    const inputValue = e.target.value;
-    const currentHashtagList = [ ...hashtagList ];
-    const currentHashtag = currentHashtagList.find((e: HashtagType) => e.id === dataKey);
-    // 해시태그명 유효성 검사 시작
+
+  const checkValidation = (inputValue: string) => {
     if(checkSpaceIncluded(inputValue)) {
       return { result: false, msg: '공백을 포함할 수 없습니다.' };
     }
     if(checkFullHangeulOrEnglish(inputValue)) {
       return { result: false, msg: '한글의 자음 또는 모음 단독으로 구성할 수 없습니다.' };
     }
-    if(inputValue.length > 30) {
-      return { result: false, msg: '30자를 초과할 수 없습니다.' };
+    if(inputValue.length < 2) {
+      return { result: false, msg: '최소 2글자 이상으로 입력해주세요.' };
     }
-
+    if(inputValue.length > 30) {
+      return { result: false, msg: '30글자를 초과할 수 없습니다.' };
+    }
+    return { result: true, msg: null };
+  };
+  
+  const onInputTextChange =  (e: React.ChangeEvent<HTMLInputElement>, dataKey: number)  => {
+    const inputValue = e.target.value;
+    const currentHashtagList = [ ...hashtagList ];
+    const currentHashtag = currentHashtagList.find((e: HashtagType) => e.id === dataKey);
+    let validationResult = null;
+    // 해시태그명 유효성 검사 시작
+    validationResult = checkValidation(inputValue);
+    setValidationResult(validationResult.result);
     if(currentHashtag !== undefined) {
       currentHashtag.text = inputValue;
     }
-    // console.log('currentHashtagList', currentHashtagList);
     setHashtagList(currentHashtagList);
-    return { result: true, msg: null };
+    return validationResult;
   };
 
   const saveAllTheHashtags = () => {
-    const emptyHashtag = hashtagList.find((e: HashtagType) =>e.text === '');
-    if(emptyHashtag) {
-      alert('태그명이 비어있는 해시태그가 존재합니다.');
-      return;
-    }
+    // const emptyHashtag = hashtagList.find((e: HashtagType) =>e.text === '');
+    // if(emptyHashtag) {
+    //   alert('태그명이 비어있는 해시태그가 존재합니다.');
+    //   return;
+    // }
     const result = window.confirm('해시태그 목록을 저장하시겠어요?');
     if(result) {
       dispatch(updateHashtag(hashtagList));
@@ -114,16 +123,6 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
       smallest:h-[85%]
       ${ environmentVariables.backgroundMode ? 'bg-white text-black' : 'bg-[#2A303C] text-white' } 
     `}>
-      {/* <div className="absolute flex left-3">
-        <Image
-          src={ image1.src }
-          alt=""
-          width="40"
-          height="40"
-          className="w-[40px] h-[40px]"
-          onClick={ () => closeHashtagTree() }
-        />
-      </div> */}
       <div 
         style={{
           width: `${ size.width * 0.7 }px`,
@@ -151,7 +150,8 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
         }
       </div>
       <div className="absolute z-5 flex flex-col gap-3 right-3 bottom-3">
-        <div 
+        <button 
+          onClick={ () => createHashtag() }
           className="
           border-2 border-gray-300 
           rounded-full p-2 bg-yellow-300 hover:cursor-pointer
@@ -162,23 +162,24 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
             width="30"
             height="30"
             className="w-[30px] h-[30px]"
-            onClick={ () => createHashtag() }
           />
-        </div>
-        <div 
-          className="
+        </button>
+        <button 
+          disabled={ isValidResult ? false : true }
+          onClick={ () => saveAllTheHashtags() }
+          className={`
           border-2 border-gray-300 
-          rounded-full p-2 bg-yellow-300 hover:cursor-pointer
-        ">
+          rounded-full p-2 hover:cursor-pointer
+          ${ isValidResult ? 'bg-yellow-300' : 'bg-gray-300' }
+         `}>
           <Image
             src={ image3.src }
             alt=""
             width="30"
             height="30"
-            className="w-[3-px] h-[30px]"
-            onClick={ () => saveAllTheHashtags() }
+            className="w-[30px] h-[30px]"
           />
-        </div>
+        </button>
       </div>
       <div>
 

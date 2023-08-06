@@ -51,7 +51,7 @@ const Hashtag: React.FC<HashtagProps> = ({
     <div 
       id={ `hashtag-${ sequence }` }
       className={`
-      flex flex-row gap-2 items-center justify-center border-2 border-gray-200 rounded-[10px] p-3
+      relative flex flex-row gap-2 items-center justify-center border-2 border-gray-200 rounded-[10px] p-3
       `}
     >
       <div className="flex flex-row items-between justify-center gap-2">
@@ -77,7 +77,13 @@ const Hashtag: React.FC<HashtagProps> = ({
             ${ environmentVariables.backgroundMode ? 'bg-white focus:text-black' : 'bg-[#2A303C] border-white focus:text-white' }
           `}/>
           { textErrorMsg !== null ? 
-            <span className="text-red-500 text-[13px] self-start pl-2">{ textErrorMsg  }</span> : null 
+            <span className="
+              text-red-500 text-[13px] self-start pl-2 
+              laptop:w-[190px] whitespace-normal
+              tablet:w-[190px] whitespace-normal
+              mobile:whitespace-normal
+              smallest:whitespace-normal
+            ">{ textErrorMsg  }</span> : null 
           }
           <div className="flex flex-row items-center justify-center gap-2 w-full">
             <button 
