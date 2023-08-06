@@ -70,6 +70,7 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
   const [ regionCode, setRegionCode ] = useState<string>(data[0]?.key);
   const [ matjipListData, setMatjipListData ] = useState<CardDataType[]>();
   const [ currentCardSequence, setCurrentCardSequence ] = useState<number>(0);
+  const [ isChangedToHashtagMgmt, setChangedToHashtagMgmt ] = useState<boolean>(false);
 
   const convertWithRegionCode = (address: string, compoundCode: string) => {
     const arrAddress = address.split(' ');
@@ -223,6 +224,16 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
 
   }, [ matjipListData ]);
 
+  useEffect(() => {
+    if(modalControl.isHashtagTreeOpen) {
+      setTimeout(() => {
+        setChangedToHashtagMgmt(true);
+      }, 1000);
+    } else {
+      setChangedToHashtagMgmt(false);
+    }
+  }, [ modalControl.isHashtagTreeOpen ]);
+
   return (
     <>
       { modalControl.isMyMatjipSlidersOpen ?
@@ -253,7 +264,7 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
             laptop:text-2xl
             tablet:text-2xl
             mobile:text-1xl
-          `}>🦐 내 맛집 목록</h3>
+          `}>🦐 내 맛집 목록 { isChangedToHashtagMgmt ? '> 해시태그 관리' : null }</h3>
           <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 cursor-pointer" fill="none" viewBox="0 0 24 24"
             stroke={`${ environmentVariables.backgroundMode ? '#2A303C' : 'white' }`} 
             onClick={ closeModal }
