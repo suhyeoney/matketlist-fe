@@ -13,6 +13,7 @@ import { HashtagType } from '@dataTypes/hashtag';
 import { checkFullHangeulOrEnglish, checkSpaceIncluded } from '@utils/stringUtils';
 import { updateHashtag } from '@features/location/locationSlice';
 import { setHashtagTreeOpen } from '@features/modalControl/modalControlSlice';
+import useDragAndDrop from '@hooks/useDragAndDrop';
 
 type HashtagTreeProps = {
   size : { width: number, height: number },
@@ -25,9 +26,13 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
   const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
   const [ cntHashtag, setCntHashtag ] = useState<number>(0); // 현재 로컬 해시태그 개수 (저장 전)
   const [ hashtagList, setHashtagList ] = useState<HashtagType[]>([]); // 현재 로컬 해시태그 목록 (저장 전)
-  const [ isValidResult, setValidationResult ] = useState<boolean>(false);
+  const [ isValidResult, setValidationResult ] = useState<boolean>(true);
 
   const dispatch = useDispatch();
+  const dragAndDrop = useDragAndDrop({ 
+    data: hashtagList,
+    setState: setHashtagList,
+  });
 
   const createHashtag = () => {
     setCntHashtag(cntHashtag => cntHashtag + 1);
@@ -81,7 +86,25 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
     } else {
       return;
     }
-    
+  };
+
+  const observeHashtags = () => {
+    let hashtags = document.querySelectorAll('.hashtag');
+    const io = new IntersectionObserver((
+      entries: IntersectionObserverEntry[], observer: IntersectionObserver)=> {
+        // console.log('entries target ids', entries.map(({ target, ...rest }) => (target.getAttribute('id'))));
+        if(entries[0].isIntersecting) {
+          const currentId = Number(entries[0].target.id.split('hashtag-')[1]);
+          // console.log('currentId', currentId); // 맨 오른쪽 카드를 entry의 첫번째 원소로 인식하고 있다.
+          console.log('currentId', currentId);
+        }
+      }, 
+      { threshold: 0, root: null, rootMargin: `-70% 0% -30% 0%` }
+    );
+    for(const e of hashtags) {
+      io.observe(e);
+    }
+
   };
 
   useEffect(() => {
@@ -92,6 +115,7 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
 
   useEffect(() => {
     console.log('hashtagList', hashtagList);
+    observeHashtags();
   }, [ hashtagList ]);
   
   useEffect(() => {
@@ -124,6 +148,7 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
       ${ environmentVariables.backgroundMode ? 'bg-white text-black' : 'bg-[#2A303C] text-white' } 
     `}>
       <div 
+        id="hashtagList"
         style={{
           width: `${ size.width * 0.7 }px`,
           // height: `${ size.height * 0.6 }px`,
@@ -144,6 +169,9 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
                 hashtagList={ hashtagList }
                 minusHashtag={ minusHashtag }
                 onInputTextChange={ onInputTextChange }
+                onDragStart={ dragAndDrop.dragStart }
+                onDragOver={ dragAndDrop.dragOver }
+                onDragEnd={ dragAndDrop.dragEnd }
               />
             );
           }) : null

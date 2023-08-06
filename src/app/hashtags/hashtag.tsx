@@ -20,7 +20,10 @@ type HashtagProps = {
   onInputTextChange: (e: React.ChangeEvent<HTMLInputElement>, dataKey: number) => {
     result: boolean;
     msg: string | null;
-}
+  },
+  onDragStart: (e: React.DragEvent<HTMLDivElement>) => void
+  onDragOver: (e: React.DragEvent<HTMLDivElement>) => void
+  onDragEnd: (e: React.DragEvent<HTMLDivElement>) => void
 };
 
 const Hashtag: React.FC<HashtagProps> = ({ 
@@ -30,7 +33,10 @@ const Hashtag: React.FC<HashtagProps> = ({
   placeIds, 
   hashtagList,
   minusHashtag, 
-  onInputTextChange }) => {
+  onInputTextChange,
+  onDragStart,
+  onDragOver,
+  onDragEnd, }) => {
 
   const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
 
@@ -50,8 +56,13 @@ const Hashtag: React.FC<HashtagProps> = ({
   return (
     <div 
       id={ `hashtag-${ sequence }` }
+      data-id={ sequence }
+      draggable
+      onDragStart={ onDragStart }
+      onDragOver={ onDragOver }
+      onDragEnd={ onDragEnd }
       className={`
-      relative flex flex-row gap-2 items-center justify-center border-2 border-gray-200 rounded-[10px] p-3
+      hashtag relative flex flex-row gap-2 items-center justify-center border-2 border-gray-200 rounded-[10px] p-3
       `}
     >
       <div className="flex flex-row items-between justify-center gap-2">
