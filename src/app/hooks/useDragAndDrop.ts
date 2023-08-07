@@ -4,22 +4,27 @@ import { ReactNode, useState } from 'react';
 
 type DragAndDropProps<T> = {
   data: T[],
-  setState: React.Dispatch<React.SetStateAction<T[]>>
+  elements: NodeListOf<Element>,
+  setState: React.Dispatch<React.SetStateAction<T[]>>,
+  idPrefix: string,
+  containerId: string,
+  rootId: string,
 };
 
-const DragAndDrop = <T, >({ data, setState }: DragAndDropProps<T>) => {
-  console.log('data', data);
+const DragAndDrop = <T, >({ data, elements, setState, idPrefix, containerId, rootId }: DragAndDropProps<T>) => {
 
   let dragged: EventTarget & HTMLDivElement;
   let over: EventTarget & HTMLDivElement;
 
-  // const placeholder = document.createElement('div');
-  // document.getElementById('hashtagList')?.appendChild(placeholder);
-  // placeholder.className = 'placeholder';
-  // placeholder.setAttribute('before', 'Drop Here');
-  // placeholder.classList.add('bg-yellow-200');
-  // placeholder.classList.add('before:content-[attr(before)]');
-  // placeholder.classList.add('before:bg-lime-200');
+  const placeholder = document.createElement('div');
+  const classList = ('flex flex-row gap-2 items-center justify-center w-full ' + 
+  'border-2 border-gray-200 border-dotted rounded-[10px] p-3 ' +
+  'before:content-[attr(before)] before:bg-lime-200').split(' ');
+  placeholder.className = 'placeholder';
+  placeholder.setAttribute('before', 'Drop Here');
+  for(const c of classList) {
+    placeholder.classList.add(c);
+  }
 
   const dragStart = (e: React.DragEvent<HTMLDivElement>) => {
     dragged = e.currentTarget;
@@ -29,8 +34,13 @@ const DragAndDrop = <T, >({ data, setState }: DragAndDropProps<T>) => {
 
   const dragEnd = (e: React.DragEvent<HTMLDivElement>) => {
     const tempArr = data;
+    const container = document.getElementById(containerId);
     dragged.style.display = 'block';
-    // dragged.parentNode?.removeChild(placeholder);
+    if(container?.contains(placeholder)) {
+      dragged.parentNode?.removeChild(placeholder);
+    } else {
+      return;
+    }
     let from = Number(dragged.dataset.id);
     let to = Number(over.dataset.id);
     console.log(`from: ${from}, to: ${to}`);
@@ -45,9 +55,17 @@ const DragAndDrop = <T, >({ data, setState }: DragAndDropProps<T>) => {
   const dragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     dragged.style.display = 'none';
-    // if(e.currentTarget.className === 'placeholder') return;
-    over = e.currentTarget;
-    // e.currentTarget.parentElement?.insertBefore(placeholder, e.currentTarget);
+    // elements.forEach((e: Element) => {
+    //   e.setAttribute('aria-disabled', 'true');
+    // });
+    if((e.target as HTMLDivElement).className === 'placeholder') return;
+    // if((e.target as HTMLDivElement).id !== rootId) return;
+    if((e.target as HTMLDivElement).id === undefined || !(e.target as HTMLDivElement).id.includes(idPrefix)) return;
+    over = e.target as HTMLDivElement;
+    (e.target as HTMLDivElement).parentElement?.insertBefore(placeholder, e.target as HTMLDivElement);
+    // console.log('target ID', (e.target as HTMLDivElement).id);
+    // (e.target as HTMLDivElement).parentElement?.insertBefore(placeholder, (e.target as HTMLDivElement).nextSibling);
+
   };
 
   return {

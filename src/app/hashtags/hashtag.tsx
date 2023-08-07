@@ -66,7 +66,7 @@ const Hashtag: React.FC<HashtagProps> = ({
       `}
     >
       <div className="flex flex-row items-between justify-center gap-2">
-        <span>{ sequence + 1 }</span>
+        {/* <span>{ sequence + 1 }</span> */}
         <Image
           src={ image1.src }
           alt=""

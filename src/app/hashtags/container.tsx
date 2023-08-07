@@ -31,7 +31,11 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
   const dispatch = useDispatch();
   const dragAndDrop = useDragAndDrop({ 
     data: hashtagList,
+    elements: document.querySelectorAll('.hashtag'),
     setState: setHashtagList,
+    idPrefix: 'hashtag-',
+    containerId: 'hashtagList',
+    rootId: 'hashtagTree',
   });
 
   const createHashtag = () => {
@@ -74,11 +78,11 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
   };
 
   const saveAllTheHashtags = () => {
-    // const emptyHashtag = hashtagList.find((e: HashtagType) =>e.text === '');
-    // if(emptyHashtag) {
-    //   alert('태그명이 비어있는 해시태그가 존재합니다.');
-    //   return;
-    // }
+    const emptyHashtag = hashtagList.find((e: HashtagType) =>e.text === '');
+    if(emptyHashtag) {
+      alert('태그명이 비어있는 해시태그가 존재합니다.');
+      return;
+    }
     const result = window.confirm('해시태그 목록을 저장하시겠어요?');
     if(result) {
       dispatch(updateHashtag(hashtagList));
@@ -104,8 +108,18 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
     for(const e of hashtags) {
       io.observe(e);
     }
-
   };
+
+  const findTheBiggestNumObj = (list: HashtagType[]) => {
+    let biggest = list[0];
+    list.forEach((x: HashtagType) => {
+      if(x.id > biggest.id) {
+        biggest = x;
+      }
+    })
+    console.log('biggest', biggest);
+    return biggest;
+  } 
 
   useEffect(() => {
     if(location.arrHashtag !== undefined) {
@@ -122,11 +136,12 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
     console.log('cntHashtag', cntHashtag);
     if(cntHashtag > 0) {
       const savedHashtagList = location.arrHashtag;
-      let lastHashtagId = savedHashtagList[savedHashtagList.length - 1] !== undefined ? 
-        savedHashtagList[savedHashtagList.length - 1].id : -1;
+      // let lastHashtagId = savedHashtagList[savedHashtagList.length - 1] !== undefined ? 
+      //   savedHashtagList[savedHashtagList.length - 1].id : -1;
+      let biggestHashtagId =  findTheBiggestNumObj(savedHashtagList).id  ?? -1;
       for(let i = 1; i <= cntHashtag; i++) {
         let emptyObj = { 
-          id: lastHashtagId + i, 
+          id: biggestHashtagId + i, 
           text: '', 
           placeIds: [''] 
         };
@@ -155,7 +170,7 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
         }}
         className={`
         flex flex-col gap-5 items-center justify-start 
-        overflow-y-scroll my-10
+        snap-mandatory snap-y overflow-y-auto my-10 
       `}>
         { hashtagList.length > 0 ?
           hashtagList.map((e: HashtagType, idx: number) => {
