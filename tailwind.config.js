@@ -135,6 +135,22 @@ module.exports = {
           opacity: 0,
         }
       },
+      slideUp: {
+        '0%': {
+          transform: 'translateY(50%)'
+        },
+        '100%': {
+          transform: 'translateY(0%)'
+        }
+      },
+      slideDown: {
+        '0%': {
+          transform: 'translateY(0%)'
+        },
+        '100%': {
+          transform: 'translateY(100%)'
+        }
+      },
     },
     animation: {
       rotate: 'rotate 1.5s linear infinite',
@@ -149,6 +165,8 @@ module.exports = {
       bounceHide: 'bounceHide 1s linear infinite',
       hideFloatBtn: 'hideFloatBtn 1s linear',
       bounceDefault: 'bounceDefault 1.5s linear infinite',
+      slideUp: 'slideUp 0.5s linear',
+      slideDown: 'slideDown 0.5s linear',
     },
   },
   plugins: [

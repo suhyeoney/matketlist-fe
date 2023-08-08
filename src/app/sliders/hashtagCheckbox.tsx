@@ -35,6 +35,14 @@ const HashtagCheckbox: React.FC<HashtagCheckboxProps> = ({ placeId, setHashtagCh
   const [ joinedSelectedHashtagTexts, setJoinedHashtagTextsSelected ] = useState<string>('');
   const checkboxContainerRef = useRef<HTMLDivElement | null>(null);
 
+  const closeFloatButtonArea = () => {
+    document.querySelector('#floatBtnArea')?.classList.replace('animate-slideUp', 'animate-slideDown');
+    setTimeout(() => {
+      setFloatBtnAreaOpen(false);
+      setHashtagCheckboxOpen(false);
+    }, 500);
+  };
+
   const onClickCheckbox = (e: React.ChangeEvent<HTMLInputElement>, x: HashtagType) => {
     console.log(`${ x.text } checked : ${ e.currentTarget.checked }`);
     const checked = e.currentTarget.checked;
@@ -160,9 +168,7 @@ const HashtagCheckbox: React.FC<HashtagCheckboxProps> = ({ placeId, setHashtagCh
         return e;
       })
     ));
-
-    setFloatBtnAreaOpen(false);
-    setHashtagCheckboxOpen(false);
+    closeFloatButtonArea();
   };
 
   useEffect(() => {
@@ -218,8 +224,9 @@ const HashtagCheckbox: React.FC<HashtagCheckboxProps> = ({ placeId, setHashtagCh
       })}
       { isfloatBtnAreaOpen ? 
         <div 
+          id="floatBtnArea"
           className={`
-          fixed z-30 bottom-0 left-0 right-0 w-full flex flex-col items-center justify-center gap-5
+          fixed z-30 bottom-0 left-0 right-0 w-full flex flex-col items-center justify-center gap-5 animate-slideUp
           rounded-tl-[10px] rounded-tr-[10px]
           laptop:h-[140px]
           tablet:h-[140px]
@@ -270,7 +277,7 @@ const HashtagCheckbox: React.FC<HashtagCheckboxProps> = ({ placeId, setHashtagCh
             ${ Tenada.className }
           `}>
             <button 
-              onClick={ () => setHashtagCheckboxOpen(false) }
+              onClick={ () => closeFloatButtonArea() }
               className="float-left w-[48%] border border-gray-500 rounded-[3px] p-1"
             >돌아가기</button>
             <button 

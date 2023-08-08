@@ -102,6 +102,10 @@ const Card: React.FC<CardProps> = ({ dataKey, data, setPosition, closeModal }) =
   };
 
   const openHashtagCheckbox = (data: CardDataType) => {
+    if(location.arrHashtag.length === 0) {
+      alert('생성된 해시태그가 없습니다. 우측 하단의 해시태그 버튼을 통해 해시태그를 관리해보세요!');
+      return;
+    }
     setHashtagCheckboxOpen(true);
   };
 

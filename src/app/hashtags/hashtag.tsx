@@ -69,14 +69,17 @@ const Hashtag: React.FC<HashtagProps> = ({
       <div className="flex flex-row items-between justify-center">
         {/* <span>{ sequence + 1 }</span> */}
         <Image
+          id={`hashtag-image-${ sequence }`}
           src={ image1.src }
           alt=""
           width="40"
           height="40"
-          className="w-[40px] h-[40px] self-center"
+          className="hashtagImage w-[40px] h-[40px] self-center"
+          
         />
         <div className="flex flex-col items-center justify-center gap-1">
-          <input 
+          <input
+            id={`hashtag-input-${ sequence }`}
             type="text" 
             placeholder="태그명 입력" 
             value={ inputText }
@@ -85,7 +88,7 @@ const Hashtag: React.FC<HashtagProps> = ({
               setTextErrorMsg(onInputTextChange(e, dataKey).msg ?? '') 
             }}
             className={`
-            input w-[90%] h-[40px]
+            hashtagInput input w-[90%] h-[40px]
             ${ environmentVariables.backgroundMode ? 'bg-white focus:text-black' : 'bg-[#2A303C] border-white focus:text-white' }
           `}/>
           { textErrorMsg !== null ? 
@@ -97,9 +100,10 @@ const Hashtag: React.FC<HashtagProps> = ({
               smallest:whitespace-normal
             ">{ textErrorMsg  }</span> : null 
           }
-          <div className="flex flex-row items-center justify-center gap-2 w-full">
-            <button 
-              className="flex flex-row border border-gray-200 rounded-md gap-1 p-1 hover:cursor-pointer"
+          <div className="flex flex-row items-end justify-end gap-2 w-full">
+            <button
+              id={`hashtag-minus-button-${ sequence }`}
+              className="hashtagMinusButton flex flex-row border border-gray-200 rounded-md gap-1 p-1 hover:cursor-pointer"
               onClick={ () => minusHashtag(dataKey) }
             >
               <Image
@@ -111,7 +115,7 @@ const Hashtag: React.FC<HashtagProps> = ({
               />
               <span>빼기</span>
             </button>
-            <button className="flex flex-row border border-gray-200 rounded-md gap-1 p-1 hover:cursor-pointer">
+            {/* <button className="flex flex-row border border-gray-200 rounded-md gap-1 p-1 hover:cursor-pointer">
               <Image
                 src={ image3.src }
                 alt=""
@@ -120,7 +124,7 @@ const Hashtag: React.FC<HashtagProps> = ({
                 className="w-[10px] h-[10px] self-center"
               />
               <span>맛집부착</span>
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

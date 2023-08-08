@@ -78,7 +78,24 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
     return validationResult;
   };
 
+  const goBackToCards = () => {
+    if(hashtagList.length < 1) {
+      closeHashtagTree();
+    } else {
+      const result = window.confirm('나가시게 되면 변경 내역이 사라지게 됩니다. 그래도 나가시겠습니까? ❓');
+      if(result) {
+        closeHashtagTree();
+      } else {
+        return;
+      }
+    }
+  };
+
   const saveAllTheHashtags = () => {
+    if(hashtagList.length === 0) {
+      alert('최소 1개의 해시태그 생성 후, 저장이 가능합니다.');
+      return;
+    }
     const emptyHashtag = hashtagList.find((e: HashtagType) =>e.text === '');
     if(emptyHashtag) {
       alert('태그명이 비어있는 해시태그가 존재합니다.');
@@ -190,6 +207,7 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
         className={`
         flex flex-col gap-5 items-center justify-start 
         snap-mandatory snap-y overflow-y-auto my-10 
+        ${ hashtagList.length === 0 ? 'border border-dotted border-gray-400 rounded-[20px]' : null }
       `}>
         { hashtagList.length > 0 ?
           hashtagList.map((e: HashtagType, idx: number) => {
@@ -208,8 +226,31 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
                 onDragEnd={ dragAndDrop.dragEnd }
               />
             );
-          }) : null
+          }) : 
+          <div 
+            className={`
+            absolute top-[50%] bottom-[50%]
+            ${ environmentVariables.backgroundMode ? 'text-black' : 'text-white' } 
+          `}>
+            해시태그 목록이 비어있습니다. 💤
+          </div>
         }
+      </div>
+      <div className="absolute z-5 flex flex-col gap-3 left-3 top-3">
+        <button 
+          onClick={ () => goBackToCards() }
+          className="
+          border-2 border-gray-300 
+          rounded-full p-2 bg-yellow-300 hover:cursor-pointer
+        ">
+          <Image
+            src={ image1.src }
+            alt=""
+            width="30"
+            height="30"
+            className="w-[30px] h-[30px]"
+          />
+        </button>
       </div>
       <div className="absolute z-5 flex flex-col gap-3 right-3 bottom-3">
         <button 

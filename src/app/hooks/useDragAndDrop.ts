@@ -26,7 +26,17 @@ const DragAndDrop = <T, >({ data, elements, setState, idPrefix, containerId, roo
     placeholder.classList.add(c);
   }
 
+  const hashtagImages = document.querySelectorAll('.hashtagImage');
+  const hashtagInputs = document.querySelectorAll('.hashtagInput');
+  const hashtagMinusButtons = document.querySelectorAll('.hashtagMinusButton');
+
   const dragStart = (e: React.DragEvent<HTMLDivElement>) => {
+    for(let i = 0; i < elements.length; i++) {
+      hashtagImages[i].classList.add('pointer-events-none');
+      hashtagInputs[i].setAttribute('readOnly', 'true');
+      hashtagInputs[i].classList.add('pointer-events-none');
+      hashtagMinusButtons[i].classList.add('pointer-events-none');    
+    }
     dragged = e.currentTarget;
     placeholder.classList.add('cursor-grab');
     e.dataTransfer.effectAllowed = 'move';
@@ -51,6 +61,13 @@ const DragAndDrop = <T, >({ data, elements, setState, idPrefix, containerId, roo
     tempArr.splice(to, 0, tempArr.splice(from, 1)[0]);
     console.log('tempArr', tempArr);
     setState([ ...tempArr ]);
+    
+    for(let i = 0; i < elements.length; i++) {
+      hashtagImages[i].classList.remove('pointer-events-none');
+      hashtagInputs[i].removeAttribute('readOnly');
+      hashtagInputs[i].classList.remove('pointer-events-none');
+      hashtagMinusButtons[i].classList.remove('pointer-events-none');    
+    }
   };
 
   const dragOver = (e: React.DragEvent<HTMLDivElement>) => {
