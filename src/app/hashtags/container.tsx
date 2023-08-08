@@ -14,6 +14,7 @@ import { checkFullHangeulOrEnglish, checkSpaceIncluded } from '@utils/stringUtil
 import { updateHashtag } from '@features/location/locationSlice';
 import { setHashtagTreeOpen } from '@features/modalControl/modalControlSlice';
 import useDragAndDrop from '@hooks/useDragAndDrop';
+import { SearchMatjipInfo } from '@dataTypes/matjip';
 
 type HashtagTreeProps = {
   size : { width: number, height: number },
@@ -86,6 +87,25 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
     const result = window.confirm('해시태그 목록을 저장하시겠어요?');
     if(result) {
       dispatch(updateHashtag(hashtagList));
+      const tempArrLocation = location.arrLocation;
+      const arrHashtagIds = hashtagList.map((e: HashtagType) => {
+        let val = -1;
+        val = e.id;
+        return val;
+      });
+      tempArrLocation.map((e: SearchMatjipInfo) => {
+        for(const i of e.hashtags) {
+          if(!arrHashtagIds.includes(i)) {
+            return {
+              ...e,
+              hashtags: [
+                ...e.hashtags.filter((x: number) => x ! == i)
+              ]
+            };
+          }
+        }
+        return e;
+      })
       closeHashtagTree();
     } else {
       return;
@@ -136,14 +156,13 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
     console.log('cntHashtag', cntHashtag);
     if(cntHashtag > 0) {
       const savedHashtagList = location.arrHashtag;
-      // let lastHashtagId = savedHashtagList[savedHashtagList.length - 1] !== undefined ? 
-      //   savedHashtagList[savedHashtagList.length - 1].id : -1;
-      let biggestHashtagId =  findTheBiggestNumObj(savedHashtagList).id  ?? -1;
+      let biggestHashtagId =  findTheBiggestNumObj(savedHashtagList) !== undefined ? 
+      findTheBiggestNumObj(savedHashtagList).id : -1;
       for(let i = 1; i <= cntHashtag; i++) {
         let emptyObj = { 
           id: biggestHashtagId + i, 
           text: '', 
-          placeIds: [''] 
+          placeIds: [] 
         };
         setHashtagList([ ...hashtagList, emptyObj ]);
       }

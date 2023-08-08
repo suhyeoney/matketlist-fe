@@ -38,7 +38,7 @@ type ResultsDataTagType = {
   phoneNumber: string,
   placeId: string,
   compoundCode: string,
-  hashtags: string[],
+  hashtags: number[],
 };
 
 type SearchAddressModalProps = {
@@ -157,7 +157,7 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
         website: getWebsiteUrl ?? '-',
         userRegisterDate: getToday(),
         compoundCode: inputCompoundCode,
-        hashtags: [''], 
+        hashtags: [], 
       }));
       alert('맛집이 정상적으로 등록되었습니다.');
       dispatch(storeInputMajip(null));
@@ -281,8 +281,8 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
                     <Image
                       src={ image1.src }
                       alt=""
-                      width={ size.width * 0.11 }
-                      height={ size.height * 0.11 }
+                      width={ 40 }
+                      height={ 40 }
                     ></Image>
                     <div>검색 결과의 마지막입니다.</div>
                   </div>
@@ -295,8 +295,8 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
                   <Image
                     src={ image2.src }
                     alt=""
-                    width={ size.width * 0.2 }
-                    height={ size.height * 0.1 }
+                    width={ 50 }
+                    height={ 50 }
                   ></Image>
                 </div>
               </div>

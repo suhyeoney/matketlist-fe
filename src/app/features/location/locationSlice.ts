@@ -29,13 +29,16 @@ export const locationSlice = createSlice({
      state.arrLocation = state.arrLocation.filter((e: SearchMatjipInfo) => e.placeId !== action.payload)
      state.cntLocation = state.arrLocation.length;
     },
+    updateLocation: (state, action) => {
+      state.arrLocation = [ ...action.payload ];
+    },
     updateHashtag: (state, action) => {
       state.arrHashtag = [ ...action.payload ];
     },
   }
 });
 
-export const { addLocation, removeLocation, updateHashtag } = locationSlice.actions;
+export const { addLocation, removeLocation, updateLocation, updateHashtag } = locationSlice.actions;
 
 export default locationSlice.reducer;
 

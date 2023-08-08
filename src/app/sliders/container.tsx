@@ -50,7 +50,7 @@ type CardDataType = {
   region: RegionType,
   userRegisterDate: string,
   compoundCode: string,
-  hashtags: string[],
+  hashtags: number[],
 };
 
 const Tenada = localFont({
@@ -163,11 +163,13 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
               matjipCards[idx].classList.remove('border-8');
               matjipCards[idx].classList.remove('border-red-200');
               matjipCards[idx].classList.remove('rounded-[18px]');
+              matjipCards[idx].classList.add('pointer-events-none');
             } else {
               matjipCards[idx].classList.add('border-double');
               matjipCards[idx].classList.add('border-8');
               matjipCards[idx].classList.add('border-red-200');
               matjipCards[idx].classList.add('rounded-[18px]');
+              matjipCards[idx].classList.remove('pointer-events-none');
             }
           });
         }
@@ -183,7 +185,7 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
   useEffect(() => {
     setMatjipListData([
       ...location.arrLocation.map((e: SearchMatjipInfo, idx: number) => {
-        let obj = { 
+        let obj: CardDataType = { 
           id: 0, 
           placeId: '', 
           name: '', 
@@ -196,7 +198,7 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
           }, 
           userRegisterDate: '' ,
           compoundCode: '',
-          hashtags: ['']
+          hashtags: []
         };
         obj['id'] = idx;
         obj['placeId'] = e.placeId;

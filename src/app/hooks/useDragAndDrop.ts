@@ -19,15 +19,16 @@ const DragAndDrop = <T, >({ data, elements, setState, idPrefix, containerId, roo
   const placeholder = document.createElement('div');
   const classList = ('flex flex-row gap-2 items-center justify-center w-full ' + 
   'border-2 border-gray-200 border-dotted rounded-[10px] p-3 ' +
-  'before:content-[attr(before)] before:bg-lime-200').split(' ');
+  'before:content-[attr(before)] before:text-red-500').split(' ');
   placeholder.className = 'placeholder';
-  placeholder.setAttribute('before', 'Drop Here');
+  placeholder.setAttribute('before', 'Drop! Drop! Drop!');
   for(const c of classList) {
     placeholder.classList.add(c);
   }
 
   const dragStart = (e: React.DragEvent<HTMLDivElement>) => {
     dragged = e.currentTarget;
+    placeholder.classList.add('cursor-grab');
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text', e.currentTarget.id);
   };

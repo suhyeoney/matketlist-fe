@@ -62,10 +62,11 @@ const Hashtag: React.FC<HashtagProps> = ({
       onDragOver={ onDragOver }
       onDragEnd={ onDragEnd }
       className={`
-      hashtag relative flex flex-row gap-2 items-center justify-center border-2 border-gray-200 rounded-[10px] p-3
+      hashtag relative flex flex-row gap-2 items-center justify-center border-2 border-gray-200 rounded-[10px] p-2
+      hover:cursor-pointer
       `}
     >
-      <div className="flex flex-row items-between justify-center gap-2">
+      <div className="flex flex-row items-between justify-center">
         {/* <span>{ sequence + 1 }</span> */}
         <Image
           src={ image1.src }

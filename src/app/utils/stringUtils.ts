@@ -14,3 +14,7 @@ export const checkFullHangeulOrEnglish = (str: string) => {
   let regex = /[가-힣a-zA-Z0-9]+$/;
   return str.length > 0 && !regex.test(str);
 };
+
+export const checkHangeulTextEndsWithJongseong = (str: string) => {
+  return (str.charCodeAt(str.length - 1) - '가'.charCodeAt(0)) % 28 === 0;
+};

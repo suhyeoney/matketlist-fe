@@ -12,7 +12,7 @@ type ResultsDataTagType = {
   phoneNumber: string,
   placeId: string,
   compoundCode: string,
-  hashtags: string[],
+  hashtags: number[],
 };
 
 type ResultTagProps = {
