@@ -207,7 +207,7 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
         className={`
         flex flex-col gap-5 items-center justify-start 
         snap-mandatory snap-y overflow-y-scroll my-10 scroll-custom
-        ${ hashtagList.length === 0 ? 'border border-dotted border-gray-400 rounded-[20px]' : null }
+        ${ hashtagList.length === 0 ? 'border-2 border-dotted border-gray-400 rounded-[20px] scrollbar-hide' : null }
       `}>
         { hashtagList.length > 0 ?
           hashtagList.map((e: HashtagType, idx: number) => {
