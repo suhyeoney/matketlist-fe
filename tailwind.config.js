@@ -104,7 +104,7 @@ module.exports = {
           transform: 'translateX(200%)',
         },
       },
-      bounce: {
+      bounceHide: {
         '0%': {
           opacity: '1',
           visibility: 'hidden',
@@ -116,12 +116,39 @@ module.exports = {
           transform: 'translateY(20%)'
         }
       },
+      bounceDefault: {
+        '0%': {
+          transform: 'translateY(-5%)'
+        },
+        '50%': {
+          transform: 'translateY(5%)'
+        },
+        '100%': {
+          transform: 'translateY(-5%)'
+        }
+      },
       hideFloatBtn: {
         '0%': {
           opacity: 1,
         },
         '100%': {
           opacity: 0,
+        }
+      },
+      slideUp: {
+        '0%': {
+          transform: 'translateY(50%)'
+        },
+        '100%': {
+          transform: 'translateY(0%)'
+        }
+      },
+      slideDown: {
+        '0%': {
+          transform: 'translateY(0%)'
+        },
+        '100%': {
+          transform: 'translateY(100%)'
         }
       },
     },
@@ -135,8 +162,11 @@ module.exports = {
       hideModal: 'hide 0.5s linear',
       openFromRight: 'slideFromRight 1s linear',
       closeToRight: 'slideToRight 1s linear',
-      bounce: 'bounce 1s linear infinite',
+      bounceHide: 'bounceHide 1s linear infinite',
       hideFloatBtn: 'hideFloatBtn 1s linear',
+      bounceDefault: 'bounceDefault 1.5s linear infinite',
+      slideUp: 'slideUp 0.5s linear',
+      slideDown: 'slideDown 0.5s linear',
     },
   },
   plugins: [

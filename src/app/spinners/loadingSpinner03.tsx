@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import '@spinners/styles.css';
+import { useSelector } from 'react-redux';
+import { RootState } from '@store/store';
 
 type LoadingSpinner03Props = {
   cubeText: string,
@@ -11,6 +13,8 @@ type LoadingSpinner03Props = {
 const LoadingSpinner03: React.FC<LoadingSpinner03Props> = ({ cubeText, infoText }) => {
 
   const [ arrCubeText, setArrCubeText ] = useState<string[]>([]);
+
+  const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
 
   useEffect(() => {
     setArrCubeText([ ...cubeText.split('') ]);
@@ -31,7 +35,12 @@ const LoadingSpinner03: React.FC<LoadingSpinner03Props> = ({ cubeText, infoText 
           );
         })}
       </div>
-      <span>{ infoText }</span>
+      <span
+        className={`
+        ${ environmentVariables.backgroundMode ? 'text-gray-700' : 'text-white' }
+      `}>
+        { infoText }
+      </span>
     </div>
   );
     

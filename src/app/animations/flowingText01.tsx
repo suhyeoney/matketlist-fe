@@ -127,6 +127,7 @@ const FlowingText01: React.FC<FlowingText01Props> = ({ textList }) => {
             id="noticeWrapper"
             className={`
              w-full 
+             
              laptop:h-[30px]
              tablet:h-[30px]
              mobile:h-[30px]

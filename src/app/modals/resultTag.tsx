@@ -12,6 +12,7 @@ type ResultsDataTagType = {
   phoneNumber: string,
   placeId: string,
   compoundCode: string,
+  hashtags: number[],
 };
 
 type ResultTagProps = {
@@ -32,13 +33,13 @@ const ResultTag: React.FC<ResultTagProps> = ({ dataKey, data, registerMatjip }) 
         id={`resultTag-${ dataKey }`}
         onClick={ () => registerMatjip(data) }
         className={`
-          resultDataTag flex flex-row gap-2 shrink-0 p-1
+          resultDataTag flex flex-row gap-2 shrink-0 px-4 py-1
           ${ environmentVariables.backgroundMode ? 
             'text-black hover:bg-gray-100 cursor-pointer font-semibold' : 
             'text-white bg-[#2A303C] hover:cursor-pointer font-semibold' }
       `}>
         <div className="
-          flex flex-col gap-1 shrink-0 shadow-xl w-full
+          flex flex-col gap-1 shrink-0 shadow-xl w-full p-1
         ">
           <div className={`
             p-1 rounded-[10px]
