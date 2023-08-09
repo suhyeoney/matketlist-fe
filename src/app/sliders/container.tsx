@@ -287,38 +287,49 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
                 </Subscribe>
               </div>
               <div 
-                className="
+                className={`
                   relative snap-mandatory snap-x flex gap-6 pt-2 
                   w-full h-full overflow-x-scroll scroll-custom
-              ">
-              <div className={`
-                snap-center shrink-0 h-[100%]
-                laptop:w-[35%]
-                tablet:w-[30%]
-                mobile:w-[10%]
-                smallest:w-[10%]
-                ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
+                  ${ matjipListData.length === 0 ? 
+                    'items-center justify-center border-2 border-dotted border-gray-400 rounded-[20px] scrollbar-hide' : null }
               `}>
+                { matjipListData.length > 0 ?
+                <>
+                  <div className={`
+                    snap-center shrink-0 h-[100%]
+                    laptop:w-[35%]
+                    tablet:w-[30%]
+                    mobile:w-[10%]
+                    smallest:w-[10%]
+                    ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
+                  `}>
+                    <div className="shrink-0"></div>
+                  </div>
+                  { matjipListData.map((e: CardDataType, idx: number) => {
+                    return (
+                      <Card key={ idx } dataKey={ idx } data={ e } setPosition={ setPosition } closeModal={ closeModal } />
+                    );
+                  })}
+                  <div className={`
+                    snap-center shrink-0 h-[100%]
+                    laptop:w-[35%]
+                    tablet:w-[30%]
+                    mobile:w-[10%]
+                    smallest:w-[10%]
+                    ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
+                  `}>
+                    <div className="shrink-0"></div>
+                  </div>
+                </> :
                 <div 
-                  className="shrink-0"></div>
+                  className={`
+                  absolute top-[50%] bottom-[50%]
+                  ${ environmentVariables.backgroundMode ? 'text-black' : 'text-white' } 
+                `}>
+                  내 맛집 목록이 비어있습니다. 💤
+                </div>
+                }
               </div>
-              { matjipListData.map((e: CardDataType, idx: number) => {
-                return (
-                  <Card key={ idx } dataKey={ idx } data={ e } setPosition={ setPosition } closeModal={ closeModal } />
-                );
-              })}
-              <div className={`
-                snap-center shrink-0 h-[100%]
-                laptop:w-[35%]
-                tablet:w-[30%]
-                mobile:w-[10%]
-                smallest:w-[10%]
-                ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
-              `}>
-                <div 
-                  className="shrink-0"></div>
-              </div>
-            </div>
             <div className="flex items-center justify-center">
               <span className={`
                 font-semibold
