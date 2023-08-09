@@ -62,6 +62,8 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
 	const dispatch = useDispatch();
   const keyword = useKeyword();
 
+  console.log(`width: ${size.width}, height: ${ size.height}`);
+
 	const closeModal = () => {
     // DOM에서 모달 엘리먼트가 닫혀서 사라지면, hideModal 에니메이션이 동작할 수 없으므로 
     // 엘리먼트가 실제로 사라지기 전까지 짧게 인터벌을 주고 그 인터벌 사이에 클래스를 
