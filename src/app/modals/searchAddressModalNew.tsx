@@ -265,7 +265,7 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
                 </Subscribe>
                 <div 
                   id="searchAddressResultContainer"
-                  style={{ height: size.width >= 390 ? size.height * 0.5 : size.height * 0.6 }}
+                  style={{ height: size.height * 0.5 }}
                   className="
                     relative flex flex-col
                     w-full overflow-y-scroll border scroll-custom
