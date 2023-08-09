@@ -79,10 +79,13 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
   };
 
   const goBackToCards = () => {
-    if(hashtagList.length < 1) {
+    const previousState = location.arrHashtag;
+    if(JSON.stringify(hashtagList) === JSON.stringify(previousState)) {
+      // 변경 내역이 없는 경우,
       closeHashtagTree();
     } else {
-      const result = window.confirm('나가시게 되면 변경 내역이 사라지게 됩니다. 그래도 나가시겠습니까? ❓');
+      // 변경 내역이 있는 경우,
+      const result = window.confirm('나가시게 되면 변경 내역이 사라지게 됩니다.\n그래도 나가시겠습니까? ❓');
       if(result) {
         closeHashtagTree();
       } else {
@@ -207,7 +210,7 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
         className={`
         flex flex-col gap-5 items-center justify-start 
         snap-mandatory snap-y overflow-y-scroll my-10 scroll-custom
-        ${ hashtagList.length === 0 ? 'border border-dotted border-gray-400 rounded-[20px]' : null }
+        ${ hashtagList.length === 0 ? 'border-2 border-dotted border-gray-400 rounded-[20px] scrollbar-hide' : null }
       `}>
         { hashtagList.length > 0 ?
           hashtagList.map((e: HashtagType, idx: number) => {
