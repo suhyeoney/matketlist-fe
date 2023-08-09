@@ -192,9 +192,9 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
       id="hashtagTree" 
       className={`
       absolute z-20 left-0 bottom-0 flex justify-center w-full animate-openFromRight
-      laptop:h-[87%]
-      tablet:h-[87%]
-      mobile:h-[89%]
+      laptop:h-[87%] px-4
+      tablet:h-[87%] px-4
+      mobile:h-[89%] px-12
       smallest:h-[85%]
       ${ environmentVariables.backgroundMode ? 'bg-white text-black' : 'bg-[#2A303C] text-white' } 
     `}>
@@ -206,7 +206,7 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
         }}
         className={`
         flex flex-col gap-5 items-center justify-start 
-        snap-mandatory snap-y overflow-y-auto my-10 
+        snap-mandatory snap-y overflow-y-scroll my-10 scroll-custom
         ${ hashtagList.length === 0 ? 'border border-dotted border-gray-400 rounded-[20px]' : null }
       `}>
         { hashtagList.length > 0 ?

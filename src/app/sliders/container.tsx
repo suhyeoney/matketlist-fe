@@ -159,16 +159,14 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
           setCurrentCardSequence(currentId + 1);
           matjipCards.forEach((card: Element, idx: number) => {
             if(idx !== currentId) {
-              matjipCards[idx].classList.remove('border-double');
-              matjipCards[idx].classList.remove('border-8');
-              matjipCards[idx].classList.remove('border-red-200');
-              matjipCards[idx].classList.remove('rounded-[18px]');
+              matjipCards[idx].classList.remove('border-4');
+              matjipCards[idx].classList.remove('border-[#552594]');
+              matjipCards[idx].classList.remove('rounded-[16px]');
               matjipCards[idx].classList.add('pointer-events-none');
             } else {
-              matjipCards[idx].classList.add('border-double');
-              matjipCards[idx].classList.add('border-8');
-              matjipCards[idx].classList.add('border-red-200');
-              matjipCards[idx].classList.add('rounded-[18px]');
+              matjipCards[idx].classList.add('border-4');
+              matjipCards[idx].classList.add('border-[#552594]');
+              matjipCards[idx].classList.add('rounded-[16px]');
               matjipCards[idx].classList.remove('pointer-events-none');
             }
           });
@@ -278,7 +276,7 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
           { matjipListData !== undefined ? 
           <>
               <div className="
-                flex flex-row items-center justify-between h-[15%] border-2 border-gray-300 rounded-[10px] p-2
+                flex flex-row items-center justify-center h-[15%] border-2 border-gray-300 rounded-[10px] p-2
               ">
                 <RegionSelectbox data={ data } setRegionCode={ setRegionCode } />
                 <Subscribe>
@@ -290,8 +288,8 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
               </div>
               <div 
                 className="
-                  relative snap-mandatory snap-x flex gap-6 pt-2
-                  w-full h-full overflow-x-auto
+                  relative snap-mandatory snap-x flex gap-6 pt-2 
+                  w-full h-full overflow-x-scroll scroll-custom
               ">
               <div className={`
                 snap-center shrink-0 h-[100%]

@@ -234,6 +234,7 @@ const HashtagCheckbox: React.FC<HashtagCheckboxProps> = ({ placeId, setHashtagCh
           smallest:h-[60px]
           ${ environmentVariables.backgroundMode ? 'bg-[#2A303C] text-white' : 'bg-white text-black' }
         `}>
+          
           { selectedHashtags.length > 0 ? 
           <div className="
             flex flex-col items-center justify-center gap-1 cursor-default w-full
@@ -245,7 +246,7 @@ const HashtagCheckbox: React.FC<HashtagCheckboxProps> = ({ placeId, setHashtagCh
             `}>
               <span 
                 className={`
-                self-center text-red-500
+                self-center text-lime-200
               `}>
                 { joinedSelectedHashtagTexts }
               </span>

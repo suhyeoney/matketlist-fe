@@ -192,6 +192,11 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
     }
   };
 
+  const filter = (keyword: string, dataSet: any[]) => {
+    return dataSet.filter(
+      (e: SearchMatjipInfo) => e.name?.includes(keyword) || e.address?.includes(keyword));
+  };
+
   useEffect(() => {
     if(searchResultsOrigin !== undefined && searchResultsOrigin.length >= 4) {
       observeContainer();
@@ -205,11 +210,6 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
       setSearchResultsOrigin(undefined);
     }
 	}, [ keyword ]);
-
-  const filter = (keyword: string, dataSet: any[]) => {
-    return dataSet.filter(
-      (e: SearchMatjipInfo) => e.name?.includes(keyword) || e.address?.includes(keyword));
-  };
 
   return (
     <>
@@ -266,7 +266,7 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
                   style={{ height: size.width >= 390 ? size.height * 0.5 : size.height * 0.6 }}
                   className="
                     relative flex flex-col
-                    w-full overflow-y-scroll border
+                    w-full overflow-y-scroll border scroll-custom
                 ">
                   { searchResultsOrigin?.map((e: ResultsDataTagType, idx: number) => {
                     return (

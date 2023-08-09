@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image';
+import localFont from 'next/font/local';
 
 import RegionBadge from '@sliders/regionBadge';
 import { getDiffBetweenTwoDays } from '@utils/dateUtils';
@@ -40,6 +41,10 @@ type CardProps = {
   }>>,
   closeModal: () => void,
 };
+
+const YeongdeokBlueroad = localFont({
+  src: '../assets/fonts/YeongdeokBlueroad.woff'
+});
 
 const Card: React.FC<CardProps> = ({ dataKey, data, setPosition, closeModal }) => {  
 
@@ -112,13 +117,15 @@ const Card: React.FC<CardProps> = ({ dataKey, data, setPosition, closeModal }) =
   return (
     <div 
       id={`card-${ dataKey }`}
-      className="matjipCard snap-center shrink-0
+      className={`
+      matjipCard snap-center shrink-0
+      ${ YeongdeokBlueroad.className }
       laptop:w-[200px] h-[90%]
       tablet:w-[200px] h-[90%]
       mobile:w-[200px] h-[100%]
       smallest:w-[150px] h-[100%]
       first:pl-8 last:pr-8 
-    ">
+    `}>
       { !isHashtagCheckboxOpen ?
       <div className="
         shrink-0 shadow-xl w-full h-full flex flex-col rounded-[10px] bg-gradient-to-r from-purple-500 to-pink-500
@@ -182,9 +189,9 @@ const Card: React.FC<CardProps> = ({ dataKey, data, setPosition, closeModal }) =
             <Image
               src={ image3.src }
               alt=""
-              width="30"
-              height="30"
-              className="w-[30px] h-[30px] rounded-[10px] bg-white p-1"
+              width="35"
+              height="35"
+              className="w-[35px] h-[35px] rounded-[10px] bg-white p-1"
             />
           </div>
         </div>

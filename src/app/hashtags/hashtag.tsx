@@ -88,7 +88,7 @@ const Hashtag: React.FC<HashtagProps> = ({
               setTextErrorMsg(onInputTextChange(e, dataKey).msg ?? '') 
             }}
             className={`
-            hashtagInput input w-[90%] h-[40px]
+            hashtagInput input w-[90%] h-[40px] truncate ...
             ${ environmentVariables.backgroundMode ? 'bg-white focus:text-black' : 'bg-[#2A303C] border-white focus:text-white' }
           `}/>
           { textErrorMsg !== null ? 
