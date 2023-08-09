@@ -31,6 +31,7 @@ const LoadingSpinner03: React.FC<LoadingSpinner03Props> = ({ cubeText, infoText 
               className={`
                 side 
                 side-${ idx + 1 }
+                ${ environmentVariables.backgroundMode ? 'text-[#2A303C]' : 'text-white' } 
             `}>{ x }</div>
           );
         })}
