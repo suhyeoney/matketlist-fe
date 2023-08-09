@@ -1,13 +1,14 @@
 'use client'
 
 import localFont from 'next/font/local';
+import Image from 'next/image';
 
 import Card from '@sliders/card';
 import { RootState } from '@store/store';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SearchMatjipInfo } from '@dataTypes/matjip';
-import { setMyMatjipSlidersOpen } from '@features/modalControl/modalControlSlice';
+import { setHashtagTreeOpen, setMyMatjipSlidersOpen } from '@features/modalControl/modalControlSlice';
 import RegionSelectbox from '@main/regionSelectbox';
 import SearchInputbox from '@sliders/searchInputbox';
 import { data } from '@utils/dataForRegion/data';
@@ -15,6 +16,8 @@ import { createSignal } from '@react-rxjs/utils';
 import { Subscribe, bind } from '@react-rxjs/core';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { useWindowSize } from '@hooks/useWindowSize';
+import image1 from '@assets/icons/hashtag-btn.png';
+import HashtagTree from '@hashtags/container';
 
 // rxjs
 const [ keywordChange$, setKeyword ] = createSignal<string>();
@@ -47,6 +50,7 @@ type CardDataType = {
   region: RegionType,
   userRegisterDate: string,
   compoundCode: string,
+  hashtags: number[],
 };
 
 const Tenada = localFont({
@@ -66,6 +70,7 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
   const [ regionCode, setRegionCode ] = useState<string>(data[0]?.key);
   const [ matjipListData, setMatjipListData ] = useState<CardDataType[]>();
   const [ currentCardSequence, setCurrentCardSequence ] = useState<number>(0);
+  const [ isChangedToHashtagMgmt, setChangedToHashtagMgmt ] = useState<boolean>(false);
 
   const convertWithRegionCode = (address: string, compoundCode: string) => {
     const arrAddress = address.split(' ');
@@ -126,9 +131,21 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
     document.querySelector('#matjipCardsWrapper')?.classList.replace('animate-openFromRight', 'animate-closeToRight');
     setTimeout(() => {
       dispatch(setMyMatjipSlidersOpen(false));
+      dispatch(setHashtagTreeOpen(false));
       setCurrentCardSequence(0);
     }, 1000);
 	};
+
+  const openHashtagTree = () => {
+    dispatch(setHashtagTreeOpen(true));
+  };
+
+  const closeHashtagTree = () => {
+    document.querySelector('#hashtagTree')?.classList.replace('animate-openFromRight', 'animate-closeToRight');
+    setTimeout(() => {
+      dispatch(setHashtagTreeOpen(false));
+    }, 1000);
+  };
 
   const observeSliders = () => {
     let matjipCards = document.querySelectorAll('.matjipCard');
@@ -142,15 +159,15 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
           setCurrentCardSequence(currentId + 1);
           matjipCards.forEach((card: Element, idx: number) => {
             if(idx !== currentId) {
-              matjipCards[idx].classList.remove('border-double');
-              matjipCards[idx].classList.remove('border-8');
-              matjipCards[idx].classList.remove('border-red-200');
-              matjipCards[idx].classList.remove('rounded-[18px]');
+              matjipCards[idx].classList.remove('border-4');
+              matjipCards[idx].classList.remove('border-[#552594]');
+              matjipCards[idx].classList.remove('rounded-[16px]');
+              matjipCards[idx].classList.add('pointer-events-none');
             } else {
-              matjipCards[idx].classList.add('border-double');
-              matjipCards[idx].classList.add('border-8');
-              matjipCards[idx].classList.add('border-red-200');
-              matjipCards[idx].classList.add('rounded-[18px]');
+              matjipCards[idx].classList.add('border-4');
+              matjipCards[idx].classList.add('border-[#552594]');
+              matjipCards[idx].classList.add('rounded-[16px]');
+              matjipCards[idx].classList.remove('pointer-events-none');
             }
           });
         }
@@ -166,7 +183,7 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
   useEffect(() => {
     setMatjipListData([
       ...location.arrLocation.map((e: SearchMatjipInfo, idx: number) => {
-        let obj = { 
+        let obj: CardDataType = { 
           id: 0, 
           placeId: '', 
           name: '', 
@@ -179,6 +196,7 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
           }, 
           userRegisterDate: '' ,
           compoundCode: '',
+          hashtags: []
         };
         obj['id'] = idx;
         obj['placeId'] = e.placeId;
@@ -189,6 +207,7 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
         obj['region'] = e.address ? convertWithRegionCode(e.address, e.compoundCode) : { key: '', name: '' };
         obj['userRegisterDate'] = e.userRegisterDate;
         obj['compoundCode'] = e.compoundCode;
+        obj['hashtags'] = e.hashtags;
         return obj;
       }).filter((e: any) => regionCode !== 'RC000' ? e.region.key === regionCode : true)
       .filter((x: any) => keyword?.length > 0 ?
@@ -204,6 +223,16 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
     }
 
   }, [ matjipListData ]);
+
+  useEffect(() => {
+    if(modalControl.isHashtagTreeOpen) {
+      setTimeout(() => {
+        setChangedToHashtagMgmt(true);
+      }, 1000);
+    } else {
+      setChangedToHashtagMgmt(false);
+    }
+  }, [ modalControl.isHashtagTreeOpen ]);
 
   return (
     <>
@@ -235,7 +264,7 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
             laptop:text-2xl
             tablet:text-2xl
             mobile:text-1xl
-          `}>🦐 내 맛집 목록</h3>
+          `}>🦐 내 맛집 목록 { isChangedToHashtagMgmt ? '> 해시태그 관리' : null }</h3>
           <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 cursor-pointer" fill="none" viewBox="0 0 24 24"
             stroke={`${ environmentVariables.backgroundMode ? '#2A303C' : 'white' }`} 
             onClick={ closeModal }
@@ -247,7 +276,7 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
           { matjipListData !== undefined ? 
           <>
               <div className="
-                flex flex-row items-center justify-between h-[15%] border-2 border-gray-300 rounded-[10px] p-2
+                flex flex-row items-center justify-center h-[15%] border-2 border-gray-300 rounded-[10px] p-2
               ">
                 <RegionSelectbox data={ data } setRegionCode={ setRegionCode } />
                 <Subscribe>
@@ -259,8 +288,8 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
               </div>
               <div 
                 className="
-                  relative snap-mandatory snap-x flex gap-6 pt-2
-                  w-full h-full overflow-x-auto
+                  relative snap-mandatory snap-x flex gap-6 pt-2 
+                  w-full h-full overflow-x-scroll scroll-custom
               ">
               <div className={`
                 snap-center shrink-0 h-[100%]
@@ -271,7 +300,6 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
                 ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
               `}>
                 <div 
-                  // style={{width: `${ (size.width >= size.height ? size.width * 0.6 : size.width * 0.9) / 4 }px`}} 
                   className="shrink-0"></div>
               </div>
               { matjipListData.map((e: CardDataType, idx: number) => {
@@ -288,7 +316,6 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
                 ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
               `}>
                 <div 
-                  // style={{width: `${ (size.width >= size.height ? size.width * 0.6 : size.width * 0.9) / 4 }px`}} 
                   className="shrink-0"></div>
               </div>
             </div>
@@ -303,6 +330,22 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
         </> 
         : null
         }
+        { modalControl.isHashtagTreeOpen ? <HashtagTree size={ size } closeHashtagTree={ closeHashtagTree } /> : null }
+        <div 
+          className="
+          absolute z-15 bottom-3 right-3 rounded-full bg-orange-200 border-4 border-orange-400 
+          p-3 animate-bounceDefault hover:cursor-pointer
+          "
+          onClick={ () => openHashtagTree()  }
+        >
+          <Image
+            src={ image1.src }
+            alt=""
+            width="25"
+            height="25"
+            className="w-[25px] h-[25px]"
+          />
+        </div>
       </div>
     </>
   );

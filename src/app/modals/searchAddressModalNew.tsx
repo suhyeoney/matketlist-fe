@@ -38,6 +38,7 @@ type ResultsDataTagType = {
   phoneNumber: string,
   placeId: string,
   compoundCode: string,
+  hashtags: number[],
 };
 
 type SearchAddressModalProps = {
@@ -91,6 +92,7 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
           phoneNumber: '',
           placeId: '',
           compoundCode: '',
+          hashtags: [],
         };
         newObj['address'] = e.formatted_address.includes('대한민국') ? e.formatted_address.replace('대한민국', '') : e.formatted_address;
         newObj['name'] = e.name;
@@ -99,6 +101,7 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
         newObj['longitude'] = e.geometry.location.lng;
         newObj['placeId'] = e.place_id;
         newObj['compoundCode'] = e.plus_code ? e.plus_code.compound_code : '';
+        newObj['hashtags'] = e.hashtags;
 
         return newObj;
       });
@@ -154,6 +157,7 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
         website: getWebsiteUrl ?? '-',
         userRegisterDate: getToday(),
         compoundCode: inputCompoundCode,
+        hashtags: [], 
       }));
       alert('맛집이 정상적으로 등록되었습니다.');
       dispatch(storeInputMajip(null));
@@ -172,11 +176,12 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
     const io = new IntersectionObserver((
       entries: IntersectionObserverEntry[], observer: IntersectionObserver)=> {
         const currentId = Number(entries[0].target.id.split('resultTag-')[1]);
-        if(currentId === searchResultsOrigin?.length) {
-          floatBtn?.classList.remove('animate-bounce');
+        console.log('currentId', currentId);
+        if(searchResultsOrigin !== undefined && currentId >= searchResultsOrigin?.length - 1) {
+          floatBtn?.classList.remove('animate-bounceHide');
           floatBtn?.classList.add('animate-hideFloatBtn');
         } else {
-          floatBtn?.classList.add('animate-bounce');
+          floatBtn?.classList.add('animate-bounceHide');
           floatBtn?.classList.remove('animate-hideFloatBtn');
         }
       }, 
@@ -185,6 +190,11 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
     for(const e of resultTags) {
       io.observe(e);
     }
+  };
+
+  const filter = (keyword: string, dataSet: any[]) => {
+    return dataSet.filter(
+      (e: SearchMatjipInfo) => e.name?.includes(keyword) || e.address?.includes(keyword));
   };
 
   useEffect(() => {
@@ -200,11 +210,6 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
       setSearchResultsOrigin(undefined);
     }
 	}, [ keyword ]);
-
-  const filter = (keyword: string, dataSet: any[]) => {
-    return dataSet.filter(
-      (e: SearchMatjipInfo) => e.name?.includes(keyword) || e.address?.includes(keyword));
-  };
 
   return (
     <>
@@ -258,10 +263,10 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
                 </Subscribe>
                 <div 
                   id="searchAddressResultContainer"
-                  style={{ height: size.height * 0.5 }}
+                  style={{ height: size.width >= 390 ? size.height * 0.5 : size.height * 0.6 }}
                   className="
                     relative flex flex-col
-                    w-full overflow-y-scroll border
+                    w-full overflow-y-scroll border scroll-custom
                 ">
                   { searchResultsOrigin?.map((e: ResultsDataTagType, idx: number) => {
                     return (
@@ -276,8 +281,8 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
                     <Image
                       src={ image1.src }
                       alt=""
-                      width={ size.width * 0.11 }
-                      height={ size.height * 0.11 }
+                      width={ 40 }
+                      height={ 40 }
                     ></Image>
                     <div>검색 결과의 마지막입니다.</div>
                   </div>
@@ -290,8 +295,8 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
                   <Image
                     src={ image2.src }
                     alt=""
-                    width={ size.width * 0.2 }
-                    height={ size.height * 0.1 }
+                    width={ 50 }
+                    height={ 50 }
                   ></Image>
                 </div>
               </div>

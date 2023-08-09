@@ -1,5 +1,7 @@
 'use client'
 
+import localFont from 'next/font/local';
+
 import { useWindowSize } from '@hooks/useWindowSize';
 import { useEffect, useState } from 'react';
 
@@ -12,6 +14,10 @@ type RegionBadgeProps = {
   id: number,
   regionData: RegionType
 };
+
+const YeongdeokSea = localFont({
+  src: '../assets/fonts/YeongdeokSea.woff'
+});
 
 const RegionBadge: React.FC<RegionBadgeProps> = ({ id, regionData }) => {
 
@@ -112,9 +118,11 @@ const RegionBadge: React.FC<RegionBadgeProps> = ({ id, regionData }) => {
           top: `${ topPadding }px`,
           borderRadius: `30% 70% 70% 30% / 30% 30% 70% 70%` 
         }}
-        className={`${ badgeStyle }`}
-      >
-        { regionData?.name }
+        className={`
+        ${ YeongdeokSea.className }
+        ${ badgeStyle }
+      `}>
+        <span className="absolute top-1">{ regionData?.name }</span>
       </div>
     );
   };

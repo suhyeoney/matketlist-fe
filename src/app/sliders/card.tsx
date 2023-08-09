@@ -1,15 +1,20 @@
 'use client'
 
 import Image from 'next/image';
+import localFont from 'next/font/local';
 
 import RegionBadge from '@sliders/regionBadge';
 import { getDiffBetweenTwoDays } from '@utils/dateUtils';
 import image1 from '@assets/icons/move-to-map.png';
 import image2 from '@assets/icons/remove-btn.png';
-import image3 from '@assets/icons/share.png';
-import { useDispatch } from 'react-redux';
+import image3 from '@assets/icons/hashtag.png';
+import { useDispatch, useSelector } from 'react-redux';
 import { moveToMapToggle } from '@features/environmentVariables/environmentVariablesSlice';
-import { removeLocation } from '@features/location/locationSlice';
+import { removeLocation, updateHashtag } from '@features/location/locationSlice';
+import { useState } from 'react';
+import HashtagCheckbox from '@sliders/hashtagCheckbox';
+import { RootState } from '@store/store';
+import { HashtagType } from '@dataTypes/hashtag';
 
 type RegionType = {
   key: string,
@@ -37,7 +42,15 @@ type CardProps = {
   closeModal: () => void,
 };
 
+const YeongdeokBlueroad = localFont({
+  src: '../assets/fonts/YeongdeokBlueroad.woff'
+});
+
 const Card: React.FC<CardProps> = ({ dataKey, data, setPosition, closeModal }) => {  
+
+  const location = useSelector((state: RootState) => state.location);
+
+  const [ isHashtagCheckboxOpen, setHashtagCheckboxOpen ] = useState<boolean>(false);
 
   const dispatch = useDispatch();
 
@@ -60,25 +73,60 @@ const Card: React.FC<CardProps> = ({ dataKey, data, setPosition, closeModal }) =
     const result = window.confirm(`해당 맛집을 목록에서 해제하시겠어요?`);
     if(result) {
       dispatch(removeLocation(data.placeId));
+      // 해시태그에 매핑되어있는 placeId도 제거해줘야 함!
+      const tempArrHashtag = location.arrHashtag;
+      console.log(
+        tempArrHashtag.map((e: HashtagType) => {
+          if(e.placeIds.includes(data.placeId)) {
+            return {
+              ...e,
+              placeIds: [
+                ...e.placeIds.filter((x: string) => x !== data.placeId)
+              ]
+            };
+          }
+          return e;
+        })
+      );
+      dispatch(updateHashtag(
+        tempArrHashtag.map((e: HashtagType) => {
+          if(e.placeIds.includes(data.placeId)) {
+            return {
+              ...e,
+              placeIds: [
+                ...e.placeIds.filter((x: string) => x !== data.placeId)
+              ]
+            };
+          }
+          return e;
+        })
+      ));
     } else {
       return;
     }
   };
 
-  const openSnsSharing = (data: CardDataType) => {
-
+  const openHashtagCheckbox = (data: CardDataType) => {
+    if(location.arrHashtag.length === 0) {
+      alert('생성된 해시태그가 없습니다. 우측 하단의 해시태그 버튼을 통해 해시태그를 관리해보세요!');
+      return;
+    }
+    setHashtagCheckboxOpen(true);
   };
 
   return (
     <div 
       id={`card-${ dataKey }`}
-      className="matjipCard snap-center shrink-0
+      className={`
+      matjipCard snap-center shrink-0
+      ${ YeongdeokBlueroad.className }
       laptop:w-[200px] h-[90%]
       tablet:w-[200px] h-[90%]
       mobile:w-[200px] h-[100%]
       smallest:w-[150px] h-[100%]
       first:pl-8 last:pr-8 
-    ">
+    `}>
+      { !isHashtagCheckboxOpen ?
       <div className="
         shrink-0 shadow-xl w-full h-full flex flex-col rounded-[10px] bg-gradient-to-r from-purple-500 to-pink-500
         laptop:gap-7
@@ -89,18 +137,18 @@ const Card: React.FC<CardProps> = ({ dataKey, data, setPosition, closeModal }) =
         <RegionBadge id={ dataKey } regionData={ data.region } />
         <div className="
           h-[60px] font-semibold bg-white text-black p-1 rounded-[10px]
-          text-center px-3 truncate ...
-          laptop:text-[15px]
-          tablet:text-[15px]
-          mobile:text-[15px]
-          smallest:text-[15px]
+          text-center px-3 
+          laptop:text-[15px] whitespace-normal
+          tablet:text-[15px] whitespace-normal
+          mobile:text-[15px] whitespace-normal
+          smallest:text-[15px] truncate ...
       ">{ data.name }</div>
         <div className="
-          font-medium bg-white text-black p-2 rounded-[10px] truncate ...
-          laptop:h-[90px]
-          tablet:h-[90px] 
-          mobile:h-[90px] 
-          smallest:h-[60px] text-[12px] 
+          font-medium bg-white text-black p-2 rounded-[10px] 
+          laptop:h-[100px] whitespace-normal
+          tablet:h-[100px]  whitespace-normal
+          mobile:h-[90px] whitespace-normal
+          smallest:h-[60px] text-[12px] truncate ...
         ">{ data.address }</div>
         <div className="
           h-[30px] font-medium bg-white text-center text-gray-300 p-1 rounded-[10px]
@@ -133,21 +181,25 @@ const Card: React.FC<CardProps> = ({ dataKey, data, setPosition, closeModal }) =
               height="30"
               className="w-[30px] h-[30px]"/>
           </button>
-          <button 
-            id="btn-share" 
-            onClick={ () => openSnsSharing(data) } 
-            className="flex items-center justify-center float-right w-[33%]
+          <div 
+            id="btn-hashtag" 
+            onClick={ () => openHashtagCheckbox(data) } 
+            className="flex items-center justify-center float-right w-[33%] hover:cursor-pointer
           ">
             <Image
               src={ image3.src }
               alt=""
-              width="30"
-              height="30"
-              className="w-[30px] h-[30px]"
+              width="35"
+              height="35"
+              className="w-[35px] h-[35px] rounded-[10px] bg-white p-1"
             />
-          </button>
+          </div>
         </div>
-      </div>
+      </div> : 
+      <HashtagCheckbox 
+        placeId={ data.placeId }
+        setHashtagCheckboxOpen={ setHashtagCheckboxOpen }
+      /> }
     </div>
   );
 };

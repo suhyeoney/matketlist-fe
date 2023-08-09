@@ -6,12 +6,14 @@ export interface ModalControlState {
   isSearchAddressModalOpen: boolean,
   isMyMatjipSlidersOpen: boolean,
   isMatjipInfoModalOpen: boolean,
+  isHashtagTreeOpen: boolean,
 };
 
 const initialState: ModalControlState = {
   isSearchAddressModalOpen: false,
   isMyMatjipSlidersOpen: false,
   isMatjipInfoModalOpen: false,
+  isHashtagTreeOpen: false,
 }
 
 export const modalControlSlice = createSlice({
@@ -27,6 +29,9 @@ export const modalControlSlice = createSlice({
     setMatjipInfoModalOpen: (state, action) => {
       state.isMatjipInfoModalOpen = action.payload
     },
+    setHashtagTreeOpen: (state, action) => {
+      state.isHashtagTreeOpen = action.payload
+    },
   }
 });
 
@@ -34,6 +39,7 @@ export const {
   setSearchAddressModalOpen, 
   setMyMatjipSlidersOpen,
   setMatjipInfoModalOpen, 
+  setHashtagTreeOpen,
 } = modalControlSlice.actions;
 
 export default modalControlSlice.reducer;

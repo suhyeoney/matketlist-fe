@@ -15,7 +15,7 @@ const LoadingSpinner03: React.FC<LoadingSpinner03Props> = ({ cubeText, infoText 
   const [ arrCubeText, setArrCubeText ] = useState<string[]>([]);
 
   const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
-  
+
   useEffect(() => {
     setArrCubeText([ ...cubeText.split('') ]);
   }, [ cubeText ]);
@@ -36,7 +36,12 @@ const LoadingSpinner03: React.FC<LoadingSpinner03Props> = ({ cubeText, infoText 
           );
         })}
       </div>
-      <span>{ infoText }</span>
+      <span
+        className={`
+        ${ environmentVariables.backgroundMode ? 'text-gray-700' : 'text-white' }
+      `}>
+        { infoText }
+      </span>
     </div>
   );
     

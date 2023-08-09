@@ -32,6 +32,22 @@ input[type="search"]::-webkit-search-cancel-button {
   /* background-image: url('../app/assets/icons/like-it.png'); */
 }
 
+.scroll-custom::-webkit-scrollbar {
+  width: 5px;
+  background-color: #c0fce9;
+  border-radius: 5px;
+}
+
+.scroll-custom::-webkit-scrollbar-thumb {
+  background-color: #00fcaa;
+  border-radius: 5px;
+}
+
+.scroll-custom::-webkit-scrollbar-track {
+  background-color: #c0fce9;
+  border-radius: 5px;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     --foreground-rgb: 255, 255, 255;
