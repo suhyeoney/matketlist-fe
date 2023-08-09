@@ -79,10 +79,13 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
   };
 
   const goBackToCards = () => {
-    if(hashtagList.length < 1) {
+    const previousState = location.arrHashtag;
+    if(JSON.stringify(hashtagList) === JSON.stringify(previousState)) {
+      // 변경 내역이 없는 경우,
       closeHashtagTree();
     } else {
-      const result = window.confirm('나가시게 되면 변경 내역이 사라지게 됩니다. 그래도 나가시겠습니까? ❓');
+      // 변경 내역이 있는 경우,
+      const result = window.confirm('나가시게 되면 변경 내역이 사라지게 됩니다.\n그래도 나가시겠습니까? ❓');
       if(result) {
         closeHashtagTree();
       } else {
