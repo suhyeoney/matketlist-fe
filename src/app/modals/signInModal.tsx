@@ -1,6 +1,6 @@
 'use client'
 
-type SignInModalProps = {
+interface SignInModalProps {
   htmlString: string,
 };
 

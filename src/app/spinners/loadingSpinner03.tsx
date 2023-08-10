@@ -5,7 +5,7 @@ import '@spinners/styles.css';
 import { useSelector } from 'react-redux';
 import { RootState } from '@store/store';
 
-type LoadingSpinner03Props = {
+interface LoadingSpinner03Props {
   cubeText: string,
   infoText: string,
 };

@@ -16,12 +16,12 @@ import HashtagCheckbox from '@sliders/hashtagCheckbox';
 import { RootState } from '@store/store';
 import { HashtagType } from '@dataTypes/hashtag';
 
-type RegionType = {
+interface RegionType {
   key: string,
   name: string | string[],
-} | undefined;
+};
 
-type CardDataType = {
+interface CardDataType {
   id: number,
   placeId: string,
   name: string,
@@ -32,7 +32,7 @@ type CardDataType = {
   userRegisterDate: string,
 };
 
-type CardProps = {
+interface CardProps {
   dataKey: number,
   data: CardDataType,
   setPosition: React.Dispatch<React.SetStateAction<{

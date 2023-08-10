@@ -1,6 +1,6 @@
 'use client'
 
-type LoadingSpinner01Props = {
+interface LoadingSpinner01Props {
   color: string,
   depth: string,
   thickness: string,

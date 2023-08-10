@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 import image1 from '@assets/icons/signout-btn.png';
 
-type SignOutProps = {
+interface SignOutProps {
   signOut: () => void
 };
 

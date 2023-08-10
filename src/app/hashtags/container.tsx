@@ -16,7 +16,7 @@ import { setHashtagTreeOpen } from '@features/modalControl/modalControlSlice';
 import useDragAndDrop from '@hooks/useDragAndDrop';
 import { SearchMatjipInfo } from '@dataTypes/matjip';
 
-type HashtagTreeProps = {
+interface HashtagTreeProps {
   size : { width: number, height: number },
   closeHashtagTree: () => void,
 };

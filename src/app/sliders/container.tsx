@@ -27,7 +27,7 @@ const [ useKeyword, keyword$ ] = bind(
     distinctUntilChanged()
   ), '');
 
-type MatjipSlidersProps = {
+interface MatjipSlidersProps {
   size : { width: number, height: number },
   setPosition: React.Dispatch<React.SetStateAction<{
     latitude: number;
@@ -35,12 +35,12 @@ type MatjipSlidersProps = {
   }>>
 }
 
-type RegionType = {
+interface RegionType {
   key: string,
   name: string | string[],
 };
 
-type CardDataType = {
+interface CardDataType {
   id: number,
   placeId: string,
   name: string,

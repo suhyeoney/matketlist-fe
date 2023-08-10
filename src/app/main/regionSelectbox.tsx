@@ -3,12 +3,12 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '@store/store';
 
-type RegionType = {
+interface RegionType {
   key: string,
   name: string | string[],
 };
 
-type RegionSelectboxProps = {
+interface RegionSelectboxProps {
   data: RegionType[],
   setRegionCode: React.Dispatch<React.SetStateAction<string>>,
 };

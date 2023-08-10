@@ -2,7 +2,7 @@
 
 import { ReactNode, useState } from 'react';
 
-type DragAndDropProps<T> = {
+interface DragAndDropProps<T> {
   data: T[],
   elements: NodeListOf<Element>,
   setState: React.Dispatch<React.SetStateAction<T[]>>,

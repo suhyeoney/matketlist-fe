@@ -10,7 +10,7 @@ import { RootState } from '@store/store';
 import { useEffect, useState } from 'react';
 import { HashtagType } from '@dataTypes/hashtag';
 
-type HashtagProps = {
+interface HashtagProps {
   sequence: number,
   dataKey: number,
   text: string,

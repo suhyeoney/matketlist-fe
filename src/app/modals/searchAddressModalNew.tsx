@@ -29,7 +29,7 @@ const [ useKeyword, keyword$ ] = bind(
     distinctUntilChanged()
   ), '');
 
-type ResultsDataTagType = {
+interface ResultsDataTagType {
   address: string, 
   name : string, 
   iconUrl: string, 
@@ -41,7 +41,7 @@ type ResultsDataTagType = {
   hashtags: number[],
 };
 
-type SearchAddressModalProps = {
+interface SearchAddressModalProps {
   size : { width: number, height: number },
 };
 

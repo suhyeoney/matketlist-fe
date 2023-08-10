@@ -25,7 +25,7 @@ const [ useKeyword, keyword$ ] = bind(
     distinctUntilChanged()
   ), '');
 
-type SearchAddressModalProps = {
+interface SearchAddressModalProps {
   size : { width: number, height: number },
 };
 

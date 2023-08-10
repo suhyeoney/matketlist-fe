@@ -18,7 +18,7 @@ const Tenada = localFont({
   src: '../assets/fonts/Tenada.woff'
 });
 
-type HashtagCheckboxProps = {
+interface HashtagCheckboxProps {
   placeId: string,
   setHashtagCheckboxOpen: React.Dispatch<React.SetStateAction<boolean>>,
 };
