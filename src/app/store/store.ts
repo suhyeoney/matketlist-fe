@@ -9,9 +9,8 @@ import environmentVariablesReducer from '@features/environmentVariables/environm
 // import thunk from 'redux-thunk';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { all } from 'typed-redux-saga';
-import { environmentVariablesSaga } from '@sagas/sagas/environmentVariablesSaga';
 import createSagaMiddleware from 'redux-saga';
+import { rootSaga } from '@sagas/saga';
 
 const reducers = combineReducers({
   counter: counterReducer,
@@ -37,13 +36,6 @@ export const store = configureStore({
 });
 
 sagaMiddleware.run(rootSaga);
-
-// Saga
-export function* rootSaga() {
-  yield all([
-    environmentVariablesSaga(),
-  ]);
-}
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
