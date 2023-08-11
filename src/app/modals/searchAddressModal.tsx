@@ -7,7 +7,7 @@ import { RootState } from '@store/store';
 import { setSearchAddressModalOpen } from '@features/modalControl/modalControlSlice';
 import { useEffect, useState } from 'react';
 import MainService from '@services/main.service';
-import SearchResultsTable from '@tables/SearchResultsTable';
+import SearchResultsTable from '@tables/searchResultsTable';
 import SearchInputbox from './searchInputbox';
 import { Subscribe, bind } from '@react-rxjs/core';
 import { SearchMatjipInfo } from '@dataTypes/matjip';

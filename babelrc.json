@@ -19,6 +19,7 @@
             "@hooks": "./src/app/hooks",
             "@main": "./src/app/main",
             "@modals": "./src/app/modals",
+            "@sagas": "./src/app/sagas",
             "@services": "./src/app/services",
             "@signIn": "./src/app/signIn",
             "@sliders": "./src/app/sliders",            

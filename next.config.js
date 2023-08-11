@@ -32,6 +32,7 @@ const nextConfig = {
         '@hooks': path.resolve(__dirname, 'src/app/hooks'),
         '@main': path.resolve(__dirname, 'src/app/main'),
         '@modals': path.resolve(__dirname, 'src/app/modals'),
+        '@sagas': path.resolve(__dirname, 'src/app/sagas'),
         '@services': path.resolve(__dirname, 'src/app/services'),
         '@signIn': path.resolve(__dirname, 'src/app/signIn'),
         '@sliders': path.resolve(__dirname, 'src/app/sliders'),
