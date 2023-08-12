@@ -7,7 +7,7 @@ import { RootState } from '@store/store';
 import { setSearchAddressModalOpen } from '@features/modalControl/modalControlSlice';
 import { useEffect, useState } from 'react';
 import MainService from '@services/main.service';
-import SearchResultsTable from '@tables/searchResultsTable';
+// import SearchResultsTable from '@tables/searchResultsTable';
 import SearchInputbox from './searchInputbox';
 import { Subscribe, bind } from '@react-rxjs/core';
 import { SearchMatjipInfo } from '@dataTypes/matjip';
@@ -226,7 +226,7 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
                     placeholder={ '검색 결과 내 키워드로 조회' } 
                   />
                 </div>
-                <SearchResultsTable 
+                {/* <SearchResultsTable 
                   size={ size }
                   data={ searchResultsCopy } 
                   page={ page }
@@ -234,7 +234,7 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
                   setData={ setSearchResultsCopy } 
                   setPage={ setPage }
                   registerMatjip={ registerMatjip } 
-                />
+                /> */}
               </Subscribe>
             </div>
           </div>
