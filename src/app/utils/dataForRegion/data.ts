@@ -1,6 +1,6 @@
 'use client'
 
-type RegionType = {
+interface RegionType {
   key: string,
   name: string | string[],
 };

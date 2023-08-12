@@ -20,6 +20,7 @@ import ResultTag from '@modals/resultTag';
 import image1 from '@assets/icons/end.png';
 import image2 from '@assets/icons/godown.png';
 import LoadingSpinner03 from '@spinners/loadingSpinner03';
+import { getPlaceDetailData } from '@features/api/mainApiSlice';
 
 // rxjs
 const [ keywordChange$, setKeyword ] = createSignal<string>();
@@ -29,7 +30,7 @@ const [ useKeyword, keyword$ ] = bind(
     distinctUntilChanged()
   ), '');
 
-type ResultsDataTagType = {
+interface ResultsDataTagType {
   address: string, 
   name : string, 
   iconUrl: string, 
@@ -41,7 +42,7 @@ type ResultsDataTagType = {
   hashtags: number[],
 };
 
-type SearchAddressModalProps = {
+interface SearchAddressModalProps {
   size : { width: number, height: number },
 };
 
@@ -268,7 +269,7 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
                   style={{ height: size.height * 0.5 }}
                   className="
                     relative flex flex-col
-                    w-full overflow-y-scroll border scroll-custom
+                    w-full overflow-y-scroll border scroll-custom-normal
                 ">
                   { searchResultsOrigin?.map((e: ResultsDataTagType, idx: number) => {
                     return (

@@ -3,7 +3,7 @@ import { SearchMatjipInfo } from '@dataTypes/matjip';
 import { get } from '../api/api';
 import { instanceForGoogleApi, instanceForNaverApi } from '../api/axios';
 
-type LocalSearchParams = {
+interface LocalSearchParamsType {
   key: string | undefined,
   query: string,
   // display: number,
@@ -11,7 +11,7 @@ type LocalSearchParams = {
   // sort: string
 };
 
-type PlaceDetailParams = {
+interface PlaceDetailParamsType {
   key: string | undefined,
   placeid: string,
 };
@@ -25,7 +25,7 @@ type PlaceDetailParams = {
 //   }
 // };
 
-// const getLocalSearchDataApi = async (params: LocalSearchParams) => {
+// const getLocalSearchDataApi = async (params: LocalSearchParamsType) => {
 //   try {
 //     const response: AxiosResponse = await get<SearchMatjipInfo>('/search/local.json', params, instanceForNaverApi);
 //     const data = response.data.items;
@@ -34,10 +34,14 @@ type PlaceDetailParams = {
 //   }
 // };
 
-const getLocalSearchDataApi = async(params: LocalSearchParams) => {
+const isServer = typeof window === 'undefined';
+
+const getLocalSearchDataApi = async(params: LocalSearchParamsType) => {
+  console.log('>>>>> getLocalSearchDataApi');
+  console.log(`isServer: ${ typeof window === 'undefined'}`);
   try {
     const response: AxiosResponse = await get<SearchMatjipInfo>(
-      '/maps/api/place/textsearch/json', 
+      (isServer ? 'https://maps.googleapis.com' : '') +  '/maps/api/place/textsearch/json', 
       params, 
       instanceForGoogleApi
     );
@@ -47,10 +51,11 @@ const getLocalSearchDataApi = async(params: LocalSearchParams) => {
   }
 };
 
-const getPlaceDetailDataApi = async(params: PlaceDetailParams) => {
+const getPlaceDetailDataApi = async(params: PlaceDetailParamsType) => {
+  console.log('>>>>> getPlaceDetailDataApi');
   try {
-    const response: AxiosResponse = await get<any>(
-      '/maps/api/place/details/json', 
+    const response: AxiosResponse = await get<SearchMatjipInfo>(
+      (isServer ? 'https://maps.googleapis.com' : '') + '/maps/api/place/details/json', 
       params, 
       instanceForGoogleApi
     );

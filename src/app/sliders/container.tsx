@@ -27,7 +27,7 @@ const [ useKeyword, keyword$ ] = bind(
     distinctUntilChanged()
   ), '');
 
-type MatjipSlidersProps = {
+interface MatjipSlidersProps {
   size : { width: number, height: number },
   setPosition: React.Dispatch<React.SetStateAction<{
     latitude: number;
@@ -35,12 +35,12 @@ type MatjipSlidersProps = {
   }>>
 }
 
-type RegionType = {
+interface RegionType {
   key: string,
   name: string | string[],
 };
 
-type CardDataType = {
+interface CardDataType {
   id: number,
   placeId: string,
   name: string,
@@ -168,6 +168,7 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
               matjipCards[idx].classList.add('border-[#552594]');
               matjipCards[idx].classList.add('rounded-[16px]');
               matjipCards[idx].classList.remove('pointer-events-none');
+
             }
           });
         }
@@ -177,7 +178,6 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
     for(const e of matjipCards) {
       io.observe(e);
     }
-
   };
 
   useEffect(() => {
@@ -287,9 +287,10 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
                 </Subscribe>
               </div>
               <div 
+                id="sliderContainer"
                 className={`
                   relative snap-mandatory snap-x flex gap-6 pt-2 
-                  w-full h-full overflow-x-scroll scroll-custom
+                  w-full h-full overflow-x-scroll scroll-custom-normal
                   ${ matjipListData.length === 0 ? 
                     'items-center justify-center border-2 border-dotted border-gray-400 rounded-[20px] scrollbar-hide' : null }
               `}>

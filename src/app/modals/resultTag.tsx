@@ -3,7 +3,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@store/store';
 
-type ResultsDataTagType = {
+interface ResultsDataTagType {
   address: string, 
   name : string, 
   iconUrl: string, 
@@ -15,7 +15,7 @@ type ResultsDataTagType = {
   hashtags: number[],
 };
 
-type ResultTagProps = {
+interface ResultTagProps {
   dataKey: number,
   data: ResultsDataTagType,
   registerMatjip: (e: ResultsDataTagType) => Promise<void>

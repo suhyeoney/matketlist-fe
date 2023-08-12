@@ -2,7 +2,7 @@ import { get } from '@api/api';
 import { instanceForNaverApi } from '@api/axios';
 import { AxiosResponse } from 'axios';
 
-type ResponseTokenType = {
+interface ResponseTokenType {
   access_token: string,
   token_type: string,
   expires_in: string,

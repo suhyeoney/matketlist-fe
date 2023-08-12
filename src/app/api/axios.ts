@@ -1,7 +1,9 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 
 const BASE_URL_NAVER= '/naver';
 const BASE_URL_GOOGLE = '/google';
+
+const isServer = typeof window === 'undefined';
 
 console.log(process.env.NODE_ENV);
 
@@ -30,3 +32,24 @@ export const instanceForGoogleApi: AxiosInstance = axios.create({
   },
   timeout: 5000,
 });
+
+defaultInstance.interceptors.request.use(async (config: InternalAxiosRequestConfig) => setHeader(config));
+instanceForNaverApi.interceptors.request.use(async (config: InternalAxiosRequestConfig) => setHeader(config));
+instanceForGoogleApi.interceptors.request.use(async (config: InternalAxiosRequestConfig) => setHeader(config));
+
+const setHeader = async (config: InternalAxiosRequestConfig) => {
+  if (isServer) {
+    const { cookies } = (await import('next/headers'));
+    const token = cookies().get('token')?.value;
+
+    if (token) {
+        config.headers['Authorization'] = `Bearer ${token}`;
+    }
+  } else {
+    const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, '$1');
+    if (token) {
+        config.headers['Authorization'] = `Bearer ${token}`;
+    }
+  }
+  return config;
+};

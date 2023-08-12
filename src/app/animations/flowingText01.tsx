@@ -8,17 +8,17 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@store/store';
 import { useEffect, useRef, useState } from 'react';
 
-type NoticeType = {
+interface NoticeType {
   typeId: number,
   content: string,
 };
 
-type EntryFlagType = {
+interface EntryFlagType {
   in: boolean,
   out: boolean,
 };
 
-type FlowingText01Props = {
+interface FlowingText01Props {
   textList: NoticeType[],
 };
 

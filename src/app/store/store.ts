@@ -6,9 +6,12 @@ import locationReducer from '@features/location/locationSlice';
 import modalControlReducer from '@features/modalControl/modalControlSlice';
 import inputControlReducer from '@features/inputControl/inputControlSlice';
 import environmentVariablesReducer from '@features/environmentVariables/environmentVariablesSlice';
-import thunk from 'redux-thunk';
+// import thunk from 'redux-thunk';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import createSagaMiddleware from 'redux-saga';
+import { rootSaga } from '@sagas/saga';
+import mainApiReducer  from '@features/api/mainApiSlice';
 
 const reducers = combineReducers({
   counter: counterReducer,
@@ -16,20 +19,29 @@ const reducers = combineReducers({
   modalControl: modalControlReducer,
   inputControl: inputControlReducer,
   environmentVariables: environmentVariablesReducer,
+  mainApi: mainApiReducer,
 });
 
 const persistConfig = {
   key: 'root',
-  storage
+  storage,
+  blacklist: [
+    'modalControl',
+    'mainApi',
+  ],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
+const sagaMiddleware = createSagaMiddleware();
+
 export const store = configureStore({
 	reducer: persistedReducer,
 	devTools: true,
-  middleware: [ thunk ]
+  middleware: [ sagaMiddleware ]
 });
+
+sagaMiddleware.run(rootSaga);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
