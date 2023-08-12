@@ -2,7 +2,6 @@ import Script from 'next/script'
 import './globals.css'
 import { Inter } from 'next/font/google'
 import { Providers } from '@store/provider'
-import Header from './header'
 import Footer from './footer'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -37,7 +36,6 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       </head>
       <body>
         <Providers>
-          <Header />
           { children }
           <Footer />
         </Providers>
