@@ -1,7 +1,6 @@
 import localFont from 'next/font/local';
 import { useRouter } from 'next/navigation';
 
-import RegionSelectbox from '@main/regionSelectbox';
 import BackgroundModeToggle from '@main/backgroundModeToggle';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@store/store';
@@ -47,7 +46,6 @@ const Header: React.FC = () => {
           <SignOut  signOut={ signOut } />
         </div>
       </div>
-      {/* <RegionSelectbox /> */}
     </div>
   );
 };
