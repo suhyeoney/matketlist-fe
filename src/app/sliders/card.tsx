@@ -159,9 +159,10 @@ const Card: React.FC<CardProps> = ({ dataKey, data, setPosition, closeModal }) =
           overflow-x-scroll overflow-y-hidden scrollbar-hide
         ">
           {/* { getDiffBetweenTwoDays(data.userRegisterDate) } */}
-          { location.arrHashtag.filter((e: HashtagType) => e.placeIds.includes(data.placeId)).map((x: HashtagType) => {
+          { location.arrHashtag.filter((e: HashtagType) => e.placeIds.includes(data.placeId)).map((x: HashtagType, idx: number) => {
             return (
             <span 
+              key={ idx }
               className={`
               ${ YeongdeokSea.className }
               rounded-[5px] bg-gray-200 p-[2px] mr-1 font-medium cursor-default self-center
