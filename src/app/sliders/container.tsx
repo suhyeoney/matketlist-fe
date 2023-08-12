@@ -181,10 +181,6 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
   };
 
   useEffect(() => {
-    console.log('currentCardSeq', currentCardSequence);
-  }, [ currentCardSequence ]);
-
-  useEffect(() => {
     setMatjipListData([
       ...location.arrLocation.map((e: SearchMatjipInfo, idx: number) => {
         let obj: CardDataType = { 
@@ -294,7 +290,7 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
                 id="sliderContainer"
                 className={`
                   relative snap-mandatory snap-x flex gap-6 pt-2 
-                  w-full h-full overflow-x-scroll scroll-custom
+                  w-full h-full overflow-x-scroll scroll-custom-normal
                   ${ matjipListData.length === 0 ? 
                     'items-center justify-center border-2 border-dotted border-gray-400 rounded-[20px] scrollbar-hide' : null }
               `}>

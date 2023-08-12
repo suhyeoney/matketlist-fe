@@ -269,7 +269,7 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
                   style={{ height: size.height * 0.5 }}
                   className="
                     relative flex flex-col
-                    w-full overflow-y-scroll border scroll-custom
+                    w-full overflow-y-scroll border scroll-custom-normal
                 ">
                   { searchResultsOrigin?.map((e: ResultsDataTagType, idx: number) => {
                     return (
