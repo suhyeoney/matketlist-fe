@@ -10,7 +10,7 @@ import LoadingSpinner03 from '@spinners/loadingSpinner03';
 import Image from 'next/image';
 import { RootState } from '@store/store';
 
-type SearchResultsTableProps = {
+interface SearchResultsTableProps {
   size : { width: number, height: number },
   data: any[],
   page: number,

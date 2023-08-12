@@ -3,12 +3,12 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '@store/store';
 
-type RegionType = {
+interface RegionType {
   key: string,
   name: string | string[],
 };
 
-type RegionSelectboxProps = {
+interface RegionSelectboxProps {
   data: RegionType[],
   setRegionCode: React.Dispatch<React.SetStateAction<string>>,
 };
@@ -26,7 +26,7 @@ const RegionSelectbox:React.FC<RegionSelectboxProps> = ({ data, setRegionCode })
         }}
         className={`
           select select-bordered w-[100px] h-[90%]
-          ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
+          ${ environmentVariables.backgroundMode ? 'bg-white text-black' : 'bg-[#2A303C] text-white' }
         `}>
         { data.map((e: RegionType) => {
           return (

@@ -1,6 +1,6 @@
 'use client'
 
-type NoticeType = {
+interface NoticeType {
   typeId: number,
   content: string,
 };

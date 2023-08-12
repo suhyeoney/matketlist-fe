@@ -1,10 +1,9 @@
 import Script from 'next/script'
 import './globals.css'
 import { Inter } from 'next/font/google'
-import Header from '@main/header'
-import { store } from '@store/store'
-import { Providers } from '@store/provider' 
-import Footer from 'src/app/footer'
+import { Providers } from '@store/provider'
+import Header from './header'
+import Footer from './footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -30,13 +29,15 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <meta name="apple-mobile-web-app-capable" content="yes"></meta>
         <link rel='icon' href='/favicon.ico'/>
         {/* <Script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js"></Script> */}
-        {/* Naver Map Script : afterInteractive */}
         <Script
+          type="text/javascript"
+          strategy="afterInteractive"
           src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_MAP_KEY}`}
         ></Script>
       </head>
       <body>
         <Providers>
+          <Header />
           { children }
           <Footer />
         </Providers>

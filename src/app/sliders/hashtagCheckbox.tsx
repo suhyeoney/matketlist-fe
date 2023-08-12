@@ -18,7 +18,7 @@ const Tenada = localFont({
   src: '../assets/fonts/Tenada.woff'
 });
 
-type HashtagCheckboxProps = {
+interface HashtagCheckboxProps {
   placeId: string,
   setHashtagCheckboxOpen: React.Dispatch<React.SetStateAction<boolean>>,
 };
@@ -37,6 +37,8 @@ const HashtagCheckbox: React.FC<HashtagCheckboxProps> = ({ placeId, setHashtagCh
 
   const closeFloatButtonArea = () => {
     document.querySelector('#floatBtnArea')?.classList.replace('animate-slideUp', 'animate-slideDown');
+    document.querySelector('#sliderContainer')?.classList.replace('overflow-x-hidden', 'overflow-x-scroll');
+    document.querySelector('#sliderContainer')?.addEventListener('keydown', () => { return true; });
     setTimeout(() => {
       setFloatBtnAreaOpen(false);
       setHashtagCheckboxOpen(false);
@@ -168,6 +170,8 @@ const HashtagCheckbox: React.FC<HashtagCheckboxProps> = ({ placeId, setHashtagCh
         return e;
       })
     ));
+    document.querySelector('#sliderContainer')?.classList.replace('overflow-x-hidden', 'overflow-x-scroll');
+    document.querySelector('#sliderContainer')?.addEventListener('keydown', () => { return true; });
     closeFloatButtonArea();
   };
 
@@ -180,6 +184,8 @@ const HashtagCheckbox: React.FC<HashtagCheckboxProps> = ({ placeId, setHashtagCh
   useEffect(() => {
     console.log('현재 선택된 해시태그', selectedHashtags);
     setFloatBtnAreaOpen(true);
+    document.querySelector('#sliderContainer')?.classList.replace('overflow-x-scroll', 'overflow-x-hidden');
+    document.querySelector('#sliderContainer')?.addEventListener('keydown', () => { return false; });
     if(selectedHashtags.length > 0) {
       setJoinedHashtagTextsSelected(joinSelectedHashtagTexts());
     }
@@ -246,7 +252,8 @@ const HashtagCheckbox: React.FC<HashtagCheckboxProps> = ({ placeId, setHashtagCh
             `}>
               <span 
                 className={`
-                self-center text-lime-200
+                self-center 
+                ${ environmentVariables.backgroundMode ? 'text-lime-200' : 'text-purple-500' }
               `}>
                 { joinedSelectedHashtagTexts }
               </span>

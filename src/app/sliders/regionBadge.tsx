@@ -5,12 +5,12 @@ import localFont from 'next/font/local';
 import { useWindowSize } from '@hooks/useWindowSize';
 import { useEffect, useState } from 'react';
 
-type RegionType = {
+interface RegionType {
   key: string,
   name: string | string[],
-} | undefined;
+};
 
-type RegionBadgeProps = {
+interface RegionBadgeProps {
   id: number,
   regionData: RegionType
 };

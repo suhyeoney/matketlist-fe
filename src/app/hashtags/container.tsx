@@ -16,7 +16,7 @@ import { setHashtagTreeOpen } from '@features/modalControl/modalControlSlice';
 import useDragAndDrop from '@hooks/useDragAndDrop';
 import { SearchMatjipInfo } from '@dataTypes/matjip';
 
-type HashtagTreeProps = {
+interface HashtagTreeProps {
   size : { width: number, height: number },
   closeHashtagTree: () => void,
 };
@@ -209,7 +209,7 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
         }}
         className={`
         flex flex-col gap-5 items-center justify-start 
-        snap-mandatory snap-y overflow-y-scroll my-10 scroll-custom
+        snap-mandatory snap-y overflow-y-scroll my-10 scroll-custom-normal
         ${ hashtagList.length === 0 ? 'border-2 border-dotted border-gray-400 rounded-[20px] scrollbar-hide' : null }
       `}>
         { hashtagList.length > 0 ?

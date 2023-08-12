@@ -16,12 +16,12 @@ import HashtagCheckbox from '@sliders/hashtagCheckbox';
 import { RootState } from '@store/store';
 import { HashtagType } from '@dataTypes/hashtag';
 
-type RegionType = {
+interface RegionType {
   key: string,
   name: string | string[],
-} | undefined;
+};
 
-type CardDataType = {
+interface CardDataType {
   id: number,
   placeId: string,
   name: string,
@@ -32,7 +32,7 @@ type CardDataType = {
   userRegisterDate: string,
 };
 
-type CardProps = {
+interface CardProps {
   dataKey: number,
   data: CardDataType,
   setPosition: React.Dispatch<React.SetStateAction<{
@@ -44,6 +44,10 @@ type CardProps = {
 
 const YeongdeokBlueroad = localFont({
   src: '../assets/fonts/YeongdeokBlueroad.woff'
+});
+
+const YeongdeokSea = localFont({
+  src: '../assets/fonts/YeongdeokSea.woff'
 });
 
 const Card: React.FC<CardProps> = ({ dataKey, data, setPosition, closeModal }) => {  
@@ -129,9 +133,9 @@ const Card: React.FC<CardProps> = ({ dataKey, data, setPosition, closeModal }) =
       { !isHashtagCheckboxOpen ?
       <div className="
         shrink-0 shadow-xl w-full h-full flex flex-col rounded-[10px] bg-gradient-to-r from-purple-500 to-pink-500
-        laptop:gap-7
-        tablet:gap-6 
-        mobile:gap-3 p-3
+        laptop:gap-4
+        tablet:gap-4 
+        mobile:gap-2 p-3
         smallest:gap-1 p-3
       ">
         <RegionBadge id={ dataKey } regionData={ data.region } />
@@ -151,10 +155,21 @@ const Card: React.FC<CardProps> = ({ dataKey, data, setPosition, closeModal }) =
           smallest:h-[60px] text-[12px] truncate ...
         ">{ data.address }</div>
         <div className="
-          h-[30px] font-medium bg-white text-center text-gray-300 p-1 rounded-[10px]
-          smallest:text-[12px]
+          flex flex-row items-start h-[25px] text-center text-[10px] text-black whitespace-nowrap
+          overflow-x-scroll overflow-y-hidden scrollbar-hide
         ">
-          { getDiffBetweenTwoDays(data.userRegisterDate) }
+          {/* { getDiffBetweenTwoDays(data.userRegisterDate) } */}
+          { location.arrHashtag.filter((e: HashtagType) => e.placeIds.includes(data.placeId)).map((x: HashtagType, idx: number) => {
+            return (
+            <span 
+              key={ idx }
+              className={`
+              ${ YeongdeokSea.className }
+              rounded-[5px] bg-gray-200 p-[2px] mr-1 font-medium cursor-default self-center
+            `}>
+              #{ x.text }
+              </span> );
+          }) }
         </div>
         <div className="flex flex-row items-center justify-center">
           <button 

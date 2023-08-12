@@ -3,7 +3,7 @@
 import { RootState } from '@store/store';
 import { useSelector } from 'react-redux';
 
-type SearchInputboxProps = {
+interface SearchInputboxProps {
   setKeyword: (payload: string) => void,
   placeholder: string,
 };
