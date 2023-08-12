@@ -155,7 +155,7 @@ const Card: React.FC<CardProps> = ({ dataKey, data, setPosition, closeModal }) =
           smallest:h-[60px] text-[12px] truncate ...
         ">{ data.address }</div>
         <div className="
-          flex flex-row items-start h-[25px] text-center p-1 text-[10px] text-black whitespace-nowrap
+          flex flex-row items-start h-[25px] text-center text-[10px] text-black whitespace-nowrap
           overflow-x-scroll overflow-y-hidden scrollbar-hide
         ">
           {/* { getDiffBetweenTwoDays(data.userRegisterDate) } */}
@@ -164,7 +164,7 @@ const Card: React.FC<CardProps> = ({ dataKey, data, setPosition, closeModal }) =
             <span 
               className={`
               ${ YeongdeokSea.className }
-              rounded-[5px] bg-gray-200 p-[2px] mx-1 font-medium cursor-default self-center
+              rounded-[5px] bg-gray-200 p-[2px] mr-1 font-medium cursor-default self-center
             `}>
               #{ x.text }
               </span> );

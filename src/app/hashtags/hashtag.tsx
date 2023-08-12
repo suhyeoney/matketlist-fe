@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image';
+import localFont from 'next/font/local';
 
 import image1 from '@assets/icons/hashtag-btn.png';
 import image2 from '@assets/icons/minus-btn.png';
@@ -25,6 +26,10 @@ interface HashtagProps {
   onDragOver: (e: React.DragEvent<HTMLDivElement>) => void
   onDragEnd: (e: React.DragEvent<HTMLDivElement>) => void
 };
+
+const YeongdeokSea = localFont({
+  src: '../assets/fonts/YeongdeokSea.woff'
+});
 
 const Hashtag: React.FC<HashtagProps> = ({ 
   sequence,
@@ -62,7 +67,9 @@ const Hashtag: React.FC<HashtagProps> = ({
       onDragOver={ onDragOver }
       onDragEnd={ onDragEnd }
       className={`
-      hashtag relative flex flex-row gap-2 items-center justify-center border-2 border-gray-200 rounded-[10px] p-2
+      hashtag relative flex flex-row gap-2 items-center justify-center 
+      border-2 border-gray-200 rounded-[10px] p-2
+      bg-gradient-to-r from-red-200 from-10% via-lime-300 via-30%  via-yellow-300 via-60% to-slate-200 to-90%
       hover:cursor-pointer
       `}
     >
@@ -88,7 +95,7 @@ const Hashtag: React.FC<HashtagProps> = ({
               setTextErrorMsg(onInputTextChange(e, dataKey).msg ?? '') 
             }}
             className={`
-            hashtagInput input w-[90%] h-[40px] truncate ...
+            hashtagInput input w-[90%] h-[40px] self-end truncate ...
             ${ environmentVariables.backgroundMode ? 'bg-white focus:text-black' : 'bg-[#2A303C] border-white focus:text-white' }
           `}/>
           { textErrorMsg !== null ? 
@@ -100,10 +107,13 @@ const Hashtag: React.FC<HashtagProps> = ({
               smallest:whitespace-normal
             ">{ textErrorMsg  }</span> : null 
           }
-          <div className="flex flex-row items-end justify-end gap-2 w-full">
+          <div className={`
+            flex flex-row items-end justify-end gap-2 w-full
+            ${ YeongdeokSea.className }
+          `}>
             <button
               id={`hashtag-minus-button-${ sequence }`}
-              className="hashtagMinusButton flex flex-row border border-gray-200 rounded-md gap-1 p-1 hover:cursor-pointer"
+              className="hashtagMinusButton flex flex-row border-2 border-red-500 rounded-md gap-1 px-2 py-1 hover:cursor-pointer"
               onClick={ () => minusHashtag(dataKey) }
             >
               <Image
