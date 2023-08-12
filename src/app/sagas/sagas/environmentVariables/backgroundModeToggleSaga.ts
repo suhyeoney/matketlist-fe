@@ -11,6 +11,6 @@ export function* backgroundModeToggleSaga(action: { payload: boolean }) {
   }
 }
 
-export function* environmentVariablesSaga() {
+export function* backgroundModeSaga() {
   yield takeEvery(backgroundModeToggle, backgroundModeToggleSaga);
 }

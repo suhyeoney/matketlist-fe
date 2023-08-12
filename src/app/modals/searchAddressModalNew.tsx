@@ -20,6 +20,7 @@ import ResultTag from '@modals/resultTag';
 import image1 from '@assets/icons/end.png';
 import image2 from '@assets/icons/godown.png';
 import LoadingSpinner03 from '@spinners/loadingSpinner03';
+import { getPlaceDetailData } from '@features/api/mainApiSlice';
 
 // rxjs
 const [ keywordChange$, setKeyword ] = createSignal<string>();

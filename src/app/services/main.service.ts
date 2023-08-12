@@ -34,10 +34,14 @@ interface PlaceDetailParamsType {
 //   }
 // };
 
+const isServer = typeof window === 'undefined';
+
 const getLocalSearchDataApi = async(params: LocalSearchParamsType) => {
+  console.log('>>>>> getLocalSearchDataApi');
+  console.log(`isServer: ${ typeof window === 'undefined'}`);
   try {
     const response: AxiosResponse = await get<SearchMatjipInfo>(
-      '/maps/api/place/textsearch/json', 
+      (isServer ? 'https://maps.googleapis.com' : '') +  '/maps/api/place/textsearch/json', 
       params, 
       instanceForGoogleApi
     );
@@ -48,9 +52,10 @@ const getLocalSearchDataApi = async(params: LocalSearchParamsType) => {
 };
 
 const getPlaceDetailDataApi = async(params: PlaceDetailParamsType) => {
+  console.log('>>>>> getPlaceDetailDataApi');
   try {
-    const response: AxiosResponse = await get<any>(
-      '/maps/api/place/details/json', 
+    const response: AxiosResponse = await get<SearchMatjipInfo>(
+      (isServer ? 'https://maps.googleapis.com' : '') + '/maps/api/place/details/json', 
       params, 
       instanceForGoogleApi
     );

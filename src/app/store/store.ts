@@ -11,6 +11,7 @@ import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import createSagaMiddleware from 'redux-saga';
 import { rootSaga } from '@sagas/saga';
+import mainApiReducer  from '@features/api/mainApiSlice';
 
 const reducers = combineReducers({
   counter: counterReducer,
@@ -18,11 +19,16 @@ const reducers = combineReducers({
   modalControl: modalControlReducer,
   inputControl: inputControlReducer,
   environmentVariables: environmentVariablesReducer,
+  mainApi: mainApiReducer,
 });
 
 const persistConfig = {
   key: 'root',
-  storage
+  storage,
+  blacklist: [
+    'modalControl',
+    'mainApi',
+  ],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

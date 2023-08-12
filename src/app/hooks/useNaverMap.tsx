@@ -283,6 +283,12 @@ const NaverMap = (
       }
     } else {}
   }, [ myLocation, arrMatjipLocation, position ]);
+
+  useEffect(() => {
+    return () => {
+        mapRef.current?.destroy();
+    };
+  }, []);
   
   return {
     myLocation,

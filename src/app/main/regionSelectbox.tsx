@@ -26,7 +26,7 @@ const RegionSelectbox:React.FC<RegionSelectboxProps> = ({ data, setRegionCode })
         }}
         className={`
           select select-bordered w-[100px] h-[90%]
-          ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
+          ${ environmentVariables.backgroundMode ? 'bg-white text-black' : 'bg-[#2A303C] text-white' }
         `}>
         { data.map((e: RegionType) => {
           return (
