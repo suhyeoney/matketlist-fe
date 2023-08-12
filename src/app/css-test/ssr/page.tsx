@@ -11,7 +11,7 @@ const Ssr: React.FC = () => {
   //   query: '카레야상'
   // }));
 
-  const x = use(fetchData());
+  // const x = use(fetchData());
 
   return (
     <div className="h-screen p-5">
@@ -23,20 +23,20 @@ const Ssr: React.FC = () => {
       </div> */}
       <div className="flex flex-col gap-2">
         <div className="flex items-start justify-start">
-          { JSON.stringify(x) }
+          {/* { JSON.stringify(x) } */}
         </div>
       </div>
-      <div id="map" className="w-[400px] h-[400px]"></div>
+      {/* <div id="map" className="w-[400px] h-[400px]"></div> */}
     </div>
   );
 };
 
 export default Ssr;
 
-const fetchData = async() => {
-  const data = MainService.getLocalSearchDataApi({
-    key: process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY, 
-    query: '카레야상'
-  });
-  return data;
-}
+// const fetchData = async() => {
+//   const data = MainService.getLocalSearchDataApi({
+//     key: process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY, 
+//     query: '카레야상'
+//   });
+//   return data;
+// }
