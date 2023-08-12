@@ -22,7 +22,7 @@ const Header: React.FC = () => {
     document.querySelector('#mainPage')?.classList.replace('animate-showPage', 'animate-closePage');
     setTimeout(() => {
       navigator.push('/signIn');
-      // dispatch(accessTokenSetting(''));
+      dispatch(accessTokenSetting(''));
     }, 1000);
   };
 
