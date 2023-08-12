@@ -27,7 +27,7 @@ const Footer: React.FC = () => {
         Matket List <br />
         © 2023. suhyeong.ahn all rights reserved.
       </div>
-      {/* <span className="self-end">{ signedInTime }</span> */}
+      <span className="self-end">{ signedInTime }</span>
     </div>
   </>
   );

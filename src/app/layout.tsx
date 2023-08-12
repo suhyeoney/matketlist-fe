@@ -29,7 +29,6 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <link rel='icon' href='/favicon.ico'/>
         {/* <Script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js"></Script> */}
         <Script
-          type="text/javascript"
           strategy="afterInteractive"
           src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_MAP_KEY}`}
         ></Script>
