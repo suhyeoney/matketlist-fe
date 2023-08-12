@@ -168,7 +168,7 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
               matjipCards[idx].classList.add('border-[#552594]');
               matjipCards[idx].classList.add('rounded-[16px]');
               matjipCards[idx].classList.remove('pointer-events-none');
-              
+
             }
           });
         }
@@ -291,6 +291,7 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
                 </Subscribe>
               </div>
               <div 
+                id="sliderContainer"
                 className={`
                   relative snap-mandatory snap-x flex gap-6 pt-2 
                   w-full h-full overflow-x-scroll scroll-custom
