@@ -20,6 +20,6 @@ export default Header;
 
 const fetchTimeStamp = async() => {
   const isServer = typeof window === 'undefined';
-  const time = isServer ? getToday() : null;
+  const time = isServer ? getToday('Asia/Seoul') : null;
   return time;
 };
