@@ -5,7 +5,7 @@ import image1 from '@assets/icons/light-mode.png';
 import image2 from '@assets/icons/dark-mode.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@store/store';
-import { backgroundModeToggle } from '@features/environmentVariables/environmentVariablesSlice';
+import { backgroundModeToggle } from '@store/features/environmentVariables/slice';
 import Image from 'next/image';
 
 const BackgroundModeToggle:React.FC = () => {

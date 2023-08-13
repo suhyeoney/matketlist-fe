@@ -18,7 +18,6 @@ export const environmentVariablesSlice = createSlice({
   name: 'environmentVariables',
   initialState,
   reducers: {
-    // Redux-saga Test...
     backgroundModeToggle: (state, action: PayloadAction<boolean>) => {
       console.log('>>> backgroundModeToggle');
       state.backgroundMode = action.payload
@@ -31,6 +30,7 @@ export const environmentVariablesSlice = createSlice({
     accessTokenSetting: (state, action: PayloadAction<string>) => {
       state.accessToken = action.payload
     },
+    
     moveToMapToggle: (state, action: PayloadAction<boolean>) => {
       state.moveToMap = action.payload
     },
