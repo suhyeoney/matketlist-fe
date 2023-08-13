@@ -7,10 +7,10 @@ import { InfoWindow, Marker } from 'react-naver-maps';
 import image1 from '@assets/icons/you-are-here.png';
 import image2 from '@assets/icons/like-it.png';
 import { SearchMatjipInfo } from '@dataTypes/matjip';
-import { removeLocation } from '@features/location/locationSlice';
-import { setMatjipInfoModalOpen, setMyMatjipSlidersOpen } from '@features/modalControl/modalControlSlice';
+import { removeLocation } from '@store/features/location/slice';
+import { setMatjipInfoModalOpen, setMyMatjipSlidersOpen } from '@store/features/modalControl/slice';
 import image3 from '@assets/icons/my-matjip-list.png';
-import { moveToMapToggle } from '@features/environmentVariables/environmentVariablesSlice';
+import { moveToMapToggle } from '@store/features/environmentVariables/slice';
 
 
 const NaverMap = (

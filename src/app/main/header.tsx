@@ -5,7 +5,7 @@ import BackgroundModeToggle from '@main/backgroundModeToggle';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@store/store';
 import SignOut from '@main/signout';
-import { accessTokenSetting } from '@features/environmentVariables/environmentVariablesSlice';
+import { accessTokenSetting } from '@store/features/environmentVariables/slice';
 
 const Tenada = localFont({
   src: '../assets/fonts/Tenada.woff'

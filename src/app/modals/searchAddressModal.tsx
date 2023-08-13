@@ -4,7 +4,7 @@ import localFont from 'next/font/local';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@store/store';
-import { setSearchAddressModalOpen } from '@features/modalControl/modalControlSlice';
+import { setSearchAddressModalOpen } from '@store/features/modalControl/slice';
 import { useEffect, useState } from 'react';
 import MainService from '@services/main.service';
 // import SearchResultsTable from '@tables/searchResultsTable';
@@ -13,8 +13,8 @@ import { Subscribe, bind } from '@react-rxjs/core';
 import { SearchMatjipInfo } from '@dataTypes/matjip';
 import { createSignal } from '@react-rxjs/utils';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
-import { addLocation } from '@features/location/locationSlice';
-import { storeInputMajip } from '@features/inputControl/inputControlSlice';
+import { addLocation } from '@store/features/location/slice';
+import { storeInputMajip } from '@store/features/inputControl/slice';
 import { getToday } from '@utils/dateUtils';
 
 // rxjs

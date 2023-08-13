@@ -3,10 +3,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@store/store';
-import { addLocation } from '@features/location/locationSlice';
+import { addLocation } from '@store/features/location/slice';
 import SearchAddressModal from '@modals/searchAddressModal';
-import { setSearchAddressModalOpen } from '@features/modalControl/modalControlSlice';
-import { storeInputMajip } from '@features/inputControl/inputControlSlice';
+import { setSearchAddressModalOpen } from '@store/features/modalControl/slice';
+import { storeInputMajip } from '@store/features/inputControl/slice';
 import { LocationType } from '@dataTypes/location';
 import { useWindowSize } from '@hooks/useWindowSize';
 import localFont from 'next/font/local';

@@ -2,7 +2,7 @@
 
 import type { RootState } from '@store/store'; 
 import { useSelector, useDispatch } from 'react-redux';
-import { increment, decrement, incrementByAmount } from '@features/counter/counterSlice'; 
+import { increment, decrement, incrementByAmount } from '@store/features/counter/slice'; 
 
 const ReduxTest: React.FC = () => {
 
