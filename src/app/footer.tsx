@@ -1,7 +1,4 @@
-import { getToday } from '@utils/dateUtils';
 import localFont from 'next/font/local';
-
-import { use } from 'react';
 
 const Tenada = localFont({
   src: './assets/fonts/Tenada.woff'
@@ -9,8 +6,6 @@ const Tenada = localFont({
 
 const Footer: React.FC = () => {
   
-  const latestUpdateTime = use(fetchTimeStamp());
-
   return (
     <>
     <div
@@ -28,16 +23,9 @@ const Footer: React.FC = () => {
         Matket List <br />
         © 2023. suhyeong.ahn all rights reserved.
       </div>
-      <span className="absolute bottom-1 right-1">The Latest Update : { latestUpdateTime }</span>
     </div>
   </>
   );
 };
 
 export default Footer;
-
-const fetchTimeStamp = async() => {
-  const isServer = typeof window === 'undefined';
-  const time = isServer ? getToday() : null;
-  return time;
-};
