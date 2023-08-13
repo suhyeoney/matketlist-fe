@@ -18,7 +18,6 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     beforeInteractive : 해당 페이지가 상호작용하기 전에 가져오고 실행되어야 할 필요가 있는 경우 설정
   */
  
-
   return (
     <html lang="en">
       <head>
@@ -26,11 +25,11 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <meta httpEquiv="Pragma" content="no-cache"></meta>
         <meta httpEquiv="Expires" content="0"></meta> */}
         <meta name="viewport" content="viewport-fit=cover"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0 user-scalable=no" />
         <meta name="apple-mobile-web-app-capable" content="yes"></meta>
         <link rel='icon' href='/favicon.ico'/>
         {/* <Script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js"></Script> */}
         <Script
-          type="text/javascript"
           strategy="afterInteractive"
           src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_MAP_KEY}`}
         ></Script>

@@ -9,9 +9,9 @@ const Header: React.FC = () => {
     <div
       id="header" 
       className={`
-      absolute z-5 top-0 right-2 text-center text-gray-400 cursor-default text-[10px]
+      w-screen fixed z-5 top-0 p-1 text-gray-400 cursor-default text-[10px]
     `}>
-      <span>{ signedInTime }</span>
+      <span className="absolute z-5 right-2">{ signedInTime }</span>
     </div>
   );
 };
@@ -20,6 +20,6 @@ export default Header;
 
 const fetchTimeStamp = async() => {
   const isServer = typeof window === 'undefined';
-  const time = isServer ? getToday() : null;
+  const time = isServer ? getToday('Asia/Seoul') : null;
   return time;
 };

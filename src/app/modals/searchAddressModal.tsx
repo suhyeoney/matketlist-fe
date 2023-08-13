@@ -133,7 +133,7 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
       placeId: inputPlaceId, 
       phoneNumber: getPhoneNumber ?? '-',
       website: getWebsiteUrl ?? '-',
-      userRegisterDate: getToday(),
+      userRegisterDate: getToday('Asia/Seoul'),
     }));
     alert('맛집이 정상적으로 등록되었습니다.');
     dispatch(storeInputMajip(null));

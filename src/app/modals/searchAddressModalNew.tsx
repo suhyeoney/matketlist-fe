@@ -158,7 +158,7 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
         placeId: inputPlaceId, 
         phoneNumber: getPhoneNumber ?? '-',
         website: getWebsiteUrl ?? '-',
-        userRegisterDate: getToday(),
+        userRegisterDate: getToday('Asia/Seoul'),
         compoundCode: inputCompoundCode,
         hashtags: [], 
       }));
