@@ -9,25 +9,26 @@ const Tenada = localFont({
 
 const Footer: React.FC = () => {
   
-  const signedInTime = use(fetchTimeStamp());
+  const latestUpdateTime = use(fetchTimeStamp());
 
   return (
     <>
     <div
       id="footer" 
       className={`
-      ${ Tenada.className } 
-      w-screen flex flex-col text-center text-gray-400 fixed bottom-0 z-5 p-3 cursor-default
+      w-screen flex items-center justify-center text-center text-gray-400 fixed bottom-0 z-5 p-1 cursor-default
       laptop:text-[12px]
       tablet:text-[10px]
       mobile:text-[8px]
       smallest:text-[3px]
     `}>
-      <div>
+      <div className={`
+        ${ Tenada.className } 
+      `}>
         Matket List <br />
         © 2023. suhyeong.ahn all rights reserved.
       </div>
-      <span className="self-end">{ signedInTime }</span>
+      <span className="absolute bottom-1 right-1">The Latest Update : { latestUpdateTime }</span>
     </div>
   </>
   );
