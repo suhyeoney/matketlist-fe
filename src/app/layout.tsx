@@ -24,7 +24,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         {/* <meta httpEquiv="Cache-Control" content="no-cache, no-store, must-revalidate"></meta>
         <meta httpEquiv="Pragma" content="no-cache"></meta>
         <meta httpEquiv="Expires" content="0"></meta> */}
-        <meta name="viewport" content="viewport-fit=cover"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=0.5, minimum-scale=0.5, maximum-scale=0.5"></meta>
         <meta name="apple-mobile-web-app-capable" content="yes"></meta>
         <link rel='icon' href='/favicon.ico'/>
         {/* <Script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js"></Script> */}
