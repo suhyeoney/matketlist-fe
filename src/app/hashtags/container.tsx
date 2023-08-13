@@ -140,7 +140,7 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
         if(entries[0].isIntersecting) {
           const currentId = Number(entries[0].target.id.split('hashtag-')[1]);
           // console.log('currentId', currentId); // 맨 오른쪽 카드를 entry의 첫번째 원소로 인식하고 있다.
-          console.log('currentId', currentId);
+          // console.log('currentId', currentId);
         }
       }, 
       { threshold: 0, root: null, rootMargin: `-70% 0% -30% 0%` }

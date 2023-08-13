@@ -179,7 +179,7 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
     const io = new IntersectionObserver((
       entries: IntersectionObserverEntry[], observer: IntersectionObserver)=> {
         const currentId = Number(entries[0].target.id.split('resultTag-')[1]);
-        console.log('currentId', currentId);
+        // console.log('currentId', currentId);
         if(searchResultsOrigin !== undefined && currentId >= searchResultsOrigin?.length - 1) {
           floatBtn?.classList.remove('animate-bounceHide');
           floatBtn?.classList.add('animate-hideFloatBtn');

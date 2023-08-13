@@ -123,7 +123,11 @@ const Hashtag: React.FC<HashtagProps> = ({
                 height="10"
                 className="w-[10px] h-[10px] self-center"
               />
-              <span>빼기</span>
+              <span className={`
+                text-black
+              `}>
+                빼기
+              </span>
             </button>
             {/* <button className="flex flex-row border border-gray-200 rounded-md gap-1 p-1 hover:cursor-pointer">
               <Image
