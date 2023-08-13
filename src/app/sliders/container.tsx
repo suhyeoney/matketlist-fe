@@ -8,7 +8,7 @@ import { RootState } from '@store/store';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SearchMatjipInfo } from '@dataTypes/matjip';
-import { setHashtagTreeOpen, setMyMatjipSlidersOpen } from '@features/modalControl/modalControlSlice';
+import { setHashtagTreeOpen, setMyMatjipSlidersOpen } from '@store/features/modalControl/slice';
 import RegionSelectbox from '@main/regionSelectbox';
 import SearchInputbox from '@sliders/searchInputbox';
 import { data } from '@utils/dataForRegion/data';

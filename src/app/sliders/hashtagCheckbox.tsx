@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkHangeulTextEndsWithJongseong } from '@utils/stringUtils';
 import { SearchMatjipInfo } from '@dataTypes/matjip';
-import { updateHashtag, updateLocation } from '@features/location/locationSlice';
+import { updateHashtag, updateLocation } from '@store/features/location/slice';
 
 const YeongdeokSea = localFont({
   src: '../assets/fonts/YeongdeokSea.woff'

@@ -3,7 +3,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { SearchMatjipInfo } from '@dataTypes/matjip';
 import LoadingSpinner01 from '@spinners/loadingSpinner01';
-import { setSearchAddressModalOpen } from '@features/modalControl/modalControlSlice';
+import { setSearchAddressModalOpen } from '@store/features/modalControl/slice';
 import { useEffect, useState } from 'react';
 import image1 from '@assets/icons/choose-from-list.png';
 import LoadingSpinner03 from '@spinners/loadingSpinner03';

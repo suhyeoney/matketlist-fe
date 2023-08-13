@@ -1,17 +1,17 @@
 'use client'
 
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import counterReducer from '@features/counter/counterSlice';
-import locationReducer from '@features/location/locationSlice';
-import modalControlReducer from '@features/modalControl/modalControlSlice';
-import inputControlReducer from '@features/inputControl/inputControlSlice';
-import environmentVariablesReducer from '@features/environmentVariables/environmentVariablesSlice';
+import counterReducer from '@store/features/counter/slice';
+import locationReducer from '@store/features/location/slice';
+import modalControlReducer from '@store/features/modalControl/slice';
+import inputControlReducer from '@store/features/inputControl/slice';
+import environmentVariablesReducer from '@store/features/environmentVariables/slice';
 // import thunk from 'redux-thunk';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import createSagaMiddleware from 'redux-saga';
-import { rootSaga } from '@sagas/saga';
-import mainApiReducer  from '@features/api/mainApiSlice';
+import { rootSaga } from '@store/saga';
+import mainApiReducer  from '@store/features/api/main/slice';
 
 const reducers = combineReducers({
   counter: counterReducer,

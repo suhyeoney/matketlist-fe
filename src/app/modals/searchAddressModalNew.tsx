@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@store/store';
-import { setSearchAddressModalOpen } from '@features/modalControl/modalControlSlice';
+import { setSearchAddressModalOpen } from '@store/features/modalControl/slice';
 import { useEffect, useState } from 'react';
 import MainService from '@services/main.service';
 import SearchInputbox from './searchInputbox';
@@ -13,14 +13,14 @@ import { Subscribe, bind } from '@react-rxjs/core';
 import { SearchMatjipInfo } from '@dataTypes/matjip';
 import { createSignal } from '@react-rxjs/utils';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
-import { addLocation } from '@features/location/locationSlice';
-import { storeInputMajip } from '@features/inputControl/inputControlSlice';
+import { addLocation } from '@store/features/location/slice';
+import { storeInputMajip } from '@store/features/inputControl/slice';
 import { getToday } from '@utils/dateUtils';
 import ResultTag from '@modals/resultTag';
 import image1 from '@assets/icons/end.png';
 import image2 from '@assets/icons/godown.png';
 import LoadingSpinner03 from '@spinners/loadingSpinner03';
-import { getPlaceDetailData } from '@features/api/mainApiSlice';
+import { getPlaceDetailData } from '@store/features/api/main/slice';
 
 // rxjs
 const [ keywordChange$, setKeyword ] = createSignal<string>();

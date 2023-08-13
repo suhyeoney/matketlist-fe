@@ -11,8 +11,8 @@ import { useCallback, useEffect, useState } from 'react';
 import Hashtag from '@hashtags/hashtag';
 import { HashtagType } from '@dataTypes/hashtag';
 import { checkFullHangeulOrEnglish, checkSpaceIncluded } from '@utils/stringUtils';
-import { updateHashtag } from '@features/location/locationSlice';
-import { setHashtagTreeOpen } from '@features/modalControl/modalControlSlice';
+import { updateHashtag } from '@store/features/location/slice';
+import { setHashtagTreeOpen } from '@store/features/modalControl/slice';
 import useDragAndDrop from '@hooks/useDragAndDrop';
 import { SearchMatjipInfo } from '@dataTypes/matjip';
 

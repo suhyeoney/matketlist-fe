@@ -17,7 +17,7 @@ import { useEffect, useState } from 'react';
 import useResponsiveMapSize from '@hooks/useResponsiveMapSize';
 import { useWindowSize } from '@hooks/useWindowSize';
 import SignInService from '@services/signIn.service';
-import { accessTokenSetting } from '@features/environmentVariables/environmentVariablesSlice';
+import { accessTokenSetting } from '@store/features/environmentVariables/slice';
 import { isEmpty } from '@utils/stringUtils';
 import { useRouter } from 'next/navigation';
 import FlowingText01 from '@animations/flowingText01';
