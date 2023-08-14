@@ -20,7 +20,7 @@ import ResultTag from '@modals/resultTag';
 import image1 from '@assets/icons/end.png';
 import image2 from '@assets/icons/godown.png';
 import LoadingSpinner03 from '@spinners/loadingSpinner03';
-import { getPlaceDetailData } from '@store/features/api/main/slice';
+import { getLocalSearchData, getPlaceDetailData } from '@store/features/api/main/slice';
 
 // rxjs
 const [ keywordChange$, setKeyword ] = createSignal<string>();
@@ -59,6 +59,7 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
   const inputControl = useSelector((state: RootState) => state.inputControl);
   const location = useSelector((state: RootState) => state.location)
   const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
+  const mainApi = useSelector((state: RootState) => state.mainApi);
 
 	const dispatch = useDispatch();
   const keyword = useKeyword();
@@ -83,39 +84,8 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
       // start: 10,
       // sort: 'random'
     };
-    const searchResults = await MainService.getLocalSearchDataApi(paramsLocalSearch);
-    if(searchResults !== undefined && searchResults.length > 0) {
-      const formattedResults = searchResults.map((e: any) => {
-        let newObj = { 
-          address: '', 
-          name : '', 
-          iconUrl: '', 
-          latitude: 0, 
-          longitude: 0,
-          phoneNumber: '',
-          placeId: '',
-          compoundCode: '',
-          hashtags: [],
-        };
-        newObj['address'] = e.formatted_address.includes('대한민국') ? e.formatted_address.replace('대한민국', '') : e.formatted_address;
-        newObj['name'] = e.name;
-        newObj['iconUrl'] = e.icon;
-        newObj['latitude'] = e.geometry.location.lat;
-        newObj['longitude'] = e.geometry.location.lng;
-        newObj['placeId'] = e.place_id;
-        newObj['compoundCode'] = e.plus_code ? e.plus_code.compound_code : '';
-        newObj['hashtags'] = e.hashtags;
-
-        return newObj;
-      });
-
-      setSearchResultsOrigin([
-       ...formattedResults.filter((e: any) => keyword?.length > 0 ?
-       e.name?.includes(keyword) || e.address?.includes(keyword) : true)
-      ]);
-    } else {
-      setSearchResultsOrigin([]);
-    }
+    // const searchResults = await MainService.getLocalSearchDataApi(paramsLocalSearch);
+    dispatch(getLocalSearchData(paramsLocalSearch));
   };
 
   const registerMatjip = async (e: ResultsDataTagType) => {
@@ -139,13 +109,14 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
     }
 
     const result = window.confirm('맛집 목록에 등록하시겠어요?');
+    const paramsPlaceDetail = {
+      placeid: e.placeId,
+      key: process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY
+    };
 
     if(result) {
-      const paramsPlaceDetail = {
-        placeid: e.placeId,
-        key: process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY
-      };
       const placeDetailResult = await MainService.getPlaceDetailDataApi(paramsPlaceDetail);
+      
       const getPhoneNumber = placeDetailResult.formatted_phone_number;
       const getWebsiteUrl = placeDetailResult.website;
       
@@ -166,8 +137,9 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
       dispatch(storeInputMajip(null));
       setRegisteringStatus(false);
       closeModal();
-    } else
-    return;
+    } else {
+      return;
+    }
   };
 
   const observeContainer = () => {
@@ -199,6 +171,42 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
     return dataSet.filter(
       (e: SearchMatjipInfo) => e.name?.includes(keyword) || e.address?.includes(keyword));
   };
+
+  useEffect(() => {
+    const localSearchData = mainApi.localSearchData;
+    const isLoading = mainApi.isLoading;
+    if(!isLoading && localSearchData.length > 0) {
+      const formattedResults = localSearchData.map((e: any) => {
+        let newObj = { 
+          address: '', 
+          name : '', 
+          iconUrl: '', 
+          latitude: 0, 
+          longitude: 0,
+          phoneNumber: '',
+          placeId: '',
+          compoundCode: '',
+          hashtags: [],
+        };
+        newObj['address'] = e.formatted_address.includes('대한민국') ? e.formatted_address.replace('대한민국', '') : e.formatted_address;
+        newObj['name'] = e.name;
+        newObj['iconUrl'] = e.icon;
+        newObj['latitude'] = e.geometry.location.lat;
+        newObj['longitude'] = e.geometry.location.lng;
+        newObj['placeId'] = e.place_id;
+        newObj['compoundCode'] = e.plus_code ? e.plus_code.compound_code : '';
+        newObj['hashtags'] = e.hashtags;
+        return newObj;
+      });
+
+      setSearchResultsOrigin([
+       ...formattedResults.filter((e: any) => keyword?.length > 0 ?
+       e.name?.includes(keyword) || e.address?.includes(keyword) : true)
+      ]);
+    } else {
+      setSearchResultsOrigin([]);
+    }
+  }, [ mainApi.localSearchData ]);
 
   useEffect(() => {
     if(searchResultsOrigin !== undefined && searchResultsOrigin.length >= 4) {
@@ -253,7 +261,7 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
                   d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            { searchResultsOrigin === undefined ?
+            { mainApi.isLoading || searchResultsOrigin === undefined ?
               <div className="flex items-center justify-center h-[90%]">
                 <LoadingSpinner03 cubeText={ 'MATKET' } infoText={ '검색 결과를 불러오고 있습니다.' } />
               </div> :
