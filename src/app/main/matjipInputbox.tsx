@@ -83,9 +83,9 @@ const MatjipInputbox:React.FC = () => {
             onBlur={ () => document.querySelector('#footer')?.classList.remove('hidden') }
             className={`
               searchInput
-              input input-bordered 
-              ${ environmentVariables.backgroundMode ? 'text-black bg-white focus:text-black' 
-              : 'text-white bg-[#2A303C] border-white focus:text-white' }
+              input input-bordered border
+              ${ environmentVariables.backgroundMode ? 'text-black bg-white border-black focus:text-black focus:border-black' : 
+              'text-white bg-[#2A303C] border-white focus:text-white focus:border-white' }
               smallest:w-[170px]
             `}/>
         </div>
