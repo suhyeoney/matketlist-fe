@@ -158,7 +158,7 @@ const NaverMap = (
         let CURRENT_MATJIP_LIST_HTML_ARRAY = [
           '<div id="list-badge" class="flex items-center justify-center p-2 hover:cursor-pointer">',
           '<div class="relative">',
-          '<div class="w-16 h-16 bg-white rounded-lg shadow-2xl">',
+          '<div class="w-16 h-16 bg-white rounded-[15px] shadow-2xl">',
           `<img src=${ image3.src } class="w-15 h-15" />`,
           '</div>',
           '</div>',
@@ -166,7 +166,8 @@ const NaverMap = (
         ];
         let PING_HTML_ARRAY = [
           `<div class="absolute top-0 right-0 -mr-1 -mt-1 w-4 h-4 rounded-full bg-red-400">`,
-          `<span class="absolute z-12 text-[10px] text-black font-bold">${ location.cntLocation > 10 ? '10+' : location.cntLocation }</span>`,
+          `<span class="absolute z-12 right-[5px] text-[10px] text-black font-bold">`,
+          `${ location.cntLocation > 10 ? '10+' : location.cntLocation }</span>`,
           `</div>`,
           `<div id="list-ping" class="absolute top-0 right-0 -mr-1 -mt-1 w-4 h-4 rounded-full bg-red-400 animate-ping">`,
           `</div>`
