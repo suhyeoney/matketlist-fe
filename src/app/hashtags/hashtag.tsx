@@ -100,7 +100,7 @@ const Hashtag: React.FC<HashtagProps> = ({
           `}/>
           { textErrorMsg !== null ? 
             <span className="
-              text-red-500 text-[13px] self-start pl-2 
+              text-red-500 text-[13px] self-end pl-2 
               laptop:w-[190px] whitespace-normal
               tablet:w-[190px] whitespace-normal
               mobile:whitespace-normal

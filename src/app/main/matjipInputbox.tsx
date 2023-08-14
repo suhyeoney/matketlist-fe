@@ -84,7 +84,8 @@ const MatjipInputbox:React.FC = () => {
             className={`
               searchInput
               input input-bordered 
-              ${ environmentVariables.backgroundMode ? 'bg-white focus:text-black' : 'bg-[#2A303C] border-white focus:text-white' }
+              ${ environmentVariables.backgroundMode ? 'text-black bg-white focus:text-black' 
+              : 'text-white bg-[#2A303C] border-white focus:text-white' }
               smallest:w-[170px]
             `}/>
         </div>
