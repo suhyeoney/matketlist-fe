@@ -64,22 +64,27 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
   };
   
   const onInputTextChange =  (e: React.ChangeEvent<HTMLInputElement>, dataKey: number)  => {
-    const inputValue = e.target.value;
-    const currentHashtagList = [ ...hashtagList ];
-    const currentHashtag = currentHashtagList.find((e: HashtagType) => e.id === dataKey);
     let validationResult = null;
+    let inputValue = e.target.value;
     // 해시태그명 유효성 검사 시작
     validationResult = checkValidation(inputValue);
     setValidationResult(validationResult.result);
-    if(currentHashtag !== undefined) {
-      currentHashtag.text = inputValue;
-    }
-    setHashtagList(currentHashtagList);
+    setHashtagList(hashtagList =>
+      hashtagList.map((e: HashtagType) => {
+        if(e.id === dataKey) {
+          return {
+            ...e,
+            text: inputValue,
+          };
+        }
+        return e;
+      })
+    );
     return validationResult;
   };
 
   const goBackToCards = () => {
-    const previousState = location.arrHashtag;
+    const previousState = [ ...location.arrHashtag ];
     if(JSON.stringify(hashtagList) === JSON.stringify(previousState)) {
       // 변경 내역이 없는 경우,
       closeHashtagTree();
@@ -159,7 +164,7 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
     })
     console.log('biggest', biggest);
     return biggest;
-  } 
+  };
 
   useEffect(() => {
     if(location.arrHashtag !== undefined) {
@@ -168,12 +173,10 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
   }, []);
 
   useEffect(() => {
-    console.log('hashtagList', hashtagList);
     observeHashtags();
   }, [ hashtagList ]);
   
   useEffect(() => {
-    console.log('cntHashtag', cntHashtag);
     if(cntHashtag > 0) {
       const savedHashtagList = location.arrHashtag;
       let biggestHashtagId =  findTheBiggestNumObj(savedHashtagList) !== undefined ? 
@@ -222,6 +225,7 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
                 text={ e.text } 
                 placeIds={ e.placeIds } 
                 hashtagList={ hashtagList }
+                setHashtagList={ setHashtagList }
                 minusHashtag={ minusHashtag }
                 onInputTextChange={ onInputTextChange }
                 onDragStart={ dragAndDrop.dragStart }

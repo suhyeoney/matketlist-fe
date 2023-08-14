@@ -17,6 +17,7 @@ interface HashtagProps {
   text: string,
   placeIds: string[],
   hashtagList: HashtagType[],
+  setHashtagList: React.Dispatch<React.SetStateAction<HashtagType[]>>,
   minusHashtag: (idx: number) => void,
   onInputTextChange: (e: React.ChangeEvent<HTMLInputElement>, dataKey: number) => {
     result: boolean;
@@ -37,26 +38,28 @@ const Hashtag: React.FC<HashtagProps> = ({
   text, 
   placeIds, 
   hashtagList,
+  setHashtagList,
   minusHashtag, 
   onInputTextChange,
   onDragStart,
   onDragOver,
   onDragEnd, }) => {
 
+  const location = useSelector((state: RootState) => state.location);
   const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
 
-  const [ inputText, setInputText ] = useState<string>(text);
+  const [ inputText, setInputText ] = useState<string>('');
   const [ textErrorMsg, setTextErrorMsg ] = useState<string>('');
+
+  useEffect(() => {
+    setInputText(text);
+  }, []);
 
   useEffect(() => {
     if(hashtagList !== undefined) {
       setInputText(hashtagList.find((e: HashtagType) => e.id === dataKey)?.text ?? text);
     }
   }, [ hashtagList ]);
-
-  useEffect(() => {
-    console.log('inputText', inputText);
-  }, [ inputText ]);
 
   return (
     <div 
@@ -92,7 +95,7 @@ const Hashtag: React.FC<HashtagProps> = ({
             value={ inputText }
             onChange={ (e: React.ChangeEvent<HTMLInputElement>) => {
               setInputText(e.target.value);
-              setTextErrorMsg(onInputTextChange(e, dataKey).msg ?? '') 
+              setTextErrorMsg(onInputTextChange(e, dataKey).msg ?? '');
             }}
             className={`
             hashtagInput input w-[90%] h-[40px] self-end truncate ...
