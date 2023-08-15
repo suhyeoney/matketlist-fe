@@ -12,6 +12,8 @@ import { useWindowSize } from '@hooks/useWindowSize';
 
 const Background: React.FC = () => {
 
+  const window = useWindowSize();
+
   return (
     <div className="absolute z-0">
       <video 
@@ -20,9 +22,10 @@ const Background: React.FC = () => {
         muted 
         playsInline 
         // poster={ useWindowSize().width < 1024 ? poster2.src : poster1.src }
-        className="fixed min-w-full min-h-full right-0 bottom-0 pointer-events-none"
+        // style={{ width: window.width, height: window.height }}
+        className="fixed min-w-full min-h-full left-0 top-0 pointer-events-none"
       >
-        <source src={ useWindowSize().width < 1024 ? video1_narrow : video1_wide } type="video/mp4" />
+        <source src={ window.width < 1024 ? video1_narrow : video1_wide } type="video/mp4" />
       </video>
       {/* <video 
         loop 

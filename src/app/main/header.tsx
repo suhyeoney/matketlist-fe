@@ -26,13 +26,12 @@ const Header: React.FC = () => {
   };
 
   return (
-    <div className="
-      flex flex-row items-center justify-center gap-3 relative z-0
+    <div className={`
+      absolute z-10 top-10 w-full flex flex-row items-center justify-center gap-3
       smallest:h-[75px]
-    ">
+    `}>
       <div className={`
-        ${ Tenada.className } h-[100px] text-center p-[10px] flex justify-center items-center
-        ${ environmentVariables.backgroundMode ? 'text-[#2A303C]' : 'text-white' }
+        ${ Tenada.className } h-[80px] text-center p-[10px] flex justify-center items-center text-black
         laptop:text-5xl
         tablet:text-4xl
         mobile:text-3xl
@@ -41,7 +40,9 @@ const Header: React.FC = () => {
         맛킷 리스트
       </div>
       <div className="flex items-center justify-center">
-        <div className="flex flex-row items-center gap-3">
+        <div className={`
+          flex flex-row items-center gap-3
+        `}>
           <BackgroundModeToggle />
           <SignOut  signOut={ signOut } />
         </div>
@@ -51,3 +52,5 @@ const Header: React.FC = () => {
 };
 
 export default Header;
+
+// ${ environmentVariables.backgroundMode ? 'text-[#2A303C]' : 'text-white' }

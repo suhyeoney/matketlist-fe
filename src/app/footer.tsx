@@ -1,7 +1,7 @@
 import localFont from 'next/font/local';
 
-const Tenada = localFont({
-  src: './assets/fonts/Tenada.woff'
+const YeongdeokSea = localFont({
+  src: './assets/fonts/YeongdeokSea.woff'
 });
 
 const Footer: React.FC = () => {
@@ -11,14 +11,14 @@ const Footer: React.FC = () => {
     <div
       id="footer" 
       className={`
-      w-screen flex items-center justify-center text-center text-gray-400 fixed bottom-0 z-5 p-1 cursor-default
+      absolute z-[15] bottom-0 w-screen flex items-center justify-center text-center text-black font-bold p-1 cursor-default
       laptop:text-[12px]
       tablet:text-[10px]
       mobile:text-[8px]
       smallest:text-[3px]
     `}>
       <div className={`
-        ${ Tenada.className } 
+        ${ YeongdeokSea.className } 
       `}>
         Matket List <br />
         © 2023. suhyeong.ahn all rights reserved.

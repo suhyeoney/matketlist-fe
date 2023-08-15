@@ -7,6 +7,7 @@ import image1 from '@assets/icons/notice-megaphone.png';
 import { useSelector } from 'react-redux';
 import { RootState } from '@store/store';
 import { useEffect, useRef, useState } from 'react';
+import { useWindowSize } from '@hooks/useWindowSize';
 
 interface NoticeType {
   typeId: number,
@@ -26,12 +27,18 @@ const Tenada = localFont({
   src: '../assets/fonts/Tenada.woff'
 });
 
+const YeongdeokSea = localFont({
+  src: '../assets/fonts/YeongdeokSea.woff'
+});
+
 const FlowingText01: React.FC<FlowingText01Props> = ({ textList }) => {
 
   const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
   const [ divBgColor, setDivBgColor ] = useState<string>('bg-white');
   const [ noticeId, setNoticeId ] = useState<number>(0);
   const [ entryFlag, setEntryFlag ] = useState<EntryFlagType>({ in: false, out: false });
+
+  const window = useWindowSize();
 
   const observeNotice = () => {
     const noticeArea = document.querySelector(`#noticeArea`);
@@ -84,77 +91,61 @@ const FlowingText01: React.FC<FlowingText01Props> = ({ textList }) => {
   }, [ environmentVariables.backgroundMode ]);
 
   return (
-    <div className="
-      flex flex-row items-center justify-center
-      laptop:pb-2
-      tablet:pb-2
-    ">
-      <div className={`
-        absolute z-10 left-0 ${ divBgColor } 
-        laptop:w-[25%] h-[30px]
-        tablet:w-[25%] h-[30px]
-        mobile:w-[5%] h-[30px]
-        smallest:w-[5%] h-[30px]
-      `}></div>
-      <div id="noticeArea" 
-        className="
-        absolute z-6
-        laptop:w-[50%] h-[30px]
-        tablet:w-[50%] h-[30px]
-        mobile:w-[90%] h-[30px]
-        smallest:w-[90%] h-[30px]
-      ">
-        <div className="flex flex-row items-center justify-center border border-solid border-gray-200 rounded-[5px]">
-          <div className="
-            w-[80px] h-[30px] absolute z-10 left-0
-            flex flex-row items-center justify-center gap-1 px-2 rounded-tl-[5px] rounded-bl-[5px] bg-gray-100
-          ">
-            <Image
-              src={ image1.src }
-              alt=""
-              width="25"
-              height="25"
-              className="w-[25px] h-[25px]"
-            />
-            <div className="">
-              <span className={ `
-                ${ Tenada.className }
-                ${ environmentVariables.backgroundMode ? 'text-black' : 'text-[#2A303C]' }
-              `}>알림</span>
+    <div className={`
+      relative flex flex-row items-center justify-center h-full
+      ${ divBgColor }
+    `}>
+      <div className="flex items-center justify-center self-center">
+        <div id="noticeArea" 
+          className="
+          absolute z-10 w-full h-full
+        ">
+          <div className="flex flex-row items-center justify-center">
+            <div className={`
+              w-[80px] h-[30px] absolute z-[12] left-0
+              flex flex-row items-center justify-center gap-1 px-2 
+              ${ environmentVariables.backgroundMode ? 'bg-gray-100' : 'bg-gray-400' }
+            `}>
+              <Image
+                src={ image1.src }
+                alt=""
+                width="25"
+                height="25"
+                className="w-[25px] h-[25px]"
+              />
+              <div className="">
+                <span className={ `
+                  ${ Tenada.className }
+                  ${ environmentVariables.backgroundMode ? 'text-black' : 'text-[#2A303C]' }
+                `}>알림</span>
+              </div>
             </div>
-          </div>
-          <div 
-            id="noticeWrapper"
-            className={`
-             w-full 
-             
-             laptop:h-[30px]
-             tablet:h-[30px]
-             mobile:h-[30px]
-             smallest:h-[25px]
-          `}>
-              <p 
-                id={`notice`}
-                className={`
-                font-semibold
-                animate-flowing
-                whitespace-nowrap
-                ${ environmentVariables.backgroundMode ? 'text-black' : 'text-white' }
-                ${ noticeStyle(textList[noticeId]['typeId']) }
-            `}>{ textList[noticeId]['content'] }</p>
+            <div 
+              id="noticeWrapper"
+              className={`
+              w-full h-[30px]
+              ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
+            `}>
+                <p 
+                  id={`notice`}
+                  className={`
+                  ${ YeongdeokSea.className }
+                  ${ environmentVariables.backgroundMode ? 'text-black' : 'text-white' }
+                  ${ window.width >= 768 ? 'animate-[flowing_60s_infinite]' : 'animate-[flowing_30s_infinite]' }
+                  h-[30px]
+                  font-bold
+                  whitespace-nowrap
+                  text-black
+              `}>{ textList[noticeId]['content'] }</p>
+            </div>
           </div>
         </div>
       </div>
-      <div className={`
-        absolute z-10 right-0 ${ divBgColor } 
-        laptop:w-[25%] h-[30px]
-        tablet:w-[25%] h-[30px]
-        mobile:w-[5%] h-[30px]
-        smallest:w-[5%] h-[25px]
-      `}></div>
     </div>
   );
     
 };
 
 export default FlowingText01;
+
+// ${ noticeStyle(textList[noticeId]['typeId']) }

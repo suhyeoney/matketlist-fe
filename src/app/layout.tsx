@@ -35,7 +35,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_MAP_KEY}`}
         ></Script>
       </head>
-      <body>
+      <body className="relative">
         <Providers>
           <ErrorBoundary>
             <Header />
