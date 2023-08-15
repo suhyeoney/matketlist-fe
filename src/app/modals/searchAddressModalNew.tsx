@@ -226,7 +226,7 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
     <>
       { modalControl.isSearchAddressModalOpen ?
         <>
-          <div className="flex justify-center items-center absolute z-10 w-screen h-screen opacity-50 bg-gray-700"></div>
+          <div className="flex justify-center items-center absolute z-10 w-full h-full opacity-50 bg-gray-700"></div>
         </> : null
       }
       <div 

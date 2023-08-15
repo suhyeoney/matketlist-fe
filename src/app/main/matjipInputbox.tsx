@@ -1,5 +1,7 @@
 'use client'
 
+import localFont from 'next/font/local';
+
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@store/store';
@@ -9,7 +11,6 @@ import { setSearchAddressModalOpen } from '@store/features/modalControl/slice';
 import { storeInputMajip } from '@store/features/inputControl/slice';
 import { LocationType } from '@dataTypes/location';
 import { useWindowSize } from '@hooks/useWindowSize';
-import localFont from 'next/font/local';
 
 const Tenada = localFont({
   src: '../assets/fonts/Tenada.woff'
@@ -59,13 +60,13 @@ const MatjipInputbox:React.FC = () => {
 
   return (
     <>
-      <div className="
-        flex flex-row justify-center items-center 
-        laptop:gap-[20px] p-[10px] border-[1px] border-solid border-grey 
-        tablet:gap-[20px] p-[10px] border-[1px] border-solid border-grey 
-        mobile:gap-[10px] p-[10px] border-[1px] border-solid border-grey 
-        smallest:gap-[5px] border-transparent m-0
-      ">
+      <div className={`
+       absolute z-10 top-28 flex flex-row justify-center items-center rounded-[10px]
+        laptop:gap-[20px] p-[10px] 
+        tablet:gap-[20px] p-[10px] 
+        mobile:gap-[10px] p-[10px]
+        smallest:gap-[5px] m-0
+      `}>
         { useWindowSize().width >= 768 ?
           <span className={`
           ${ Tenada.className } h-[48px] text-center p-[10px] rounded-md flex justify-center items-center 
@@ -101,3 +102,5 @@ const MatjipInputbox:React.FC = () => {
 }
 
 export default MatjipInputbox;
+
+//  ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }

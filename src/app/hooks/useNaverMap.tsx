@@ -11,6 +11,7 @@ import { removeLocation } from '@store/features/location/slice';
 import { setMatjipInfoModalOpen, setMyMatjipSlidersOpen } from '@store/features/modalControl/slice';
 import image3 from '@assets/icons/my-matjip-list.png';
 import { moveToMapToggle } from '@store/features/environmentVariables/slice';
+import { useWindowSize } from './useWindowSize';
 
 
 const NaverMap = (
@@ -27,32 +28,34 @@ const NaverMap = (
   const [ arrMatjipLocation, setArrMatjipLocation ] = useState<SearchMatjipInfo[]>([]);
   const [ markersList, setMarkersList ] = useState<any>([]); // 해당 모듈 내부에서 로컬용으로 사용할 마커 집합. 추가 / 제거 모두 구현되어야 함!
   const [ badgeObj, setBadgeObj ] = useState<naver.maps.CustomControl | undefined | null>(null);
+  const [ isSilderOpen, setSliderOpen ] = useState<boolean>(false);
 
   const location = useSelector((state: RootState) => state.location);
   const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
+  const modalControl = useSelector((state: RootState) => state.modalControl);
 
   const dispatch = useDispatch();
 
   const setMarkerInfoHtmlString =  (e: SearchMatjipInfo) => {
     return  [
-      '<div class="fixed z-20 border-solid border-2 rounded-[20px]">',
-      '<table class="table text-sm font-[\'NanumGothic\'] w-[250px]">',
+      '<div class="absolute z-[45] border-2 border-yellow-400 rounded-[20px]">',
+      '<table class="table text-[13px] font-[\'NanumGothic\'] w-[200px] h-[350px]">',
       '<tbody>',
       '<tr>',
       '<td class="font-bold"><div class="w-[70px] whitespace-normal">🍲 상호명</div></td>',
-      `<td><div class="w-[180px] whitespace-normal">${ e.name }</div></td>`,
+      `<td><div class="w-[130px] whitespace-normal">${ e.name }</div></td>`,
       '</tr>',
       '<tr>',
       '<td class="font-bold"><div class="w-[70px] whitespace-normal">🍲 주소</div></td>',
-      `<td><div class="w-[180px] whitespace-normal">${ e.address }</div></td>`,
+      `<td><div class="w-[130px] whitespace-normal">${ e.address }</div></td>`,
       '</tr>',
       '<tr>',
       '<td class="font-bold"><div class="w-[70px] whitespace-normal">🍲 대표전화번호</div></td>',
-      `<td><div class="w-[180px] whitespace-normal">${ e.phoneNumber }</div></td>`,
+      `<td><div class="w-[130px] whitespace-normal">${ e.phoneNumber }</div></td>`,
       '</tr>',
       '<tr>',
       '<td class="font-bold"><div class="w-[70px] whitespace-normal">🍲 대표웹사이트</div></td>',
-      `<td><div class="w-[180px] truncate ..."><a href=${ e.website } target="_blank">${ e.website }</a></div></td>`,
+      `<td><div class="w-[130px] truncate ..."><a href=${ e.website } target="_blank">${ e.website }</a></div></td>`,
       '</tr>',
       '<tr>',
       '<td colspan="2">',
@@ -93,13 +96,11 @@ const NaverMap = (
         badgeObj.setMap(mapObj);
       });
       naver.maps.Event.addDOMListener(badgeObj.getElement(), 'click', () => {
-        console.log('>>>> Opens my current matket list');
         if(arrMatjipLocation.length < 1) {
           alert('맛집 목록이 비어있어요... :( ');
           return;
         }
         dispatch(setMyMatjipSlidersOpen(true));
-        // TODO : 등록되어 있는 목록 모달 개발 예정
       });
     }
   }, [ badgeObj ]);
@@ -132,6 +133,11 @@ const NaverMap = (
           zoom: 11,
           zoomControl: true,
           mapDataControl: true,
+          scaleControl: false,
+          logoControl: false,
+          zoomControlOptions: {
+            position: naver.maps.Position.LEFT_CENTER
+          },
           draggable: true,
           pinchZoom: true,
           scrollWheel: true,
@@ -157,8 +163,8 @@ const NaverMap = (
 
         let CURRENT_MATJIP_LIST_HTML_ARRAY = [
           '<div id="list-badge" class="flex items-center justify-center p-2 hover:cursor-pointer">',
-          '<div class="relative">',
-          '<div class="w-16 h-16 bg-white rounded-[15px] shadow-2xl">',
+          `<div class="absolute z-[15]  right-2 ">`,
+          `<div class="w-16 h-16 bg-white rounded-[15px] shadow-2xl">`,
           `<img src=${ image3.src } class="w-15 h-15" />`,
           '</div>',
           '</div>',
@@ -166,7 +172,7 @@ const NaverMap = (
         ];
         let PING_HTML_ARRAY = [
           `<div class="absolute top-0 right-0 -mr-1 -mt-1 w-4 h-4 rounded-full bg-red-400">`,
-          `<span class="absolute z-12 right-[5px] text-[10px] text-black font-bold">`,
+          `<span class="absolute z-[5] right-[5px] text-[10px] text-black font-bold">`,
           `${ location.cntLocation > 10 ? '10+' : location.cntLocation }</span>`,
           `</div>`,
           `<div id="list-ping" class="absolute top-0 right-0 -mr-1 -mt-1 w-4 h-4 rounded-full bg-red-400 animate-ping">`,
@@ -186,7 +192,7 @@ const NaverMap = (
         }
         if(badgeObj === undefined || badgeObj === null) {
           const btnList = mapRef.current = new naver.maps.CustomControl(totalPingHtmlString, {
-            position: naver.maps.Position.RIGHT_TOP
+            position: naver.maps.Position.RIGHT_CENTER
           });
           naver.maps.Event.once(map, 'init_stylemap', () => {
             btnList.setMap(map);
@@ -198,7 +204,7 @@ const NaverMap = (
             badgeObj.setMap(null);
           });
           const btnList = mapRef.current = new naver.maps.CustomControl(totalPingHtmlString, {
-            position: naver.maps.Position.RIGHT_TOP
+            position: naver.maps.Position.RIGHT_CENTER
           });
           naver.maps.Event.once(map, 'init_stylemap', () => {
             btnList.setMap(map);
@@ -230,8 +236,8 @@ const NaverMap = (
             content: setMarkerInfoHtmlString(x),
             borderWidth: 0,
             borderColor: '#2db400',
-            // disableAnchor: true,
-            
+            pixelOffset: new naver.maps.Point(20, -20),
+            disableAnchor: true,
             backgroundColor: 'transparent',
           });
 

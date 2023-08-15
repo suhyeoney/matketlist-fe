@@ -197,7 +197,7 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
     <div
       id="hashtagTree" 
       className={`
-      absolute z-20 left-0 bottom-0 flex justify-center w-full animate-openFromRight
+      absolute z-[25] left-0 bottom-0 flex justify-center w-full animate-openFromRight
       laptop:h-[87%] px-4
       tablet:h-[87%] px-4
       mobile:h-[89%] px-12

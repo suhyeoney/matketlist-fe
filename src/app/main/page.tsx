@@ -101,49 +101,37 @@ const Main: React.FC = () => {
 
   return (
     <>
-    { isAuthorized ?
+      <FlowingText01 textList={ data ?? [] } />
+      { !modalControl.isMatjipInfoModalOpen ? <Header /> : null }
+      { isAuthorized ?
       <div
         id="mainPage" 
         className={`
-          h-screen overflow-hidden animate-showPage
-          ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
+          overflow-hidden animate-showPage
       `}>
-        { Object.keys(mapObj ?? {}).length === 0 ? 
-          <>
-            <div className="flex justify-center items-center absolute z-20 w-full h-full opacity-50 bg-gray-700"></div>
-            <div className="flex justify-center items-center absolute z-40 w-full h-full">
-              <div className="inline-block align-middle leading-normal text-white font-bold">
-                {/* <LoadingSpinner01 color={ 'purple' } depth={ '500' } thickness={ '4' } text={ '지도 영역을 불러오고 있습니다.' } /> */}
-                <LoadingSpinner03 cubeText={ 'MATKET' } infoText={ '지도 영역을 불러오고 있습니다.' } />
-              </div>
-            </div>
-          </> : null
-        }
-        {/* <div className="flex justify-center items-center absolute z-20 w-full h-full opacity-50 bg-gray-700"></div>
-        <div className="flex justify-center items-center absolute z-40 w-full h-full ">
-          <div className="inline-block align-middle leading-normal text-white font-bold">
-            <LoadingSpinner03 cubeText={ 'MATKET' } infoText={ '지도 영역을 불러오고 있습니다.' } />
-          </div>
-        </div> */}
-        <Header />
         <div className="
-          flex flex-col justify-center items-center relative z-10 
-          laptop:gap-5
-          tablet:gap-5
-          mobile:gap-5
-          smallest:gap-0
+          flex flex-col justify-center items-center relative
         ">
-          <FlowingText01 textList={ data ?? [] } />
-          <MatjipInputbox/>
+          { Object.keys(mapObj ?? {}).length === 0 ? 
+          <div
+            style={{width: `${ mapSize.width }px`, height: `${ mapSize.height }px`}} 
+            className="flex items-center justify-center absolute z-20">
+            <div className="inline-block align-middle leading-normal text-white font-bold">
+              <LoadingSpinner03 cubeText={ 'MATKET' } infoText={ '지도 영역을 불러오고 있습니다.' } />
+            </div>
+          </div> : null
+          }
+          {/* <div           
+            style={{width: `${ mapSize.width }px`, height: `${ mapSize.height }px`}}
+          ></div> */}
+          { !modalControl.isMatjipInfoModalOpen ? <MatjipInputbox /> : null }
           <div id="map" 
-          style={{width: `${ mapSize.width * 0.9 }px`, height: `${ mapSize.height * 0.6 }px`}}
+          style={{width: `${ mapSize.width }px`, height: `${ mapSize.height }px`}}
           className={`
-            z-0 self-center  w-[90%] h-[90%]
             ${ mapStyle }
           `}></div>
           { modalControl.isSearchAddressModalOpen ? <SearchAddressModal size={ mapSize } /> : null }
           { modalControl.isMyMatjipSlidersOpen ? <MatjipSliders size={ mapSize } setPosition={ setPosition }  /> : null }
-
         </div>
       </div> : null }
     </>
