@@ -51,9 +51,9 @@ const BackgroundModeToggle:React.FC = () => {
   return (
     <div className="
       flex flex-col items-center justify-center p-[10px]
-      laptop:gap-[10px] 
-      tablet:gap-[10px] 
-      mobile:gap-[10px] 
+      laptop:gap-[5px] 
+      tablet:gap-[5px] 
+      mobile:gap-[5px] 
       smallest:gap-[2px] 
     ">
       <div className="item-center">
@@ -65,7 +65,7 @@ const BackgroundModeToggle:React.FC = () => {
           defaultChecked={ !environmentVariables.backgroundMode }
           className={`
             toggle
-            ${ environmentVariables.backgroundMode ? '' : 'bg-yellow-400' }
+            ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-yellow-400' }
         `}/>
       </div>
     </div>

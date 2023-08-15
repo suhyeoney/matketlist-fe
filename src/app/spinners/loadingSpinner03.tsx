@@ -1,5 +1,7 @@
 'use client'
 
+import localFont from 'next/font/local';
+
 import { useEffect, useState } from 'react';
 import '@spinners/styles.css';
 import { useSelector } from 'react-redux';
@@ -9,6 +11,11 @@ interface LoadingSpinner03Props {
   cubeText: string,
   infoText: string,
 };
+
+const YeongdeokBlueroad = localFont({
+  src: '../assets/fonts/YeongdeokBlueroad.woff'
+});
+
 
 const LoadingSpinner03: React.FC<LoadingSpinner03Props> = ({ cubeText, infoText }) => {
 
@@ -31,14 +38,15 @@ const LoadingSpinner03: React.FC<LoadingSpinner03Props> = ({ cubeText, infoText 
               className={`
                 side 
                 side-${ idx + 1 }
-                ${ environmentVariables.backgroundMode ? 'text-[#2A303C]' : 'text-white' } 
+                ${ environmentVariables.backgroundMode ? 'text-white' : 'text-white' } 
             `}>{ x }</div>
           );
         })}
       </div>
       <span
         className={`
-        ${ environmentVariables.backgroundMode ? 'text-gray-700' : 'text-white' }
+        ${ YeongdeokBlueroad.className }
+        ${ environmentVariables.backgroundMode ? 'text-white' : 'text-white' }
       `}>
         { infoText }
       </span>

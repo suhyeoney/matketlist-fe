@@ -160,12 +160,14 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
           matjipCards.forEach((card: Element, idx: number) => {
             if(idx !== currentId) {
               matjipCards[idx].classList.remove('border-4');
-              matjipCards[idx].classList.remove('border-[#552594]');
+              matjipCards[idx].classList.remove(environmentVariables.backgroundMode ?
+                'border-[#552594]' : 'border-lime-300');
               matjipCards[idx].classList.remove('rounded-[16px]');
               matjipCards[idx].classList.add('pointer-events-none');
             } else {
               matjipCards[idx].classList.add('border-4');
-              matjipCards[idx].classList.add('border-[#552594]');
+              matjipCards[idx].classList.add(environmentVariables.backgroundMode ? 
+                'border-[#552594]' : 'border-lime-300');
               matjipCards[idx].classList.add('rounded-[16px]');
               matjipCards[idx].classList.remove('pointer-events-none');
 

@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { checkHangeulTextEndsWithJongseong } from '@utils/stringUtils';
 import { SearchMatjipInfo } from '@dataTypes/matjip';
 import { updateHashtag, updateLocation } from '@store/features/location/slice';
+import { useWindowSize } from '@hooks/useWindowSize';
 
 const YeongdeokSea = localFont({
   src: '../assets/fonts/YeongdeokSea.woff'
@@ -29,6 +30,7 @@ const HashtagCheckbox: React.FC<HashtagCheckboxProps> = ({ placeId, setHashtagCh
   const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
 
   const dispatch = useDispatch();
+  const window = useWindowSize();
   
   const [ selectedHashtags, setHashtagsChecked ] = useState<HashtagType[]>([]); // 해시태그 고유 넘버 ID로 로컬 저장 진행. 
   const [ isfloatBtnAreaOpen, setFloatBtnAreaOpen ] = useState<boolean>(false);
@@ -87,47 +89,47 @@ const HashtagCheckbox: React.FC<HashtagCheckboxProps> = ({ placeId, setHashtagCh
       return val;
     });
 
-    console.log(
-      tempArrLocation.map((e: SearchMatjipInfo) => {
-        if(e.placeId === placeId) {
-          console.log(`arrHashtagIds, ${arrHashtagIds}`);
-          return {
-            ...e, 
-            hashtags: [                          
-              ...arrHashtagIds
-          ]};
-        }
-        if(e.hashtags.findIndex((i: number) => typeof i === 'string') > -1) {
-          return {
-            ...e, 
-            hashtags: [
-              ...e.hashtags.filter((i: number) => typeof i === 'number')
-          ]};
-        }
-        return e;
-      })
-    );
+    // console.log(
+    //   tempArrLocation.map((e: SearchMatjipInfo) => {
+    //     if(e.placeId === placeId) {
+    //       console.log(`arrHashtagIds, ${arrHashtagIds}`);
+    //       return {
+    //         ...e, 
+    //         hashtags: [                          
+    //           ...arrHashtagIds
+    //       ]};
+    //     }
+    //     if(e.hashtags.findIndex((i: number) => typeof i === 'string') > -1) {
+    //       return {
+    //         ...e, 
+    //         hashtags: [
+    //           ...e.hashtags.filter((i: number) => typeof i === 'number')
+    //       ]};
+    //     }
+    //     return e;
+    //   })
+    // );
 
-    console.log(
-      tempArrHashtag.map((e: HashtagType) => {
-        if(selectedHashtags.findIndex((i: HashtagType) => i.id === e.id) > -1) {
-          if(!selectedHashtags.find((i: HashtagType) => i.id === e.id)?.placeIds.includes(placeId)) {
-            return {
-              ...e,
-              placeIds: [
-                ...e.placeIds.filter((i: string) => i.length > 0), placeId
-            ]};
-          }
-        } else {
-          return {
-            ...e,
-            placeIds: [
-              ...e.placeIds.filter((i: string) => i.length > 0).filter((i: string) => i !== placeId)
-          ]};
-        }
-        return e;
-      })
-    );
+    // console.log(
+    //   tempArrHashtag.map((e: HashtagType) => {
+    //     if(selectedHashtags.findIndex((i: HashtagType) => i.id === e.id) > -1) {
+    //       if(!selectedHashtags.find((i: HashtagType) => i.id === e.id)?.placeIds.includes(placeId)) {
+    //         return {
+    //           ...e,
+    //           placeIds: [
+    //             ...e.placeIds.filter((i: string) => i.length > 0), placeId
+    //         ]};
+    //       }
+    //     } else {
+    //       return {
+    //         ...e,
+    //         placeIds: [
+    //           ...e.placeIds.filter((i: string) => i.length > 0).filter((i: string) => i !== placeId)
+    //       ]};
+    //     }
+    //     return e;
+    //   })
+    // );
 
     dispatch(updateLocation(
       tempArrLocation.map((e: SearchMatjipInfo) => {
@@ -218,8 +220,13 @@ const HashtagCheckbox: React.FC<HashtagCheckboxProps> = ({ placeId, setHashtagCh
               name={`checkbox-${ x.id }`}
               defaultChecked={ bindChecked(x) }
               onChange={ (e: React.ChangeEvent<HTMLInputElement>) => onClickCheckbox(e, x) }
-              className="self-start"
-            />
+              className="
+              self-start
+              laptop:w-[15px] h-[15px]
+              tablet:w-[15px] h-[15px]
+              mobile:w-[13px] h-[13px]
+              smallest:w-[11px] h-[11px]
+            "/>
             <label 
               htmlFor={`checkbox-${ x.id }`}
               className={`
@@ -232,7 +239,7 @@ const HashtagCheckbox: React.FC<HashtagCheckboxProps> = ({ placeId, setHashtagCh
         <div 
           id="floatBtnArea"
           className={`
-          fixed z-30 bottom-0 left-0 right-0 w-full flex flex-col items-center justify-center gap-5 animate-slideUp
+          fixed z-30 bottom-0 left-0 right-0 w-full flex flex-col items-center justify-center gap-4 animate-slideUp
           rounded-tl-[10px] rounded-tr-[10px]
           laptop:h-[140px]
           tablet:h-[140px]
@@ -245,23 +252,23 @@ const HashtagCheckbox: React.FC<HashtagCheckboxProps> = ({ placeId, setHashtagCh
           <div className="
             flex flex-col items-center justify-center gap-1 cursor-default w-full
           ">
-            <div 
+            <div
               className={`
-              flex flex-row items-center justify-center gap-0 truncate ...
+              flex flex-row items-center justify-center gap-0 
               ${ YeongdeokSea.className }
             `}>
-              <span 
+              <span
                 className={`
-                self-center 
+                px-4
                 ${ environmentVariables.backgroundMode ? 'text-lime-200' : 'text-purple-500' }
               `}>
                 { joinedSelectedHashtagTexts }
-              </span>
-              <span 
-                className={`
-                ${ environmentVariables.backgroundMode ? 'text-white' : 'text-black' }
-              `}>
-                { checkHangeulTextEndsWithJongseong(joinedSelectedHashtagTexts) ? ' 가 선택됨' : ' 이 선택됨' }
+                <span
+                  className={`
+                  ${ environmentVariables.backgroundMode ? 'text-white' : 'text-black' }
+                `}>
+                  { checkHangeulTextEndsWithJongseong(joinedSelectedHashtagTexts) ? ' 가 선택됨' : ' 이 선택됨' }
+                </span>
               </span>
             </div>
             <div 
