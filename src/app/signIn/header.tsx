@@ -7,7 +7,7 @@ const Tenada = localFont({
 const Header: React.FC = () => {
 
   return (
-    <div className="flex flex-row items-center justify-center relative z-0">
+    <div className="flex flex-row items-center justify-center absolute z-[5]">
       <div className={`
         ${ Tenada.className } font-bold flex justify-center items-center text-center text-white p-[10px] cursor-default
         laptop:text-7xl h-[350px] 

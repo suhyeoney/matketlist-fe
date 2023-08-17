@@ -10,6 +10,7 @@ import { checkHangeulTextEndsWithJongseong } from '@utils/stringUtils';
 import { SearchMatjipInfo } from '@dataTypes/matjip';
 import { updateHashtag, updateLocation } from '@store/features/location/slice';
 import { useWindowSize } from '@hooks/useWindowSize';
+import FloatedSlideUp from '@floats/slideUp';
 
 const YeongdeokSea = localFont({
   src: '../assets/fonts/YeongdeokSea.woff'
@@ -38,7 +39,7 @@ const HashtagCheckbox: React.FC<HashtagCheckboxProps> = ({ placeId, setHashtagCh
   const checkboxContainerRef = useRef<HTMLDivElement | null>(null);
 
   const closeFloatButtonArea = () => {
-    document.querySelector('#floatBtnArea')?.classList.replace('animate-slideUp', 'animate-slideDown');
+    document.querySelector('#hashtagFloatBtnArea')?.classList.replace('animate-slideUp', 'animate-slideDown');
     document.querySelector('#sliderContainer')?.classList.replace('overflow-x-hidden', 'overflow-x-scroll');
     document.querySelector('#sliderContainer')?.addEventListener('keydown', () => { return true; });
     setTimeout(() => {
@@ -177,6 +178,66 @@ const HashtagCheckbox: React.FC<HashtagCheckboxProps> = ({ placeId, setHashtagCh
     closeFloatButtonArea();
   };
 
+  const floatedSlideUpContent = 
+    <>
+      { selectedHashtags.length > 0 ? 
+      <div className="
+        flex flex-col items-center justify-center gap-1 cursor-default w-full
+      ">
+        <div
+          className={`
+          flex flex-row items-center justify-center gap-0 
+          ${ YeongdeokSea.className }
+        `}>
+          <span
+            className={`
+            px-4
+            ${ environmentVariables.backgroundMode ? 'text-lime-200' : 'text-purple-500' }
+          `}>
+            { joinedSelectedHashtagTexts }
+            <span
+              className={`
+              ${ environmentVariables.backgroundMode ? 'text-white' : 'text-black' }
+            `}>
+              { checkHangeulTextEndsWithJongseong(joinedSelectedHashtagTexts) ? ' 가 선택됨' : ' 이 선택됨' }
+            </span>
+          </span>
+        </div>
+        <div 
+          className={`
+          ${ YeongdeokSea.className }
+          self-center text-red-500
+        `}>
+          { `지금 ${ selectedHashtags.length }개 골랐어요!` }
+        </div>
+      </div> : 
+      <div 
+        className={`
+        ${ YeongdeokSea.className }
+        flex items-center justify-center text-red-500
+      `}>
+        등록되어있는 해시태그를 골라 적용해보세요! 😎
+      </div> } 
+    </>;
+
+  const floatedSlideUpButton = 
+    <>
+      <div 
+        className={`
+        flex flex-row items-center justify-center gap-2 w-full
+        ${ Tenada.className }
+      `}>
+        <button 
+          onClick={ () => closeFloatButtonArea() }
+          className="float-left w-[48%] border border-gray-500 rounded-[3px] p-1"
+        >돌아가기</button>
+        <button 
+          onClick={ () => onApplyHashtag() }
+          className="float-right w-[48%] border border-gray-500 rounded-[3px] p-1"
+        >적용완료</button>
+      </div>
+    </>;
+
   useEffect(() => {
     setHashtagsChecked([ 
       ...location.arrHashtag.filter((e: HashtagType) => e.placeIds.includes(placeId)) 
@@ -236,71 +297,12 @@ const HashtagCheckbox: React.FC<HashtagCheckboxProps> = ({ placeId, setHashtagCh
         );
       })}
       { isfloatBtnAreaOpen ? 
-        <div 
-          id="floatBtnArea"
-          className={`
-          fixed z-30 bottom-0 left-0 right-0 w-full flex flex-col items-center justify-center gap-4 animate-slideUp
-          rounded-tl-[10px] rounded-tr-[10px]
-          laptop:h-[140px]
-          tablet:h-[140px]
-          mobile:h-[120px]
-          smallest:h-[60px]
-          ${ environmentVariables.backgroundMode ? 'bg-[#2A303C] text-white' : 'bg-white text-black' }
-        `}>
-          
-          { selectedHashtags.length > 0 ? 
-          <div className="
-            flex flex-col items-center justify-center gap-1 cursor-default w-full
-          ">
-            <div
-              className={`
-              flex flex-row items-center justify-center gap-0 
-              ${ YeongdeokSea.className }
-            `}>
-              <span
-                className={`
-                px-4
-                ${ environmentVariables.backgroundMode ? 'text-lime-200' : 'text-purple-500' }
-              `}>
-                { joinedSelectedHashtagTexts }
-                <span
-                  className={`
-                  ${ environmentVariables.backgroundMode ? 'text-white' : 'text-black' }
-                `}>
-                  { checkHangeulTextEndsWithJongseong(joinedSelectedHashtagTexts) ? ' 가 선택됨' : ' 이 선택됨' }
-                </span>
-              </span>
-            </div>
-            <div 
-              className={`
-              ${ YeongdeokSea.className }
-              self-center text-red-500
-            `}>
-              { `지금 ${ selectedHashtags.length }개 골랐어요!` }
-            </div>
-          </div> : 
-          <div 
-            className={`
-            ${ YeongdeokSea.className }
-            flex items-center justify-center text-red-500
-          `}>
-            등록되어있는 해시태그를 골라 적용해보세요! 😎
-          </div> }
-          <div 
-            className={`
-            flex flex-row items-center justify-center gap-2 w-full
-            ${ Tenada.className }
-          `}>
-            <button 
-              onClick={ () => closeFloatButtonArea() }
-              className="float-left w-[48%] border border-gray-500 rounded-[3px] p-1"
-            >돌아가기</button>
-            <button 
-              onClick={ () => onApplyHashtag() }
-              className="float-right w-[48%] border border-gray-500 rounded-[3px] p-1"
-            >적용완료</button>
-          </div>
-        </div> : null
+        <FloatedSlideUp 
+          idString={ 'hashtagFloatBtnArea' } 
+          contentArea={ floatedSlideUpContent } 
+          buttonArea={ floatedSlideUpButton }
+        />
+        : null
       }
     </div>
   );

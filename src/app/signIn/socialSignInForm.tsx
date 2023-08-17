@@ -23,7 +23,7 @@ const SocialSignInForm: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-7 items-center justify-center relative z-0">
+    <div className="flex flex-col gap-7 items-center justify-center absolute z-[5] top-1/2">
       <button className="w-[200px] h-[40px]">
         <Link href={ isLoaded ? signInNaver() ?? `` : `` }>
           <Image 

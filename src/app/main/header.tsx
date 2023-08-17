@@ -18,10 +18,10 @@ const Header: React.FC = () => {
   const navigator = useRouter();
 
   const signOut = () => {
-    document.querySelector('#mainPage')?.classList.replace('animate-showPage', 'animate-closePage');
+    document.querySelector('html')?.classList.replace('animate-showPage', 'animate-closePage');
     setTimeout(() => {
-      navigator.push('/signIn');
       dispatch(accessTokenSetting(''));
+      navigator.push('/signIn');
     }, 1000);
   };
 

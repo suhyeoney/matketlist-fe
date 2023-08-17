@@ -9,7 +9,7 @@ const Header: React.FC = () => {
     <div
       id="header" 
       className={`
-      w-screen absolute z-[5] top-8 p-1 text-gray-400 cursor-default text-[10px] 
+      w-screen absolute z-[5] top-8 p-1 text-black font-bold cursor-default text-[10px]
     `}>
       <span className="absolute right-2">{ signedInTime }</span>
     </div>

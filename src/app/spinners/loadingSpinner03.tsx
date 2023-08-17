@@ -38,7 +38,7 @@ const LoadingSpinner03: React.FC<LoadingSpinner03Props> = ({ cubeText, infoText 
               className={`
                 side 
                 side-${ idx + 1 }
-                ${ environmentVariables.backgroundMode ? 'text-white' : 'text-white' } 
+                ${ environmentVariables.backgroundMode ? 'text-black' : 'text-black' } 
             `}>{ x }</div>
           );
         })}
@@ -46,7 +46,7 @@ const LoadingSpinner03: React.FC<LoadingSpinner03Props> = ({ cubeText, infoText 
       <span
         className={`
         ${ YeongdeokBlueroad.className }
-        ${ environmentVariables.backgroundMode ? 'text-white' : 'text-white' }
+        ${ environmentVariables.backgroundMode ? 'text-black' : 'text-black' }
       `}>
         { infoText }
       </span>

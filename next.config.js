@@ -5,6 +5,9 @@ const withVideos = require('next-videos');
 
 const nextConfig = {
   reactStrictMode: false,
+  experimental: {
+    appDir: true,
+  },
   compiler: {
     styledComponents: true,
   },
@@ -27,6 +30,7 @@ const nextConfig = {
         '@api': path.resolve(__dirname, 'src/app/api'),
         '@assets': path.resolve(__dirname, 'src/app/assets'),
         '@dataTypes': path.resolve(__dirname, 'src/app/dataTypes'),
+        '@floats': path.resolve(__dirname, 'src/app/floats'),
         '@hashtags': path.resolve(__dirname, 'src/app/hashtags'),
         '@hooks': path.resolve(__dirname, 'src/app/hooks'),
         '@main': path.resolve(__dirname, 'src/app/main'),

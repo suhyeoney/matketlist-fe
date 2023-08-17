@@ -19,11 +19,9 @@ export const environmentVariablesSlice = createSlice({
   initialState,
   reducers: {
     backgroundModeToggle: (state, action: PayloadAction<boolean>) => {
-      console.log('>>> backgroundModeToggle');
       state.backgroundMode = action.payload
     },
     backgroundModeToggleSuccess: (state, action: PayloadAction<boolean>) => {
-      console.log('>>> backgroundModeToggleSuccess');
       state.backgroundMode = action.payload
     },
 

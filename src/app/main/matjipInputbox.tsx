@@ -12,8 +12,8 @@ import { storeInputMajip } from '@store/features/inputControl/slice';
 import { LocationType } from '@dataTypes/location';
 import { useWindowSize } from '@hooks/useWindowSize';
 
-const Tenada = localFont({
-  src: '../assets/fonts/Tenada.woff'
+const YeongdeokBlueroad = localFont({
+  src: '../assets/fonts/YeongdeokBlueroad.woff'
 });
 
 const MatjipInputbox:React.FC = () => {
@@ -62,16 +62,18 @@ const MatjipInputbox:React.FC = () => {
     <>
       <div className={`
        absolute z-10 top-28 flex flex-row justify-center items-center rounded-[10px]
-        laptop:gap-[20px] p-[10px] 
-        tablet:gap-[20px] p-[10px] 
-        mobile:gap-[10px] p-[10px]
-        smallest:gap-[5px] m-0
+       ${ environmentVariables.backgroundMode ? 'bg-yellow-300 text-black' : 'bg-[#2A303C] text-white' }
+        laptop:gap-1 p-[10px] 
+        tablet:gap-1 p-[10px] 
+        mobile:gap-1 p-[10px]
+        smallest:gap-1 m-0
       `}>
         { useWindowSize().width >= 768 ?
           <span className={`
-          ${ Tenada.className } h-[48px] text-center p-[10px] rounded-md flex justify-center items-center 
-          laptop:text-base bg-yellow-300 
-          tablet:text-sm bg-yellow-300
+          ${ YeongdeokBlueroad.className }
+          h-[48px] text-center pr-2 rounded-md flex justify-center items-center cursor-default
+          laptop:text-base 
+          tablet:text-sm
           mobile:text-[0px] 
         `}>나만의 맛집 추가하기</span> : null
         }
@@ -94,7 +96,7 @@ const MatjipInputbox:React.FC = () => {
           onClick={ onSearchBtnClick }
           // disabled={ modalControl.isMatjipInfoModalOpen ? true : false }
           className={`
-          ${ Tenada.className } text-white text-[17px] btn w-[100px] border-violet-500 bg-violet-500
+          ${ YeongdeokBlueroad.className } text-white text-[17px] btn w-[100px] border-violet-500 bg-violet-500
         `}><span className="pr-2">🔍</span>검색</button>
       </div>      
     </>

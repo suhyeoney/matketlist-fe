@@ -25,6 +25,7 @@
       "@api/*": ["src/app/api/*"],
       "@assets/*": ["src/app/assets/*"],
       "@dataTypes/*": ["src/app/dataTypes/*"],
+      "@floats/*": ["src/app/floats/*"],
       "@hashtags/*": ["src/app/hashtags/*"],
       "@hooks/*": ["src/app/hooks/*"],
       "@main/*": ["src/app/main/*"],

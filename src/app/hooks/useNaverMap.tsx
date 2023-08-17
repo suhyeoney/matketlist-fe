@@ -1,24 +1,23 @@
 'use client'
 
-import { DOMElement, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@store/store';
-import { InfoWindow, Marker } from 'react-naver-maps';
 import image1 from '@assets/icons/you-are-here.png';
 import image2 from '@assets/icons/like-it.png';
 import { SearchMatjipInfo } from '@dataTypes/matjip';
-import { removeLocation } from '@store/features/location/slice';
-import { setMatjipInfoModalOpen, setMyMatjipSlidersOpen } from '@store/features/modalControl/slice';
+import { setMyMatjipSlidersOpen } from '@store/features/modalControl/slice';
 import image3 from '@assets/icons/my-matjip-list.png';
 import { moveToMapToggle } from '@store/features/environmentVariables/slice';
-import { useWindowSize } from './useWindowSize';
 
 
 const NaverMap = (
     mapObj: naver.maps.Map | undefined | null, 
     setMapObj: React.Dispatch<React.SetStateAction<naver.maps.Map | undefined | null>>,
     position: { latitude: number; longitude: number },
-    isAuthorized: boolean,  
+    isAuthorized: boolean,
+    selectInfo: React.Dispatch<React.SetStateAction<SearchMatjipInfo | undefined>>,
+    setInfoFloatBtnAreaOpen: React.Dispatch<React.SetStateAction<boolean>>,
   ) => {
   const mapRef = useRef<HTMLElement | null | any>(null);
   const [myLocation, setMyLocation] = useState<
@@ -105,21 +104,21 @@ const NaverMap = (
     }
   }, [ badgeObj ]);
 
-  const closeOtherMarkerInfos = () => {
-    markersList.forEach((m: any) => {
-      const sizeX = m.getIcon().size.width;
-      const sizeY = m.getIcon().size.height;
-      if(sizeX !== 30 && sizeY !== 30) { // Default 사이즈인 30x30 이 아니면, Default로 크기를 되돌림.
-        m.setIcon({
-          url: image2.src,
-          size: new naver.maps.Size(30, 30), // 마커 크기
-          scaledSize: new naver.maps.Size(30, 30), // 아이콘 크기
-          origin: new naver.maps.Point(0, 0),
-          // anchor: new naver.maps.Point(11, 35)
-        });
-      }
-    });
-  };
+  // const closeOtherMarkerInfos = () => {
+  //   markersList.forEach((m: any) => {
+  //     const sizeX = m.getIcon().size.width;
+  //     const sizeY = m.getIcon().size.height;
+  //     if(sizeX !== 30 && sizeY !== 30) { // Default 사이즈인 30x30 이 아니면, Default로 크기를 되돌림.
+  //       m.setIcon({
+  //         url: image2.src,
+  //         size: new naver.maps.Size(30, 30), // 마커 크기
+  //         scaledSize: new naver.maps.Size(30, 30), // 아이콘 크기
+  //         origin: new naver.maps.Point(0, 0),
+  //         // anchor: new naver.maps.Point(11, 35)
+  //       });
+  //     }
+  //   });
+  // };
 
   useEffect(() => {
     if(isAuthorized) {
@@ -241,42 +240,41 @@ const NaverMap = (
             backgroundColor: 'transparent',
           });
 
-          setMarkersList([ ...markersList, { ...infowindow, placeId: x.placeId }]);
+          // setMarkersList([ ...markersList, { ...infowindow, placeId: x.placeId }]);
 
           naver.maps.Event.addListener(marker, 'click', (e: React.MouseEvent) => {
-            if (infowindow.getMap()) {
-              infowindow.close();
-            } else { // 마커 클릭 시, > Popup Open
-              infowindow.open(map, marker);
-              dispatch(setMatjipInfoModalOpen(true));
-              const elementBtnClose = document.querySelector('#btn-close');
-              const elementBtnRemove = document.querySelector('#btn-remove');
-              if(elementBtnClose !== null && elementBtnClose !== undefined) {
-                elementBtnClose?.addEventListener('click', () => {
-                  infowindow.close();
-                  dispatch(setMatjipInfoModalOpen(false));
-                });
-              }
-              if(elementBtnRemove !== null && elementBtnRemove !== undefined) {
-                elementBtnRemove?.addEventListener('click', () => {
-                  if(confirm('정말로 해제하시겠어요?')) {
-                    dispatch(removeLocation(x.placeId));
-                    setMarkersList(markersList.filter((e: any) => e.placeId !== x.placeId));
-                  } else {
-                    return;
-                  }
-                  infowindow.close();
-                  dispatch(setMatjipInfoModalOpen(false));
-                });
-              }
-              // marker.setIcon({
-              //   url: image2.src,
-              //   size: new naver.maps.Size(50, 50), // 마커 크기
-              //   scaledSize: new naver.maps.Size(50, 50), // 아이콘 크기
-              //   origin: new naver.maps.Point(0, 0),
-              //   anchor: new naver.maps.Point(11, 35)
-              // });
-            }
+            console.log('marker clicked', marker);
+            const target = location.arrLocation.find((x: SearchMatjipInfo) => 
+            x.latitude === marker.getPosition().y && x.longitude === marker.getPosition().x);
+            console.log('target', target);
+            selectInfo(target);
+            setInfoFloatBtnAreaOpen(true);
+            // if (infowindow.getMap()) {
+            //   infowindow.close();
+            // } else { // 마커 클릭 시, > Popup Open
+            //   infowindow.open(map, marker);
+            //   dispatch(setMatjipInfoModalOpen(true));
+            //   const elementBtnClose = document.querySelector('#btn-close');
+            //   const elementBtnRemove = document.querySelector('#btn-remove');
+            //   if(elementBtnClose !== null && elementBtnClose !== undefined) {
+            //     elementBtnClose?.addEventListener('click', () => {
+            //       infowindow.close();
+            //       dispatch(setMatjipInfoModalOpen(false));
+            //     });
+            //   }
+            //   if(elementBtnRemove !== null && elementBtnRemove !== undefined) {
+            //     elementBtnRemove?.addEventListener('click', () => {
+            //       if(confirm('정말로 해제하시겠어요?')) {
+            //         dispatch(removeLocation(x.placeId));
+            //         setMarkersList(markersList.filter((e: any) => e.placeId !== x.placeId));
+            //       } else {
+            //         return;
+            //       }
+            //       infowindow.close();
+            //       dispatch(setMatjipInfoModalOpen(false));
+            //     });
+            //   }
+            // }
           });
 
           if(!environmentVariables.moveToMap && index === arrMatjipLocation.length - 1) {

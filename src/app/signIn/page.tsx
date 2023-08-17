@@ -1,22 +1,25 @@
-'use client'
-
 import dynamic from 'next/dynamic';
 
-const Background = dynamic(() => import('@signIn/background'), { ssr: false });
-const SocialSignInForm = dynamic(() => import('@signIn/socialSignInForm'));
-const Header = dynamic(() => import('@signIn/header'));
+const Background = dynamic(() => import('@signIn/background'), { ssr: true });
+const SocialSignInForm = dynamic(() => import('@signIn/socialSignInForm'), { ssr: true });
+const Header = dynamic(() => import('@signIn/header'), { ssr: true });
 
-const SignIn: React.FC = () => {
+interface SignInProps {
+  pageProps: string
+};
+
+const SignIn: React.FC<SignInProps> = ({ pageProps }) => {
+
+  // console.log('SignIn Component > pageProps', pageProps);
 
   return (
     <div 
       id="signInPage"
-      className="flex flex-col h-screen items-center gap-12 animate-showPage"
+      className="relative flex flex-col h-screen items-center gap-12"
     >
       <Background />
       <Header />
       <SocialSignInForm />
-      {/* <Footer /> */}
     </div>
   );
 };

@@ -52,11 +52,11 @@ module.exports = {
       },
       flowing: {
         '0%': {
-          transform: 'translateX(200%)',
+          transform: 'translateX(100%)',
           right: '0'
         },
         '100%': {
-          transform: 'translateX(-200%)',
+          transform: 'translateX(-100%)',
           left: '0'
         },
       },
@@ -155,7 +155,7 @@ module.exports = {
     animation: {
       rotate: 'rotate 1.5s linear infinite',
       ping: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
-      flowing: 'flowing 60s linear infinite',
+      flowing: 'flowing 30s linear infinite',
       showPage: 'show 1s linear',
       closePage: 'close 1s linear',
       showModal: 'show 0.5s linear',
