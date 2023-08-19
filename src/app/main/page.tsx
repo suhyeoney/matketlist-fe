@@ -1,14 +1,10 @@
 import dynamic from 'next/dynamic';
 
+import React from 'react';
+
 const FullContainer = dynamic(() => import('@main/fullContainer'), { ssr: true });
 
-interface MainProps {
-  pageProps: string
-};
-
-const Main: React.FC<MainProps> = ({ pageProps }) => {
-
-  // console.log('SignIn Component > pageProps', pageProps);
+const Main = () => {
 
   return (
     <FullContainer />

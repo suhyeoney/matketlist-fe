@@ -28,7 +28,6 @@ const LoadingSpinner03: React.FC<LoadingSpinner03Props> = ({ cubeText, infoText 
   }, [ cubeText ]);
 
   return (
-    // <div className="flex flex-col justify-center gap-2 items-center pt-[200px]">
     <div className="flex flex-col items-center justify-center gap-8">
       <div className="cube">
         { arrCubeText.map((x: string, idx: number) => {
@@ -38,7 +37,7 @@ const LoadingSpinner03: React.FC<LoadingSpinner03Props> = ({ cubeText, infoText 
               className={`
                 side 
                 side-${ idx + 1 }
-                ${ environmentVariables.backgroundMode ? 'text-black' : 'text-black' } 
+                ${ environmentVariables.backgroundMode ? 'text-black' : 'text-white' } 
             `}>{ x }</div>
           );
         })}
@@ -46,7 +45,7 @@ const LoadingSpinner03: React.FC<LoadingSpinner03Props> = ({ cubeText, infoText 
       <span
         className={`
         ${ YeongdeokBlueroad.className }
-        ${ environmentVariables.backgroundMode ? 'text-black' : 'text-black' }
+        ${ environmentVariables.backgroundMode ? 'text-black' : 'text-white' }
       `}>
         { infoText }
       </span>

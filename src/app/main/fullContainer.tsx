@@ -160,6 +160,7 @@ const FullContainer: React.FC = () => {
 
   return (
     <div className={`
+      overflow-hidden
       ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
     `}>
       <FlowingText01 textList={ data ?? [] } />

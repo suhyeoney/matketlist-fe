@@ -1,16 +1,17 @@
 import dynamic from 'next/dynamic';
+import Iphone from './iphone';
 
 const Background = dynamic(() => import('@signIn/background'), { ssr: true });
 const SocialSignInForm = dynamic(() => import('@signIn/socialSignInForm'), { ssr: true });
 const Header = dynamic(() => import('@signIn/header'), { ssr: true });
 
 interface SignInProps {
-  pageProps: string
+  params: { domain: string }
 };
 
-const SignIn: React.FC<SignInProps> = ({ pageProps }) => {
+const SignIn: React.FC<SignInProps> = ({ params }) => {
 
-  // console.log('SignIn Component > pageProps', pageProps);
+  console.log('SignIn Component > pageProps', params.domain);
 
   return (
     <div 
@@ -19,6 +20,7 @@ const SignIn: React.FC<SignInProps> = ({ pageProps }) => {
     >
       <Background />
       <Header />
+      <Iphone />
       <SocialSignInForm />
     </div>
   );

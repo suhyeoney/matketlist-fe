@@ -1,24 +1,23 @@
-import SignIn from './page';
+import SignIn from '@signIn/page';
+
+import React from 'react';
 
 const printString = async () => {
-  const name = 'SignInLayout';
+  const domain = 'SignInPageProps';
   return {
     props: {
-      name,
-    },
-  };
-}
+      domain
+    }
+  }
+};
  
 const SignInLayout = async ({ children }: { children: React.ReactNode }) => { 
   const { props } = await printString();
-  if(props.name !== undefined) {
+  if(props.domain !== undefined) {
     return (
-      <>
-        <SignIn pageProps={ props.name } />
-        {/* { children } */}
-      </>
+      <SignIn params={ props } />
     )
   };
 };
 
-export  default SignInLayout;
+export default SignInLayout;

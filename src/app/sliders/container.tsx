@@ -250,7 +250,7 @@ const MatjipSliders: React.FC<MatjipSlidersProps> = ({ size, setPosition }) => {
           height: `${ size.width >= size.height ? size.height * 0.7 : size.width >= 375 ? size.height * 0.7 : size.height * 0.85 }px`
         }}
         className={`
-          absolute z-40 border-2 flex flex-col gap-3 animate-openFromRight
+          absolute z-40 border-2 flex flex-col gap-3 rounded-[10px] animate-openFromRight
           ${ environmentVariables.backgroundMode ? 'bg-white border-slate-950' : 'bg-[#2A303C] border-white' }
           laptop:p-5
           tablet:p-5

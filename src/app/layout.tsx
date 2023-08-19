@@ -16,7 +16,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     beforeInteractive : 해당 페이지가 상호작용하기 전에 가져오고 실행되어야 할 필요가 있는 경우 설정
   */
   return (
-    <html lang="en" className="bg-white overflow-hidden animate-showPage">
+    <html lang="en" className="bg-black animate-showPage">
       <head>
         <meta name="viewport" content="viewport-fit=cover"></meta>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0 user-scalable=no" />
@@ -41,3 +41,6 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 }
 
 export default RootLayout;
+
+export const revalidate = 0; // fetch로 API 호출을 하지 않는 경우 외부에서 revalidate export
+export const dynamic = 'force-dynamic';

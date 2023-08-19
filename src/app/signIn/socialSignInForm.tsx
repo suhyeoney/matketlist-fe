@@ -15,7 +15,6 @@ const SocialSignInForm: React.FC = () => {
   useEffect(() => {
     setLoaded(true);
     setBtnDisabled(true);
-    // document.querySelector('#signInPage')?.classList.replace('animate-showPage', 'animate-closePage');
   }, []);
 
  const signInNaver = () => {
@@ -23,7 +22,7 @@ const SocialSignInForm: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-7 items-center justify-center absolute z-[5] top-1/2">
+    <div className="flex flex-col gap-7 items-center justify-center absolute z-[9] top-1/2">
       <button className="w-[200px] h-[40px]">
         <Link href={ isLoaded ? signInNaver() ?? `` : `` }>
           <Image 

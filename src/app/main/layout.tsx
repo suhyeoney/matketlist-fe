@@ -1,4 +1,6 @@
-import Main from './page';
+import Main from '@main/page';
+
+import React from 'react';
 
 const printString = async () => {
   const name = 'MainLayout';
@@ -9,14 +11,11 @@ const printString = async () => {
   };
 }
 
-const MainLayout = async ({ children }: { children: React.ReactNode }) => { 
+const MainLayout = async ({ children }: { children: React.ReactNode }) => {
   const { props } = await printString();
   if(props.name !== undefined) {
     return (
-        <>
-          <Main pageProps={ props.name } />
-          {/* { children } */}
-        </>
+      <Main />
     );
   };
 }
