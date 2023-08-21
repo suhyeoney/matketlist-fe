@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import video1 from '@assets/videos/signIn-iphone-intro.mp4'
+import video1 from '@assets/videos/signIn-iphone-intro.mp4';
 import image1 from '@assets/images/mockups/empty.png';
 
 const DynamicIPhone: React.FC = () => {
