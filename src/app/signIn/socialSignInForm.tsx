@@ -22,8 +22,19 @@ const SocialSignInForm: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-7 items-center justify-center absolute z-[9] top-1/2">
-      <button className="w-[200px] h-[40px]">
+    <div className="
+      flex flex-row items-center justify-center absolute z-[9]
+      laptop:top-[400px] gap-7 
+      tablet:top-[400px] gap-7 
+      mobile:top-[370px] gap-7 
+      smallest:top-[260px] gap-7
+    ">
+      <button className="
+        laptop:w-[200px] h-[40px]
+        tablet:w-[200px] h-[40px]
+        mobile:w-[200px] h-[40px]
+        smallest:w-[120px] h-[30px]
+      ">
         <Link href={ isLoaded ? signInNaver() ?? `` : `` }>
           <Image 
             src={ image1.src } 
@@ -33,10 +44,14 @@ const SocialSignInForm: React.FC = () => {
           />
         </Link>
       </button>
-      <button 
+      {/* <button 
         className={`
-          relative w-[200px] h-[40px]
+          relative
           ${ isBtnDisabled ? 'cursor-not-allowed' : 'cursor-pointer' }
+          laptop:w-[200px] h-[40px]
+          tablet:w-[200px] h-[40px]
+          mobile:w-[200px] h-[40px]
+          smallest:w-[120px] h-[30px]
         `} 
         disabled={ isBtnDisabled }
       >
@@ -57,7 +72,7 @@ const SocialSignInForm: React.FC = () => {
           <span className="text-red-700">서비스 준비 중입니다.</span>
           <span className="text-red-700">🙏</span>
         </div>
-      </button>
+      </button> */}
     </div>
   );
 };

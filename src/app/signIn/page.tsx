@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic';
-import Iphone from './iphone';
+import Iphone from './staticIPhone';
 
 const Background = dynamic(() => import('@signIn/background'), { ssr: true });
 const SocialSignInForm = dynamic(() => import('@signIn/socialSignInForm'), { ssr: true });
@@ -16,11 +16,11 @@ const SignIn: React.FC<SignInProps> = ({ params }) => {
   return (
     <div 
       id="signInPage"
-      className="relative flex flex-col h-screen items-center gap-12"
-    >
+      className="relative flex flex-col h-screen items-center gap-12
+       overflow-x-hidden overflow-y-scroll scrollbar-hide
+    ">
       <Background />
       <Header />
-      <Iphone />
       <SocialSignInForm />
     </div>
   );
