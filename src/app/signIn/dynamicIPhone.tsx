@@ -1,3 +1,5 @@
+'use client'
+
 import Image from 'next/image';
 
 import video1 from '@assets/videos/signIn-iphone-intro.mp4';
