@@ -1,12 +1,18 @@
 'use client'
 
+import localFont from 'next/font/local';
 import Image from 'next/image';
 
-import image1 from '@assets/icons/naver-signin-btn.png';
+// import image1 from '@assets/icons/naver-signin-btn.png';
+import image1 from '@assets/icons/naver-signin-icon-only.png';
 import image2 from '@assets/icons/kakao-signin-btn.png';
 import SignInService from '@services/signIn.service';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+
+const NotoSansKR_Light = localFont({
+  src: '../assets/fonts/NotoSansKR-Light.woff'
+});
 
 const SocialSignInForm: React.FC = () => {
 
@@ -24,16 +30,16 @@ const SocialSignInForm: React.FC = () => {
   return (
     <div className="
       flex flex-row items-center justify-center absolute z-[9]
-      laptop:top-[400px] gap-7 
-      tablet:top-[400px] gap-7 
-      mobile:top-[370px] gap-7 
-      smallest:top-[260px] gap-7
+      laptop:top-[400px] gap-4
+      tablet:top-[400px] gap-4 
+      mobile:top-[370px] gap-2
+      smallest:top-[250px] gap-2
     ">
       <button className="
-        laptop:w-[200px] h-[40px]
-        tablet:w-[200px] h-[40px]
-        mobile:w-[200px] h-[40px]
-        smallest:w-[120px] h-[30px]
+        laptop:w-[70px] h-[70px]
+        tablet:w-[70px] h-[70px]
+        mobile:w-[60px] h-[60px]
+        smallest:w-[40px] h-[40px]
       ">
         <Link href={ isLoaded ? signInNaver() ?? `` : `` }>
           <Image 
@@ -73,6 +79,21 @@ const SocialSignInForm: React.FC = () => {
           <span className="text-red-700">🙏</span>
         </div>
       </button> */}
+      <div className={`
+        ${ NotoSansKR_Light.className }
+        font-semibold text-yellow-400
+        laptop:text-3xl
+        tablet:text-3xl 
+        mobile:text-2xl 
+        smallest:text-base
+      `}>
+        로그인으로 나만의&nbsp;
+        <br className="
+          laptop:hidden
+          tablet:hidden
+        "/>
+        매니징 시작하기
+      </div>
     </div>
   );
 };

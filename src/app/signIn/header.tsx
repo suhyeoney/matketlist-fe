@@ -1,8 +1,10 @@
+'use client'
+
 import localFont from 'next/font/local';
 import dynamic from 'next/dynamic';
 
-// import StaticIPhone from './staticIPhone';
-// import DynamicIPhone from './dynamicIPhone';
+import { useWindowSize } from '@hooks/useWindowSize';
+import { useEffect, useState } from 'react';
 
 const StaticIPhone = dynamic(() => import('@signIn/staticIPhone'), { ssr: true });
 const DynamicIPhone = dynamic(() => import('@signIn/dynamicIPhone'), { ssr: true });
@@ -21,6 +23,72 @@ const AppleSDGothicNeoM = localFont({
 
 const Header: React.FC = () => {
 
+  const windowSize = useWindowSize();
+  const [ scrollHeight, setScrollHeight ] = useState<number>(0);
+  const [ scrollY, setScrollY ] = useState<number | undefined>(0);
+
+  const observeAll = () => {
+    const elementSignInPage = document.querySelector('#signInPage');
+    const clientHeight = elementSignInPage?.clientHeight ?? 0;
+    const elementMiddleTextGroup = document.querySelector('#middleTextGroup') as Element;
+    const elementDynamicIPhone = document.querySelectorAll('.dynamicIPhone');
+    const io1 = new IntersectionObserver(
+      (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
+        elementMiddleTextGroup.classList.remove('animate-[show_2s_linear]');
+        elementMiddleTextGroup.classList.replace('text-gray-200', 'text-black');
+        for(const e of elementDynamicIPhone) {
+          e.classList.remove('animate-[show_2s_linear]');
+        };
+        if(entries[0].isIntersecting) {
+          console.log('>>>> entered');
+          elementMiddleTextGroup.classList.add('animate-[show_2s_linear]');
+          elementMiddleTextGroup.classList.replace('text-black', 'text-gray-200');
+          for(const e of elementDynamicIPhone) {
+            e.classList.add('animate-[show_2s_linear]');
+          };
+        }
+      },
+      { threshold: 0, root: null, rootMargin: `${ clientHeight }px 0px 0px 0px`, }
+    );
+    io1.observe(elementMiddleTextGroup);
+  };
+  
+  useEffect(() => {
+    const elementSignInPage = document.querySelector('#signInPage');
+    const elementGoingToTopFloatButton = document.querySelector('#goingtoTopFloatButton');
+
+    observeAll();
+
+    const handlePageScroll = () => {
+      setScrollY(elementSignInPage?.scrollTop);
+    };
+    const handleFloatBtnClick = () => {
+      elementSignInPage?.scrollTo(0, 0);
+    };
+    elementSignInPage?.addEventListener('scroll', handlePageScroll);
+    elementGoingToTopFloatButton?.addEventListener('click', handleFloatBtnClick);
+    setScrollHeight(document.querySelector('#signInPage')?.scrollHeight ?? 0);
+    return () => {
+      elementSignInPage?.removeEventListener('scroll', handlePageScroll);
+      elementGoingToTopFloatButton?.removeEventListener('click', handleFloatBtnClick);
+    };
+  }, []);
+
+  useEffect(() => {
+    if(scrollY !== undefined) {
+      const elementSignInPage = document.querySelector('#signInPage');
+      const elementGoingToTopFloatButton = document.querySelector('#goingtoTopFloatButton');
+      const clientHeight = elementSignInPage?.clientHeight ?? 0;
+      if(scrollY > clientHeight / 1.7 ) {
+        elementGoingToTopFloatButton?.classList.remove('hidden');
+      } else {
+        elementGoingToTopFloatButton?.classList.add('hidden');
+        // setTimeout(() => {
+        // }, 1000);
+      }
+    }
+  }, [ scrollY ]);
+
   return (
     <div className="
       absolute z-[7] w-full top-0 left-0
@@ -31,8 +99,8 @@ const Header: React.FC = () => {
       smallest:h-[1600px]  
     ">
       <div className={`
-        flex flex-col items-start justify-center w-full bg-black opacity-[90%] border-2 border-black
-        font-bold flex items-center justify-center text-center p-[10px] cursor-default
+        flex flex-col items-start justify-center w-full bg-black opacity-[90%] border-4 border-black
+        flex items-center justify-center text-center p-[10px] cursor-default
         laptop:h-[400px] gap-8
         tablet:h-[400px] gap-8
         mobile:h-[380px] gap-8
@@ -40,7 +108,7 @@ const Header: React.FC = () => {
       `}>
         <div className={`
           ${ NotoSansKR_Bold.className }
-          flex flex-col items-center justify-center gap-2 text-white font-semibold
+          flex flex-col items-center justify-end gap-2 text-white
           laptop:text-4xl h-[100px]
           tablet:text-4xl h-[100px] 
           mobile:text-3xl h-[60px] 
@@ -50,7 +118,7 @@ const Header: React.FC = () => {
         </div>
         <div className={`
           ${ NotoSansKR_Light.className }
-          flex flex-col items-center justify-center gap-2 text-gray-200 font-normal
+          flex flex-col items-center justify-center gap-2 text-gray-200
           laptop:text-3xl
           tablet:text-3xl 
           mobile:text-2xl 
@@ -62,7 +130,7 @@ const Header: React.FC = () => {
         </div>
         <div className={`
           ${ AppleSDGothicNeoM.className }
-          flex flex-col items-center justify-center gap-2 text-gray-400 font-normal
+          flex flex-col items-center justify-center gap-2 text-gray-400
           laptop:text-3xl 
           tablet:text-3xl
           mobile:text-2xl
@@ -73,34 +141,39 @@ const Header: React.FC = () => {
         </div>
       </div>
       <div className={`
-        ${ NotoSansKR_Light.className }
-        flex flex-col items-center justify-end w-full cursor-default bg-black opacity-[90%] border-2 border-black
-        laptop:h-[1600px]
-        tablet:h-[1450px] 
-        mobile:h-[1800px]
-        smallest:h-[1500px]
+        flex flex-col items-center justify-end w-full cursor-default bg-black opacity-[90%] 
+        border-4 border-black
       `}>
-        <div className={`
-          ${ NotoSansKR_Light.className }
-          flex flex-col items-center justify-center gap-2 text-gray-200 font-normal
-          laptop:text-3xl
-          tablet:text-3xl 
-          mobile:text-2xl 
-          smallest:text-base
-        `}>
-          <div>Full-scale 지도 위에</div>
-          <div>Pinning부터 Hashtag까지</div>
-          <div>All in One</div>
-        </div>
+      </div>
+      <div 
+        id="middleTextGroup"  
+        style={{ 
+          top: `${ 
+            windowSize.width >= 1024 ? 1450 :
+            windowSize.width >= 768 ? 1300 :
+            windowSize.width >= 330 ? 950 : 700
+          }px`  
+        }}
+        className={`
+        ${ NotoSansKR_Light.className }
+        absolute z-[9] w-full flex flex-col items-center justify-center gap-2 text-black 
+        laptop:text-3xl
+        tablet:text-3xl 
+        mobile:text-2xl
+        smallest:text-base
+      `}>
+        <div>Full-scale 지도와</div>
+        <div>Pinning부터 Hashtag까지</div>
+        <div>All in One</div>
       </div>
       <StaticIPhone />
       <DynamicIPhone />
       <div className={`
-        flex items-center justify-center w-full cursor-default bg-black opacity-[90%] border-2 border-black
-        laptop:h-[2000px]
-        tablet:h-[2000px]
-        mobile:h-[2200px]
-        smallest:h-[2300px]
+        flex items-center justify-center w-full cursor-default bg-black opacity-[90%] border-4 border-black
+        laptop:h-[3000px]
+        tablet:h-[3000px]
+        mobile:h-[3000px]
+        smallest:h-[3000px]
       `}>
       </div>
     </div>

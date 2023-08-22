@@ -1,24 +1,9 @@
-'use client'
-
 import Image from 'next/image';
 
 import video1 from '@assets/videos/signIn-iphone-intro.mp4';
 import image1 from '@assets/images/mockups/empty.png';
 
 const DynamicIPhone: React.FC = () => {
-  
-  // console.log('document>>>', document);
-  // const targets = document.querySelectorAll('.dynamicIPhone');
-  // console.log('targets', targets);
-  // const io = new IntersectionObserver(
-  //   (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
-  //     console.log('entries', entries);
-  //   },
-  //   { threshold: 0.3, root: null, rootMargin: '0px 0px 0px 0px', }
-  // );
-  // for(const e of targets) {
-  //   io.observe(e);
-  // }
 
   return (
     <>
