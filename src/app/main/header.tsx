@@ -20,7 +20,7 @@ const Header: React.FC = () => {
   const signOut = () => {
     document.querySelector('html')?.classList.replace('animate-showPage', 'animate-closePage');
     setTimeout(() => {
-      dispatch(accessTokenSetting(''));
+      dispatch(accessTokenSetting({ access_token: '', user_id: '' }));
       navigator.push('/signIn');
     }, 1000);
   };

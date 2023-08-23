@@ -5,9 +5,11 @@ import dynamic from 'next/dynamic';
 
 import { useWindowSize } from '@hooks/useWindowSize';
 import { useEffect, useState } from 'react';
+import { data } from '@utils/dataForReview/data';
 
 const StaticIPhone = dynamic(() => import('@signIn/staticIPhone'), { ssr: true });
 const DynamicIPhone = dynamic(() => import('@signIn/dynamicIPhone'), { ssr: true });
+const ReviewCards = dynamic(() => import('@signIn/reviewCards'), { ssr: false });
 
 const NotoSansKR_Light = localFont({
   src: '../assets/fonts/NotoSansKR-Light.woff'
@@ -58,16 +60,16 @@ const Header: React.FC = () => {
     const elementGoingToTopFloatButton = document.querySelector('#goingtoTopFloatButton');
 
     observeAll();
+    setScrollHeight(elementSignInPage?.scrollHeight ?? 0);
 
     const handlePageScroll = () => {
       setScrollY(elementSignInPage?.scrollTop);
     };
     const handleFloatBtnClick = () => {
-      elementSignInPage?.scrollTo(0, 0);
+      elementSignInPage?.scrollTo({ top: 0, behavior: 'smooth' });
     };
     elementSignInPage?.addEventListener('scroll', handlePageScroll);
     elementGoingToTopFloatButton?.addEventListener('click', handleFloatBtnClick);
-    setScrollHeight(document.querySelector('#signInPage')?.scrollHeight ?? 0);
     return () => {
       elementSignInPage?.removeEventListener('scroll', handlePageScroll);
       elementGoingToTopFloatButton?.removeEventListener('click', handleFloatBtnClick);
@@ -83,11 +85,14 @@ const Header: React.FC = () => {
         elementGoingToTopFloatButton?.classList.remove('hidden');
       } else {
         elementGoingToTopFloatButton?.classList.add('hidden');
-        // setTimeout(() => {
-        // }, 1000);
       }
     }
   }, [ scrollY ]);
+
+  useEffect(() => {
+
+  }, [ scrollHeight ]);
+
 
   return (
     <div className="
@@ -176,6 +181,7 @@ const Header: React.FC = () => {
         smallest:h-[3000px]
       `}>
       </div>
+      <ReviewCards data={ data } />
     </div>
   );
 };

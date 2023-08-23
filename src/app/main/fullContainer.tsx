@@ -64,9 +64,9 @@ const FullContainer: React.FC = () => {
       console.log('>>>> 콜백 URL임');
       // console.log('code', code);
       // console.log('state', state);
-      const access_token = await SignInService.getTokenNaverApi(code, state);
-      if(access_token !== undefined) {
-        dispatch(accessTokenSetting(access_token));
+      const result = await SignInService.getTokenNaverApi(code, state);
+      if(result !== undefined) {
+        dispatch(accessTokenSetting(result));
       }
       return true;
     }

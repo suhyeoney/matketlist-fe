@@ -55,7 +55,11 @@ const nextConfig = {
         source: '/naver/:path*',
         destination: 'https://nid.naver.com/:path*',
       },
-      { // 2. 구글 OpenAPI
+      { // 2. 네이버 OpenAPI > Profile specific
+        source: '/profile/:path*',
+        destination: 'https://openapi.naver.com/:path*',
+      },
+      { // 3. 구글 OpenAPI
         source: '/google/:path*',
         destination: 'https://maps.googleapis.com/:path*',
       }
@@ -79,6 +83,10 @@ module.exports = withVideos({
       { // 1. 네이버 OpenAPI
         source: '/naver/:path*',
         destination: 'https://nid.naver.com/:path*',
+      },
+      { // 2. 네이버 OpenAPI > Profile specific
+        source: '/profile/:path*',
+        destination: 'https://openapi.naver.com/:path*',
       },
       { // 2. 구글 OpenAPI
         source: '/google/:path*',

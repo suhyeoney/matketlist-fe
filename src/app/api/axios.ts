@@ -1,6 +1,7 @@
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 
 const BASE_URL_NAVER= '/naver';
+const BASE_URL_PROFILE= '/profile';
 const BASE_URL_GOOGLE = '/google';
 
 const isServer = typeof window === 'undefined';
@@ -24,6 +25,17 @@ export const instanceForNaverApi: AxiosInstance = axios.create({
   },
   timeout: 5000,
 });
+
+export const instanceForNaverProfileApi = (accessToken: string) => {
+  return axios.create({
+    baseURL: BASE_URL_PROFILE,
+    headers: {
+      "Content-type": "application/json",
+      "Authorization": "Bearer " + accessToken 
+    },
+    timeout: 5000,
+  });
+};
 
 export const instanceForGoogleApi: AxiosInstance = axios.create({
   baseURL: BASE_URL_GOOGLE,
