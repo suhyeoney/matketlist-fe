@@ -40,7 +40,7 @@ export const environmentVariablesSlice = createSlice({
     moveToMapToggle: (state, action: PayloadAction<boolean>) => {
       state.moveToMap = action.payload
     },
-  }
+  },
 });
 
 export const { 

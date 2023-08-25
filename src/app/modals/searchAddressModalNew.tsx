@@ -13,7 +13,7 @@ import { Subscribe, bind } from '@react-rxjs/core';
 import { SearchMatjipInfo } from '@dataTypes/matjip';
 import { createSignal } from '@react-rxjs/utils';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
-import { addLocation } from '@store/features/location/slice';
+import { addLocation, getLocation } from '@store/features/location/slice';
 import { storeInputMajip } from '@store/features/inputControl/slice';
 import { getToday } from '@utils/dateUtils';
 import ResultTag from '@modals/resultTag';
@@ -119,8 +119,8 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
       
       const getPhoneNumber = placeDetailResult.formatted_phone_number;
       const getWebsiteUrl = placeDetailResult.website;
-      
-      dispatch(addLocation({ 
+
+      const requestBody = { 
         latitude: inputLatitude, 
         longitude: inputLongitude, 
         name: inputName, 
@@ -131,9 +131,11 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
         website: getWebsiteUrl ?? '-',
         userRegisterDate: getToday('Asia/Seoul'),
         compoundCode: inputCompoundCode,
-        hashtags: [], 
-      }));
-      alert('맛집이 정상적으로 등록되었습니다.');
+        hashtags: [],
+        registerUser: environmentVariables.userId,
+      };
+
+      dispatch(addLocation(requestBody));
       dispatch(storeInputMajip(null));
       setRegisteringStatus(false);
       closeModal();

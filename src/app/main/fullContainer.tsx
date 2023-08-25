@@ -11,7 +11,7 @@ import LoadingSpinner03 from '@spinners/loadingSpinner03';
 import { useDispatch, useSelector } from 'react-redux';
 import useNaverMap from '@hooks/useNaverMap';
 import { RootState } from '@store/store';
-import { useEffect, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import { useWindowSize } from '@hooks/useWindowSize';
 import SignInService from '@services/signIn.service';
 import { accessTokenSetting } from '@store/features/environmentVariables/slice';
@@ -21,6 +21,7 @@ import { data } from '@utils/dataForNotice/data';
 import MatjipSliders from '@sliders/container';
 import { SearchMatjipInfo } from '@dataTypes/matjip';
 import FloatedSlideUp from '@floats/slideUp';
+import { getLocation } from '@store/features/location/slice';
 
 const Tenada = localFont({
   src: '../assets/fonts/Tenada.woff'
@@ -46,7 +47,14 @@ const FullContainer: React.FC = () => {
     longitude: locations.arrLocation.length > 0 ? locations.arrLocation[locations.arrLocation.length - 1].longitude : 0, 
   });
 
-  useNaverMap(mapObj, setMapObj, position, isAuthorized, selectInfo, setInfoFloatBtnAreaOpen);
+  useNaverMap(
+    mapObj, 
+    setMapObj, 
+    position, 
+    isAuthorized, 
+    selectInfo, 
+    setInfoFloatBtnAreaOpen
+  );
 
   const windowSize = useWindowSize();
   const dispatch = useDispatch();
@@ -72,15 +80,20 @@ const FullContainer: React.FC = () => {
     }
   };
 
+  const fetchLocation = async () => {
+    console.log('>>>>fetchLocation', environmentVariables.userId);
+    dispatch(getLocation({ registerUserId: environmentVariables.userId }));
+  };
+
   const floatedSlideUpContent = 
     <>
       <div className={`
         ${ YeongdeokBlueroad.className }
       `}>
         <table
-          style={{ width: `${ windowSize.width * 0.95 }px` }} 
+          // style={{ width: `${ windowSize.width * (windowSize.width >= 768 ? 0.5 : 0.95) }px` }} 
           className="
-            p-2 border-2 border-gray-200 rounded-[3px] cursor-default
+            p-2 border border-gray-400 rounded-[3px] cursor-default
             mobile:text-[12px]
             smallest:text-[10px]
         ">
@@ -89,16 +102,12 @@ const FullContainer: React.FC = () => {
             <tr>
               <td className="p-2 font-bold"><div className="whitespace-nowrap">🍲 상호명</div></td>
               <td className="p-2 truncate ..."><div className="">{ info?.name }</div></td>
-            </tr>
-            <tr>
               <td className="p-2 font-bold"><div className="whitespace-nowrap">🍲 주소</div></td>
               <td className="p-2 truncate ..."><div className="">{ info?.address }</div></td>
             </tr>
             <tr>
               <td className="p-2 font-bold"><div className="whitespace-nowrap">🍲 대표전화번호</div></td>
               <td className="p-2 truncate ..."><div className="">{ info?.phoneNumber }</div></td>
-            </tr>
-            <tr>
               <td className="p-2 font-bold"><div className="whitespace-nowrap">🍲 대표웹사이트</div></td>
               <td className="p-2 truncate ..."><div className="">
                 <a href={ info?.website } target="_blank">{ info?.website }</a></div></td>
@@ -117,18 +126,18 @@ const FullContainer: React.FC = () => {
       `}>
         <button 
           onClick={ () => closeFloatedSlideUpArea() }
-          style={{ width: `${ windowSize.width * 0.95 }px` }} 
+          style={{ width: `${ windowSize.width * (windowSize.width >= 768 ? 0.5 : 0.95) }px` }} 
           className="border border-gray-500 rounded-[3px] p-1"
         >돌아가기</button>
       </div>
     </>;
 
   const closeFloatedSlideUpArea = () => {
-    document.querySelector('#infoFloatBtnArea')?.classList.replace('animate-slideUp', 'animate-slideDown');
+    // document.querySelector('#infoFloatBtnArea')?.classList.replace('animate-slideUp', 'animate-slideDown');
     setTimeout(() => {
       setInfoFloatBtnAreaOpen(false);
       selectInfo(undefined);
-    }, 500);
+    }, 0);
   };
 
   useEffect(() => {
@@ -148,6 +157,12 @@ const FullContainer: React.FC = () => {
   }, [ isAuthorized ]);
 
   useEffect(() => {
+    if(environmentVariables.userId.length > 0) {
+      fetchLocation();
+    }
+  }, [ environmentVariables.accessToken, environmentVariables.userId ]);
+
+  useEffect(() => {
     console.log('>>>> mapObj', mapObj);
     if(mapObj !== null && mapObj !== undefined) {
       if(Object.keys(mapObj).length > 0) {
@@ -160,7 +175,7 @@ const FullContainer: React.FC = () => {
 
   return (
     <div className={`
-      overflow-hidden
+    overflow-x-hidden overflow-y-hidden 
       ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
     `}>
       <FlowingText01 textList={ data ?? [] } />

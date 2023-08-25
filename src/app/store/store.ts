@@ -26,6 +26,7 @@ const persistConfig = {
   key: 'root',
   storage,
   blacklist: [
+    // 'location',
     'modalControl',
     'mainApi',
   ],

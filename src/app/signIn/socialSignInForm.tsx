@@ -10,6 +10,8 @@ import image2 from '@assets/icons/kakao-signin-btn.png';
 import SignInService from '@services/signIn.service';
 import { useEffect, useState } from 'react';
 import gif1 from '@assets/icons/mouse-click.gif';
+import { useSelector } from 'react-redux';
+import { RootState } from '@store/store';
 
 const NotoSansKR_Light = localFont({
   src: '../assets/fonts/NotoSansKR-Light.woff'
@@ -19,12 +21,15 @@ const SocialSignInForm: React.FC = () => {
 
   const [ isLoaded, setLoaded ] = useState<boolean>(false); // 해당 페이지의 CSR 상태 관리
   const [ isBtnDisabled,setBtnDisabled ] = useState<boolean>(false);
+
+  const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
+
   useEffect(() => {
     setLoaded(true);
     setBtnDisabled(true);
   }, []);
 
- const signInNaver = () => {
+  const signInNaver = () => {
     return SignInService.authorizeNaverApi();     
   };
 

@@ -43,26 +43,12 @@ const MatjipInputbox:React.FC = () => {
     console.log(e);
   }, []);
 
-  const onAddBtnClick = useCallback((e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-
-    const inputLatitude = Number(latitudeRef.current?.value);
-    const inputLongitude = Number(longitudeRef.current?.value);
-    
-    const newLocation = {
-      latitude: inputLatitude,
-      longitude: inputLongitude
-    };
-
-    dispatch(addLocation(newLocation));
-
-  }, [ location.arrLocation ]);
-
   return (
     <>
       <div className={`
        absolute z-10 top-28 flex flex-row justify-center items-center rounded-[10px]
-       ${ environmentVariables.backgroundMode ? 'bg-yellow-300 text-black' : 'bg-[#2A303C] text-white' }
+       bg-gradient-to-r from-red-200 from-10% via-lime-300 via-30%  via-yellow-300 via-60% to-slate-200 to-90%
+       ${ environmentVariables.backgroundMode ? 'text-black' : 'bg-[#2A303C] text-white' }
         laptop:gap-1 p-[10px] 
         tablet:gap-1 p-[10px] 
         mobile:gap-1 p-[10px]

@@ -16,6 +16,11 @@ export const get = <T, >(url: string, payload: object | number | string, instanc
   }
 };
 
-export const post =<T, > (url: string, payload: object | number | string, instance: AxiosInstance) => {
+export const post =<T, > (url: string, payload: object, instance: AxiosInstance) => {
   return instance.post<T>(url, payload);
+};
+
+export const _delete =<T, > (url: string, payload: object, instance: AxiosInstance) => {
+  console.log('payload', payload);
+  return instance.delete<T>(url, payload);
 };

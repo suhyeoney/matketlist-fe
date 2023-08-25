@@ -3,15 +3,16 @@ import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 const BASE_URL_NAVER= '/naver';
 const BASE_URL_PROFILE= '/profile';
 const BASE_URL_GOOGLE = '/google';
+const BASE_URL_BACKEND = '/backend';
 
 const isServer = typeof window === 'undefined';
 
 console.log(process.env.NODE_ENV);
 
-export const defaultInstance: AxiosInstance = axios.create({
-  // baseURL: BASE_URL_NAVER,
+export const instanceForBackend: AxiosInstance = axios.create({
+  baseURL: BASE_URL_BACKEND,
   headers: {
-    "Content-type": "text/html;charset=utf-8",
+    "Content-type": "application/json",
   },
   timeout: 5000,
 });
@@ -45,7 +46,7 @@ export const instanceForGoogleApi: AxiosInstance = axios.create({
   timeout: 5000,
 });
 
-defaultInstance.interceptors.request.use(async (config: InternalAxiosRequestConfig) => setHeader(config));
+instanceForBackend.interceptors.request.use(async (config: InternalAxiosRequestConfig) => setHeader(config));
 instanceForNaverApi.interceptors.request.use(async (config: InternalAxiosRequestConfig) => setHeader(config));
 instanceForGoogleApi.interceptors.request.use(async (config: InternalAxiosRequestConfig) => setHeader(config));
 

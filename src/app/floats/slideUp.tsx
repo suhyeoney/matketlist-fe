@@ -17,8 +17,8 @@ const FloatedSlideUp: React.FC<SlideUpProps> = ({ idString, contentArea, buttonA
     <div 
       id={ idString }
       className={`
-      fixed z-30 bottom-0 left-0 right-0 w-full flex flex-col items-center justify-center gap-2 animate-slideUp
-      rounded-tl-[10px] rounded-tr-[10px]
+      fixed z-30 bottom-0 left-0 right-0 w-full flex flex-col items-center justify-center gap-2
+      rounded-tl-[10px] rounded-tr-[10px] overflow-hidden
       laptop:h-[140px]
       tablet:h-[140px]
       mobile:h-[120px]

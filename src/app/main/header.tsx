@@ -7,8 +7,8 @@ import { RootState } from '@store/store';
 import SignOut from '@main/signout';
 import { accessTokenSetting } from '@store/features/environmentVariables/slice';
 
-const Tenada = localFont({
-  src: '../assets/fonts/Tenada.woff'
+const YeongdeokBlueroad = localFont({
+  src: '../assets/fonts/YeongdeokBlueroad.woff'
 });
 
 const Header: React.FC = () => {
@@ -21,7 +21,7 @@ const Header: React.FC = () => {
     document.querySelector('html')?.classList.replace('animate-showPage', 'animate-closePage');
     setTimeout(() => {
       dispatch(accessTokenSetting({ access_token: '', user_id: '' }));
-      navigator.push('/signIn');
+      navigator.push('/');
     }, 1000);
   };
 
@@ -31,7 +31,8 @@ const Header: React.FC = () => {
       smallest:h-[75px]
     `}>
       <div className={`
-        ${ Tenada.className } h-[80px] text-center p-[10px] flex justify-center items-center text-black
+        ${ YeongdeokBlueroad.className } font-bold h-[80px] text-center p-[10px] flex justify-center items-center 
+        text-black cursor-default
         laptop:text-5xl
         tablet:text-4xl
         mobile:text-3xl

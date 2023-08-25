@@ -62,7 +62,11 @@ const nextConfig = {
       { // 3. 구글 OpenAPI
         source: '/google/:path*',
         destination: 'https://maps.googleapis.com/:path*',
-      }
+      },
+      { // 4. 로컬 백엔드API
+        source: '/backend/:path*',
+        destination: 'http://localhost:8080/:path*',
+      },
     ];
   }
 }
@@ -88,10 +92,14 @@ module.exports = withVideos({
         source: '/profile/:path*',
         destination: 'https://openapi.naver.com/:path*',
       },
-      { // 2. 구글 OpenAPI
+      { // 3. 구글 OpenAPI
         source: '/google/:path*',
         destination: 'https://maps.googleapis.com/:path*',
-      }
+      },
+      { // 4. 로컬 백엔드API
+        source: '/backend/:path*',
+        destination: 'http://localhost:8080/:path*',
+      },
     ];
   }
 });
