@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
     <div
       id="footer" 
       className={`
-      absolute z-[15] bottom-2 w-screen flex items-center justify-center text-center text-gray-400 font-bold p-1 cursor-default
+      absolute z-[15] bottom-2 w-screen flex items-center justify-center text-center text-gray-500 font-bold p-1 cursor-default
       laptop:text-[12px]
       tablet:text-[10px]
       mobile:text-[8px]
