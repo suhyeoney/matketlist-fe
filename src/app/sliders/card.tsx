@@ -77,9 +77,8 @@ const Card: React.FC<CardProps> = ({ dataKey, data, setPosition, closeModal }) =
   const removeData = (data: CardDataType) => {
     const result = window.confirm(`해당 맛집을 목록에서 해제하시겠어요?`);
     if(result) {
-      console.log('userId', environmentVariables.userId);
       dispatch(removeLocation({ registerUserId: environmentVariables.userId, placeId: data.placeId }));
-      
+
       // 해시태그에 매핑되어있는 placeId도 제거해줘야 함!
       const tempArrHashtag = location.arrHashtag;
       console.log(

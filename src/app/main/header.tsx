@@ -31,7 +31,7 @@ const Header: React.FC = () => {
       smallest:h-[75px]
     `}>
       <div className={`
-        ${ YeongdeokBlueroad.className } font-bold h-[80px] text-center p-[10px] flex justify-center items-center 
+        ${ YeongdeokBlueroad.className } font-bold text-white text-center h-[80px] p-[10px] flex justify-center items-center
         text-black cursor-default
         laptop:text-5xl
         tablet:text-4xl

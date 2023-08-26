@@ -59,7 +59,7 @@ const getLocationsByRegisterUserIdApi = async(params: GetLocationParamsType) => 
   console.log('>>>>> getLocationsApi');
   try {
     const response: AxiosResponse = await get<SearchMatjipInfo>(
-      (isServer ? 'http://localhost:8080' : '') +  `${ LOCATION_BASE_URL }/byUser`,
+      (isServer ? 'http://localhost:8080' : '') +  `${ LOCATION_BASE_URL }/users`,
       params,
       instanceForBackend
     );
@@ -87,8 +87,8 @@ const deleteLocationApi = async(params: DeleteLocationParamsType) => {
   console.log('>>>>> deleteLocationApi');
   try {
     const response: AxiosResponse = await _delete<DeleteLocationParamsType>(
-      (isServer ? 'http://localhost:8080' : '') +  `${ LOCATION_BASE_URL }/remove`,
-      params,
+      (isServer ? 'http://localhost:8080' : '') + 
+      `${ LOCATION_BASE_URL }/users/${ params.registerUserId }/${ params.placeId }`,
       instanceForBackend
     );
     const data = response.data;
