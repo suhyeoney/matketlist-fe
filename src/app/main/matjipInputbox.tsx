@@ -1,8 +1,9 @@
 'use client'
 
 import localFont from 'next/font/local';
+import Image from 'next/image';
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@store/store';
 import { addLocation } from '@store/features/location/slice';
@@ -11,6 +12,7 @@ import { setSearchAddressModalOpen } from '@store/features/modalControl/slice';
 import { storeInputMajip } from '@store/features/inputControl/slice';
 import { LocationType } from '@dataTypes/location';
 import { useWindowSize } from '@hooks/useWindowSize';
+import image1 from '@assets/icons/search-data.png';
 
 const YeongdeokBlueroad = localFont({
   src: '../assets/fonts/YeongdeokBlueroad.woff'
@@ -27,9 +29,11 @@ const MatjipInputbox:React.FC = () => {
   const modalControl = useSelector((state: RootState) => state.modalControl);
   const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
   // const inputControl = useSelector((state: RootState) => state.inputControl);
+  const windowSize = useWindowSize();
   const dispatch = useDispatch();
 
-  const onSearchBtnClick = useCallback((e: React.MouseEvent<HTMLElement>) => {
+  const onSearchBtnClick = useCallback((e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => {
+    console.log('>>>>>> onsearchbtnclick');
     const inputValue = matjipRef.current?.value;
     if(!inputValue) {
       alert('검색할 맛집 상호명을 입력해주세요.');
@@ -45,45 +49,49 @@ const MatjipInputbox:React.FC = () => {
 
   return (
     <>
-      <div className={`
-       absolute z-10 top-28 flex flex-row justify-center items-center rounded-[10px]
-       bg-gradient-to-r from-red-200 from-10% via-lime-300 via-30%  via-yellow-300 via-60% to-slate-200 to-90%
-       ${ environmentVariables.backgroundMode ? 'text-black' : 'bg-[#2A303C] text-white' }
-        laptop:gap-1 p-[10px] 
-        tablet:gap-1 p-[10px] 
-        mobile:gap-1 p-[10px]
-        smallest:gap-1 m-0
+      <div
+        style={{ width: `${ windowSize.width / (windowSize.width >= 768 ? 2.5 : 1.1) }px` 
+        }} 
+        className={`
+        absolute z-10 top-32 flex flex-row justify-center items-center rounded-[10px] py-2
+        bg-gradient-to-r from-red-200 from-10% via-lime-300 via-30%  via-yellow-300 via-60% to-slate-200 to-90%
+        ${ environmentVariables.backgroundMode ? 'text-black' : 'bg-[#2A303C] text-white' }
       `}>
-        { useWindowSize().width >= 768 ?
-          <span className={`
-          ${ YeongdeokBlueroad.className }
-          h-[48px] text-center pr-2 rounded-md flex justify-center items-center cursor-default
-          laptop:text-base 
-          tablet:text-sm
-          mobile:text-[0px] 
-        `}>나만의 맛집 추가하기</span> : null
-        }
-        <div className="flex flex-row gap-[20px]">
+        <div 
+          className="flex flex-row gap-0 rounded-[6px]">
           <input
             type="search" 
             ref={ matjipRef } 
-            placeholder={ useWindowSize().width >= 768 ? '맛집 상호명 입력' : '나만의 맛집 추가하기' } 
+            placeholder="맛집 가게명 입력"
             onFocus={ () => document.querySelector('#footer')?.classList.add('hidden') }
             onBlur={ () => document.querySelector('#footer')?.classList.remove('hidden') }
+            onKeyDown={ (e: React.KeyboardEvent<HTMLElement>) => {
+              e.code === 'Enter' ? onSearchBtnClick(e) : null
+            } }
+            style={{ width: `${ (windowSize.width / (windowSize.width >= 768 ? 2.5 : 1.1)) - 70 }px` }} 
             className={`
-              searchInput
-              input input-bordered border
-              ${ environmentVariables.backgroundMode ? 'text-black bg-white border-black focus:text-black focus:border-black' : 
-              'text-white bg-[#2A303C] border-white focus:text-white focus:border-white' }
-              smallest:w-[170px]
-            `}/>
+              searchInput h-[40px] rounded-l-[5px]
+              ${ environmentVariables.backgroundMode ? 'text-black bg-white focus:text-black' : 
+              'text-white bg-[#2A303C] focus:text-white' }
+          `}/>
+          <button 
+            onClick={ onSearchBtnClick }
+            className={`
+            ${ YeongdeokBlueroad.className } flex items-center justify-center
+            ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
+            w-[50px] h-[40px] rounded-r-[5px]
+          `}>
+            <Image
+              src={ image1.src }
+              alt=""
+              width="20"
+              height="20"
+              className={`
+                w-[20px] h-[20px]
+              `}
+            />
+          </button>
         </div>
-        <button 
-          onClick={ onSearchBtnClick }
-          // disabled={ modalControl.isMatjipInfoModalOpen ? true : false }
-          className={`
-          ${ YeongdeokBlueroad.className } text-white text-[17px] btn w-[100px] border-violet-500 bg-violet-500
-        `}><span className="pr-2">🔍</span>검색</button>
       </div>      
     </>
   );

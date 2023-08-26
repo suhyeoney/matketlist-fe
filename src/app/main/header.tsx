@@ -7,8 +7,8 @@ import { RootState } from '@store/store';
 import SignOut from '@main/signout';
 import { accessTokenSetting } from '@store/features/environmentVariables/slice';
 
-const YeongdeokBlueroad = localFont({
-  src: '../assets/fonts/YeongdeokBlueroad.woff'
+const YeongdeokSea = localFont({
+  src: '../assets/fonts/YeongdeokSea.woff'
 });
 
 const Header: React.FC = () => {
@@ -31,7 +31,7 @@ const Header: React.FC = () => {
       smallest:h-[75px]
     `}>
       <div className={`
-        ${ YeongdeokBlueroad.className } font-bold text-white text-center h-[80px] p-[10px] flex justify-center items-center
+        ${ YeongdeokSea.className } font-bold text-center h-[80px] p-[10px] flex justify-center items-center
         text-black cursor-default
         laptop:text-5xl
         tablet:text-4xl

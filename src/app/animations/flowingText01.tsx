@@ -136,7 +136,6 @@ const FlowingText01: React.FC<FlowingText01Props> = ({ textList }) => {
                   ${ environmentVariables.backgroundMode ? 'text-black' : 'text-white' }
                   animate-flowing
                   h-[30px]
-                  font-bold
                   whitespace-nowrap
                   text-black
                   cursor-default

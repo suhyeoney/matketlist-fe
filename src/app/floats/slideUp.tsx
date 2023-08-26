@@ -23,7 +23,7 @@ const FloatedSlideUp: React.FC<SlideUpProps> = ({ idString, contentArea, buttonA
       tablet:h-[140px]
       mobile:h-[120px]
       smallest:h-[60px]
-      ${ environmentVariables.backgroundMode ? 'bg-[#2A303C] text-white' : 'bg-white text-black' }
+      ${ environmentVariables.backgroundMode ? 'bg-gray-100 text-black' : 'bg-[#2A303C] text-white' }
     `}>
       { contentArea }
       { buttonArea }
