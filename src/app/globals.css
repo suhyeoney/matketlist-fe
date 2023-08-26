@@ -42,10 +42,10 @@
   -webkit-appearance: none;
   position: absolute;
   content: "";
-  height: 16px;
-  width: 16px;
-  left: 4px;
-  bottom: 1px;
+  height: 20px;
+  width: 20px;
+  left: 0;
+  top: -1px;
   background-color: white;
   -webkit-transition: .4s;
   transition: .4s;
@@ -62,9 +62,9 @@
 }
 
 .toggle input[type="checkbox"]:checked + .x-slider:before {
-  -webkit-transform: translateX(19px);
-  -ms-transform: translateX(19px);
-  transform: translateX(19px);
+  -webkit-transform: translateX(22px);
+  -ms-transform: translateX(22px);
+  transform: translateX(22px);
 }
 
 .x-slider.round {

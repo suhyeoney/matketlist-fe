@@ -59,12 +59,6 @@ const BackgroundModeToggle:React.FC = () => {
       <div className="item-center">
       </div>
       <div>
-        {/* <input 
-          type="checkbox" onClick={ toggle }
-          defaultChecked={ !environmentVariables.backgroundMode }
-          className={`
-            ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-yellow-400' }
-        `}/> */}
         <label className="toggle">
           <input 
             type="checkbox" 
@@ -73,7 +67,7 @@ const BackgroundModeToggle:React.FC = () => {
           />
           <span className={`
             x-slider round
-            flex items-center px-[7px]
+            flex items-center px-[4px]
             ${ environmentVariables.backgroundMode ? 'justify-end' : 'justify-start' }
           `}>
           { renderBackgroundModeIcon() }
