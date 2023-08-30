@@ -1,16 +1,16 @@
 import { SearchMatjipInfo } from '@dataTypes/matjip';
 import { call, put, takeLatest } from 'typed-redux-saga';
 import MainService from '@services/main.service';
-import { addLocation, addLocationFailure, addLocationSuccess, getLocation, getLocationFailure, getLocationSuccess, removeLocation, removeLocationFailure, removeLocationSuccess } from './slice';
+import { addLocation, addLocationFailure, addLocationSuccess, getLocation, getLocationFailure, getLocationRanks, getLocationRanksFailure, getLocationRanksSuccess, getLocationSuccess, removeLocation, removeLocationFailure, removeLocationSuccess } from './slice';
 
 interface GetLocationParamsType {
-  registerUserId: String,
-  regionCode: String,
+  registerUserId: string,
+  regionCode: string,
 }
 
 interface DeleteLocationParamsType {
-  registerUserId: String,
-  placeId: String,
+  registerUserId: string,
+  placeId: string,
 }
 
 export function*getLocationSaga(action: { payload: GetLocationParamsType }) {
@@ -56,9 +56,20 @@ export function*removeLocationSaga(action: { payload: DeleteLocationParamsType }
   }
 }
 
+export function*getLocationRanksSaga() {
+  console.log('>>>>> getLocationRanksSaga call...');
+  try {
+    const { data, refreshTime }  = yield call(MainService.getLocationRanksApi, null);
+    yield put(getLocationRanksSuccess({ data, refreshTime }));
+  } catch(error) {
+    yield put(getLocationRanksFailure(error));
+  }
+}
+
 export default [
   takeLatest(getLocation, getLocationSaga),
   takeLatest(addLocation, addLocationSaga),
   takeLatest(removeLocation, removeLocationSaga),
+  takeLatest(getLocationRanks, getLocationRanksSaga),
 
 ];

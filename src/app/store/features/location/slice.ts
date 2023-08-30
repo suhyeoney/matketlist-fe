@@ -3,30 +3,42 @@
 import { HashtagType } from '@dataTypes/hashtag';
 import { SearchMatjipInfo } from '@dataTypes/matjip';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { useDispatch } from 'react-redux';
 
 interface GetLocationParamsType {
-  registerUserId: String,
-  regionCode: String,
+  registerUserId: string,
+  regionCode: string,
 };
 
 interface DeleteLocationParamsType {
-  registerUserId: String,
-  placeId: String,
+  registerUserId: string,
+  placeId: string,
+};
+
+interface RankType {
+  rankNum: string,
+  name: string,
+  placeId: string,
+  latitude: number,
+  longitude: number,
+  cnt: number,
 };
 
 export interface LocationState {
   arrLocation: SearchMatjipInfo[],
+  arrLocationRanks: RankType[],
+  rankRefreshTime: string,
   arrHashtag: HashtagType[],
   cntLocation: number,
   isLoading: boolean,
   error: Error,
-  addResult: String,
-  deleteResult: String,
+  addResult: string,
+  deleteResult: string,
 };
 
 const initialState: LocationState = {
   arrLocation: [],
+  arrLocationRanks: [],
+  rankRefreshTime: '',
   arrHashtag: [],
   cntLocation: 0,
   isLoading: false,
@@ -68,7 +80,7 @@ export const locationSlice = createSlice({
       console.log('>>>>> addLocation');
       state.isLoading = true;
     },
-    addLocationSuccess: (state, action: PayloadAction<String>) => {
+    addLocationSuccess: (state, action: PayloadAction<string>) => {
       state.addResult = action.payload;
       console.log('state.addResult', state.addResult);
       state.isLoading = false;
@@ -94,7 +106,7 @@ export const locationSlice = createSlice({
       console.log('>>>>> removeLocation');
       state.isLoading = true;
     },
-    removeLocationSuccess: (state, action: PayloadAction<String>) => {
+    removeLocationSuccess: (state, action: PayloadAction<string>) => {
       state.addResult = action.payload;
       console.log('state.addResult', state.addResult);
       state.isLoading = false;
@@ -116,7 +128,20 @@ export const locationSlice = createSlice({
       state.isLoading = false;
     },
 
-
+    getLocationRanks: (state, action: PayloadAction<undefined>) => {
+      console.log('>>>>> getLocationRanks');
+      state.isLoading = true;
+    },
+    getLocationRanksSuccess: (state, action: PayloadAction<{ data: RankType[], refreshTime: string }>) => {
+      console.log('>>>>> getLocationRanksSuccess');
+      state.arrLocationRanks = action.payload.data;
+      state.rankRefreshTime = action.payload.refreshTime;
+      state.isLoading = false;
+    },
+    getLocationRanksFailure: (state, { payload: error }) => {
+      state.error = error;
+      state.isLoading = false;
+    },
 
     updateLocation: (state, action) => {
       state.arrLocation = [ ...action.payload ];
@@ -137,8 +162,11 @@ export const {
   addLocationFailure,
   removeLocation, 
   removeLocationSuccess, 
-  removeLocationFailure, 
-  updateLocation, 
+  removeLocationFailure,
+  getLocationRanks,
+  getLocationRanksSuccess,
+  getLocationRanksFailure,
+  updateLocation,
   updateHashtag 
 } = locationSlice.actions;
 

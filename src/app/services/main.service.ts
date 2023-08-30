@@ -14,13 +14,13 @@ interface PlaceDetailParamsType {
 };
 
 interface GetLocationParamsType {
-  registerUserId: String,
-  regionCode: String,
+  registerUserId: string,
+  regionCode: string,
 }
 
 interface DeleteLocationParamsType {
-  registerUserId: String,
-  placeId: String,
+  registerUserId: string,
+  placeId: string,
 }
 
 const LOCATION_BASE_URL = '/api/v1/locations';
@@ -57,7 +57,8 @@ const getPlaceDetailDataApi = async(params: PlaceDetailParamsType) => {
 };
 
 const getLocationsByRegisterUserIdApi = async(params: GetLocationParamsType) => {
-  console.log('>>>>> getLocationsApi');
+  console.log('>>>>> getLocationsByRegisterUserIdApi');
+  console.log(`isServer: ${ typeof window === 'undefined'}`);
   try {
     const response: AxiosResponse = await get<SearchMatjipInfo>(
       (isServer ? 'http://localhost:8080' : '') +  `${ LOCATION_BASE_URL }/users`,
@@ -99,6 +100,21 @@ const deleteLocationApi = async(params: DeleteLocationParamsType) => {
   }
 };
 
+const getLocationRanksApi = async() => {
+  console.log('>>>>> getLocationRanksApi');
+  console.log(`isServer: ${ typeof window === 'undefined'}`);
+  try {
+    const response: AxiosResponse = await get<undefined>(
+      (isServer ? 'http://localhost:8080' : '') +  `${ LOCATION_BASE_URL }/ranks`,
+      {}, 
+      instanceForBackend
+    );
+    const data = response.data;
+    return data;
+  } catch(e) {
+  }
+};
+
 const MainService = {
   // getMatjipListApi,
   getLocalSearchDataApi,
@@ -106,7 +122,7 @@ const MainService = {
   getLocationsByRegisterUserIdApi,
   addLocationApi,
   deleteLocationApi,
-
+  getLocationRanksApi,
 };
 
 export default MainService;

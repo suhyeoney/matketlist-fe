@@ -5,6 +5,7 @@ import localFont from 'next/font/local';
 
 const Header = dynamic(() => import('@main/header'), { ssr: true });
 const MatjipInputbox = dynamic(() => import('@main/matjipInputbox'), { ssr: true });
+const MatjipRank = dynamic(() => import('@main/matjipRank'), { ssr: true });
 
 import SearchAddressModal from '@modals/searchAddressModalNew';
 import LoadingSpinner03 from '@spinners/loadingSpinner03';
@@ -21,7 +22,7 @@ import { data } from '@utils/dataForNotice/data';
 import MatjipSliders from '@sliders/container';
 import { SearchMatjipInfo } from '@dataTypes/matjip';
 import FloatedSlideUp from '@floats/slideUp';
-import { getLocation } from '@store/features/location/slice';
+import { getLocation, getLocationRanks } from '@store/features/location/slice';
 
 const Tenada = localFont({
   src: '../assets/fonts/Tenada.woff'
@@ -86,6 +87,11 @@ const FullContainer: React.FC = () => {
       registerUserId: environmentVariables.userId,
       regionCode: ''
     }));
+  };
+
+  const fetchLocationRanks = async () => {
+    console.log('>>>>fetchLocationRanks');
+    dispatch(getLocationRanks());
   };
 
   const floatedSlideUpContent = 
@@ -162,6 +168,7 @@ const FullContainer: React.FC = () => {
   useEffect(() => {
     if(environmentVariables.userId.length > 0) {
       fetchLocation();
+      fetchLocationRanks();
     }
   }, [ environmentVariables.accessToken, environmentVariables.userId ]);
 
@@ -207,6 +214,7 @@ const FullContainer: React.FC = () => {
           </> : null }
 
           <MatjipInputbox />
+          <MatjipRank />
           <div id="map" 
             style={{width: `${ windowSize.width }px`, height: `${ windowSize.height }px`}}
             className={`

@@ -151,6 +151,14 @@ module.exports = {
           transform: 'translateY(100%)'
         }
       },
+      rotate360: {
+        '0%': {
+          transform: 'rotate(0deg)'
+        },
+        '100%': {
+          transform: 'rotate(360deg)'
+        }
+      },
     },
     animation: {
       rotate: 'rotate 1.5s linear infinite',
@@ -167,6 +175,7 @@ module.exports = {
       bounceDefault: 'bounceDefault 1.5s linear infinite',
       slideUp: 'slideUp 0.5s linear',
       slideDown: 'slideDown 0.5s linear',
+      rotate360: 'rotate360 1s linear',
     },
   },
   plugins: [

@@ -1,5 +1,7 @@
 'use client'
 
+import localFont from 'next/font/local';
+
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@store/store';
@@ -8,7 +10,27 @@ import image2 from '@assets/icons/i-like-it.png';
 import { SearchMatjipInfo } from '@dataTypes/matjip';
 import { setMyMatjipSlidersOpen } from '@store/features/modalControl/slice';
 import image3 from '@assets/icons/my-matjip-list.png';
+
+import image4 from '@assets/icons/top1.png';
+import image5 from '@assets/icons/top2.png';
+import image6 from '@assets/icons/top3.png';
+import image7 from '@assets/icons/top4.png';
+import image8 from '@assets/icons/top5.png';
+
 import { moveToMapToggle } from '@store/features/environmentVariables/slice';
+
+interface RankType {
+  rankNum: string,
+  name: string,
+  placeId: string,
+  latitude: number,
+  longitude: number,
+  cnt: number,
+};
+
+const YeongdeokSea = localFont({
+  src: '../assets/fonts/YeongdeokSea.woff'
+});
 
 const NaverMap = (
     mapObj: naver.maps.Map | undefined | null, 
@@ -24,6 +46,7 @@ const NaverMap = (
   >('');
 
   const [ arrMatjipLocation, setArrMatjipLocation ] = useState<SearchMatjipInfo[]>([]);
+  const [ arrLocationRanks, setArrLocationRanks ] = useState<RankType[]>([]);
   const [ markersList, setMarkersList ] = useState<any>([]); // 해당 모듈 내부에서 로컬용으로 사용할 마커 집합. 추가 / 제거 모두 구현되어야 함!
   const [ badgeObj, setBadgeObj ] = useState<naver.maps.CustomControl | undefined | null>(null);
 
@@ -68,16 +91,19 @@ const NaverMap = (
 
   const setMarkerDistanceLabelHtmlString  = (distance: number) => {
     return [
-      `<div class="text-black text-[10px] bg-gray-200 rounded-[5px] p-1">`,
+      `<div class="${ YeongdeokSea.className } text-black text-[13px] bg-gray-200 rounded-[5px] p-1">`,
       `${ distance > 1000 ? Math.round(distance / 1000) + 'km' : Math.round(distance) + 'm' }`,
       `</div>`
     ].join('');
   };
 
   useEffect(() => {
-    console.log('arrLocation', location.arrLocation);
     setArrMatjipLocation(location.arrLocation);
   }, [ location.arrLocation ]);
+
+  useEffect(() => {
+    setArrLocationRanks(location.arrLocationRanks);
+  }, [ location.arrLocationRanks ]);
 
   useEffect(() => {
     // geolocation 이용 현재 위치 확인, 위치 미동의 시 기본 위치로 지정
@@ -284,7 +310,7 @@ const NaverMap = (
             new naver.maps.LatLng(myLocation.latitude, myLocation.longitude),
             new naver.maps.LatLng(e.latitude, e.longitude),
           );
-          console.log(`>>>>> Distance from current location to ${ e.name }`, distance);
+          // console.log(`>>>>> Distance from current location to ${ e.name }`, distance);
           const halfPoint = new naver.maps.LatLng(
             e.latitude < myLocation.latitude ? ((myLocation.latitude - e.latitude) / 2) + e.latitude : ((e.latitude - myLocation.latitude) / 2) + myLocation.latitude,
             e.longitude < myLocation.longitude ? ((myLocation.longitude - e.longitude) / 2) + e.longitude : ((e.longitude - myLocation.longitude) / 2) + myLocation.longitude,
@@ -308,7 +334,7 @@ const NaverMap = (
             clickable: true,
             strokeColor: distance >= 2000 ? '#ba03fc' : distance >= 1000 ? '#1b07f7' : '#fc1803',
             strokeStyle: 'solid',
-            strokeOpacity: 1,
+            strokeOpacity: 0.3,
             strokeWeight: 2
           });
           naver.maps.Event.addListener(distanceLabel, 'mouseover', () => {
@@ -320,7 +346,7 @@ const NaverMap = (
               strokeColor: distance >= 2000 ? '#ba03fc' : distance >= 1000 ? '#1b07f7' : '#fc1803',
               strokeStyle: 'solid',
               strokeLineCap: 'round',
-              strokeOpacity: 1,
+              strokeOpacity: 0.3,
               strokeWeight: 5
             });
           });
@@ -332,14 +358,43 @@ const NaverMap = (
               ],
               strokeColor: distance >= 2000 ? '#ba03fc' : distance >= 1000 ? '#1b07f7' : '#fc1803',
               strokeStyle: 'solid',
-              strokeOpacity: 1,
+              strokeOpacity: 0.3,
               strokeWeight: 2
             });
+          });
+          naver.maps.Event.addListener(distanceLabel, 'click', () => {
+            polyline.setOptions({
+              path: [
+                new naver.maps.LatLng(myLocation.latitude, myLocation.longitude),
+                new naver.maps.LatLng(e.latitude, e.longitude),
+              ],
+              strokeColor: distance >= 2000 ? '#ba03fc' : distance >= 1000 ? '#1b07f7' : '#fc1803',
+              strokeStyle: 'solid',
+              strokeLineCap: 'round',
+              strokeOpacity: 0.3,
+              strokeWeight: 5
+            });
+          });
+        });
+
+        arrLocationRanks.forEach((x: RankType, index: number) => {
+          const marker = mapRef.current = new naver.maps.Marker({
+            position: new naver.maps.LatLng(x.latitude, x.longitude),
+            clickable: true,
+            icon: {
+              url: index === 0 ? image4.src : index === 1 ? 
+              image5.src : index === 2 ? image6.src : index === 3 ? 
+              image7.src : image8.src,
+              size: new naver.maps.Size(70, 40), // 마커 크기
+              scaledSize: new naver.maps.Size(70, 40), // 아이콘 크기
+              origin: new naver.maps.Point(0, 0),
+            },
+            map: map
           });
         });
       }
     } else {}
-  }, [ myLocation, arrMatjipLocation, position ]);
+  }, [ myLocation, arrMatjipLocation, arrLocationRanks, position ]);
   
   return {
     myLocation,
