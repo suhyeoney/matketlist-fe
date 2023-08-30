@@ -5,6 +5,7 @@ import { addLocation, addLocationFailure, addLocationSuccess, getLocation, getLo
 
 interface GetLocationParamsType {
   registerUserId: String,
+  regionCode: String,
 }
 
 interface DeleteLocationParamsType {
@@ -30,7 +31,10 @@ export function*addLocationSaga(action: { payload: SearchMatjipInfo }) {
     const { resultCode } = yield call(MainService.addLocationApi, param);
     console.log(resultCode);
     yield put(addLocationSuccess(resultCode));
-    yield put(getLocation({ registerUserId: action.payload.registerUser }));
+    yield put(getLocation({ 
+      registerUserId: action.payload.registerUser,
+      regionCode: '',
+    }));
   } catch(error) {
     yield put(addLocationFailure(error));
   }
@@ -43,7 +47,10 @@ export function*removeLocationSaga(action: { payload: DeleteLocationParamsType }
   try {
     const { resultCode } = yield call(MainService.deleteLocationApi, param);
     yield put(removeLocationSuccess(resultCode));
-    yield put(getLocation({ registerUserId: action.payload.registerUserId }));
+    yield put(getLocation({ 
+      registerUserId: action.payload.registerUserId,
+      regionCode:'',
+    }));
   } catch(error) {
     yield put(removeLocationFailure(error));
   }

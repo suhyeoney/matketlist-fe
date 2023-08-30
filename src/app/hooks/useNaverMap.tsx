@@ -66,6 +66,14 @@ const NaverMap = (
     ].join('');
   };
 
+  const setMarkerDistanceLabelHtmlString  = (distance: number) => {
+    return [
+      `<div class="text-black text-[10px] bg-gray-200 rounded-[5px] p-1">`,
+      `${ distance > 1000 ? Math.round(distance / 1000) + 'km' : Math.round(distance) + 'm' }`,
+      `</div>`
+    ].join('');
+  };
+
   useEffect(() => {
     console.log('arrLocation', location.arrLocation);
     setArrMatjipLocation(location.arrLocation);
@@ -268,6 +276,67 @@ const NaverMap = (
           map.setCenter(new naver.maps.LatLng(position.latitude, position.longitude));
           dispatch(moveToMapToggle(false));
         }
+
+        // Polyline 그리기 & Distance from current location 표시하기
+        arrMatjipLocation.forEach((e: SearchMatjipInfo) => {
+          const projection = map.getProjection();
+          const distance = projection.getDistance(
+            new naver.maps.LatLng(myLocation.latitude, myLocation.longitude),
+            new naver.maps.LatLng(e.latitude, e.longitude),
+          );
+          console.log(`>>>>> Distance from current location to ${ e.name }`, distance);
+          const halfPoint = new naver.maps.LatLng(
+            e.latitude < myLocation.latitude ? ((myLocation.latitude - e.latitude) / 2) + e.latitude : ((e.latitude - myLocation.latitude) / 2) + myLocation.latitude,
+            e.longitude < myLocation.longitude ? ((myLocation.longitude - e.longitude) / 2) + e.longitude : ((e.longitude - myLocation.longitude) / 2) + myLocation.longitude,
+          );
+          const distanceLabel = new naver.maps.Marker({
+            position: halfPoint,
+            map: map,
+            clickable: true,
+            icon: {
+              content: setMarkerDistanceLabelHtmlString(distance),
+              size: new naver.maps.Size(50, 30),
+              anchor: new naver.maps.Point(11, 10)
+            }
+          });
+          const polyline = new naver.maps.Polyline({
+            map: map,
+            path: [
+              new naver.maps.LatLng(myLocation.latitude, myLocation.longitude),
+              new naver.maps.LatLng(e.latitude, e.longitude),
+            ],
+            clickable: true,
+            strokeColor: distance >= 2000 ? '#ba03fc' : distance >= 1000 ? '#1b07f7' : '#fc1803',
+            strokeStyle: 'solid',
+            strokeOpacity: 1,
+            strokeWeight: 2
+          });
+          naver.maps.Event.addListener(distanceLabel, 'mouseover', () => {
+            polyline.setOptions({
+              path: [
+                new naver.maps.LatLng(myLocation.latitude, myLocation.longitude),
+                new naver.maps.LatLng(e.latitude, e.longitude),
+              ],
+              strokeColor: distance >= 2000 ? '#ba03fc' : distance >= 1000 ? '#1b07f7' : '#fc1803',
+              strokeStyle: 'solid',
+              strokeLineCap: 'round',
+              strokeOpacity: 1,
+              strokeWeight: 5
+            });
+          });
+          naver.maps.Event.addListener(distanceLabel, 'mouseout', () => {
+            polyline.setOptions({
+              path: [
+                new naver.maps.LatLng(myLocation.latitude, myLocation.longitude),
+                new naver.maps.LatLng(e.latitude, e.longitude),
+              ],
+              strokeColor: distance >= 2000 ? '#ba03fc' : distance >= 1000 ? '#1b07f7' : '#fc1803',
+              strokeStyle: 'solid',
+              strokeOpacity: 1,
+              strokeWeight: 2
+            });
+          });
+        });
       }
     } else {}
   }, [ myLocation, arrMatjipLocation, position ]);

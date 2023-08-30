@@ -15,6 +15,7 @@ interface PlaceDetailParamsType {
 
 interface GetLocationParamsType {
   registerUserId: String,
+  regionCode: String,
 }
 
 interface DeleteLocationParamsType {

@@ -82,7 +82,10 @@ const FullContainer: React.FC = () => {
 
   const fetchLocation = async () => {
     console.log('>>>>fetchLocation', environmentVariables.userId);
-    dispatch(getLocation({ registerUserId: environmentVariables.userId }));
+    dispatch(getLocation({ 
+      registerUserId: environmentVariables.userId,
+      regionCode: ''
+    }));
   };
 
   const floatedSlideUpContent = 

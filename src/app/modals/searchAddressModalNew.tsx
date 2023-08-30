@@ -21,6 +21,7 @@ import image1 from '@assets/icons/end.png';
 import image2 from '@assets/icons/godown.png';
 import LoadingSpinner03 from '@spinners/loadingSpinner03';
 import { getLocalSearchData, getPlaceDetailData } from '@store/features/api/main/slice';
+import { convertWithRegionCode } from '@utils/stringUtils';
 
 // rxjs
 const [ keywordChange$, setKeyword ] = createSignal<string>();
@@ -133,7 +134,10 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
         compoundCode: inputCompoundCode,
         hashtags: [],
         registerUser: environmentVariables.userId,
+        regionCode: convertWithRegionCode(inputAddress, inputCompoundCode).key,
       };
+
+      console.log(requestBody);
 
       dispatch(addLocation(requestBody));
       dispatch(storeInputMajip(null));

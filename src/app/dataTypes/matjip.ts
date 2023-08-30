@@ -13,4 +13,5 @@ export interface SearchMatjipInfo {
   compoundCode: string, // 지역 구분 스트링
   hashtags: number[], // 해시태그 배열,
   registerUser: string, // User ID
+  regionCode: string,
 }

@@ -137,6 +137,7 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
       hashtags: [],
       userRegisterDate: getToday('Asia/Seoul'),
       registerUser: environmentVariables.userId,
+      regionCode: '',
     }));
     alert('맛집이 정상적으로 등록되었습니다.');
     dispatch(storeInputMajip(null));

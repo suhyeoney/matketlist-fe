@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 
 interface GetLocationParamsType {
   registerUserId: String,
+  regionCode: String,
 };
 
 interface DeleteLocationParamsType {
