@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import localFont from 'next/font/local';
+import Image from 'next/image';
 
 const Header = dynamic(() => import('@main/header'), { ssr: true });
 const MatjipInputbox = dynamic(() => import('@main/matjipInputbox'), { ssr: true });
@@ -23,6 +24,8 @@ import MatjipSliders from '@sliders/container';
 import { SearchMatjipInfo } from '@dataTypes/matjip';
 import FloatedSlideUp from '@floats/slideUp';
 import { getLocation, getLocationRanks } from '@store/features/location/slice';
+import image1 from '@assets/icons/top5-btn.png';
+import { setMatjipRankReduced } from '@store/features/modalControl/slice';
 
 const Tenada = localFont({
   src: '../assets/fonts/Tenada.woff'
@@ -98,9 +101,10 @@ const FullContainer: React.FC = () => {
     <>
       <div className={`
         ${ YeongdeokBlueroad.className }
+        flex flex-row items-center justify-center gap-2 w-full 
       `}>
         <table
-          // style={{ width: `${ windowSize.width * (windowSize.width >= 768 ? 0.5 : 0.95) }px` }} 
+          style={{ width: `${ windowSize.width * (windowSize.width >= 768 ? 0.5 : 0.95) }px` }} 
           className="
             p-2 border border-gray-400 rounded-[3px] cursor-default
             mobile:text-[12px]
@@ -109,16 +113,16 @@ const FullContainer: React.FC = () => {
           <tbody 
             className="divide-y-2 divide-gray-200">
             <tr>
-              <td className="p-2 font-bold"><div className="whitespace-nowrap">🍲 상호명</div></td>
-              <td className="p-2 truncate ..."><div className="">{ info?.name }</div></td>
-              <td className="p-2 font-bold"><div className="whitespace-nowrap">🍲 주소</div></td>
-              <td className="p-2 truncate ..."><div className="">{ info?.address }</div></td>
+              {/* <td className="p-2 font-bold"><div className="whitespace-nowrap">🍲 상호명</div></td> */}
+              <td className="flex items-center justify-center p-2"><div className="truncate ...">{ info?.name }</div></td>
+              {/* <td className="p-2 font-bold"><div className="whitespace-nowrap">🍲 주소</div></td> */}
+              <td className="p-2"><div className="truncate ...">{ info?.address }</div></td>
             </tr>
             <tr>
-              <td className="p-2 font-bold"><div className="whitespace-nowrap">🍲 대표전화번호</div></td>
-              <td className="p-2 truncate ..."><div className="">{ info?.phoneNumber }</div></td>
-              <td className="p-2 font-bold"><div className="whitespace-nowrap">🍲 대표웹사이트</div></td>
-              <td className="p-2 truncate ..."><div className="">
+              {/* <td className="p-2 font-bold"><div className="whitespace-nowrap">🍲 대표전화번호</div></td> */}
+              <td className="flex items-center justify-center p-2"><div className="truncate ...">{ info?.phoneNumber }</div></td>
+              {/* <td className="p-2 font-bold"><div className="whitespace-nowrap">🍲 대표웹사이트</div></td> */}
+              <td className="p-2"><div className="truncate ...">
                 <a href={ info?.website } target="_blank">{ info?.website }</a></div></td>
             </tr>
           </tbody>
@@ -224,6 +228,25 @@ const FullContainer: React.FC = () => {
 
           { modalControl.isSearchAddressModalOpen ? <SearchAddressModal size={ windowSize } /> : null }
           { modalControl.isMyMatjipSlidersOpen ? <MatjipSliders size={ windowSize } setPosition={ setPosition }  /> : null }
+          { modalControl.isMatjipRankReduced ? 
+            <div className="
+              absolute z-0 right-2 hover:cursor-pointer
+              mobile:top-1/3
+              smallest:top-[130px]
+            ">
+              <Image
+                src={ image1.src }
+                alt=""
+                width="64"
+                height="64"
+                onClick={ () => dispatch(setMatjipRankReduced(false)) }
+                className={`
+                  w-16 h-16 rounded-[10px]  p-1 border-4 border-gray-300
+                  ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
+                `}
+              />
+            </div>
+          : null }
         </div>
       </div> : null 
       }

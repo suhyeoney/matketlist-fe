@@ -35,6 +35,7 @@ export function*addLocationSaga(action: { payload: SearchMatjipInfo }) {
       registerUserId: action.payload.registerUser,
       regionCode: '',
     }));
+    yield put(getLocationRanks());
   } catch(error) {
     yield put(addLocationFailure(error));
   }

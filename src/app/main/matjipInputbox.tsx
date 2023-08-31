@@ -53,9 +53,11 @@ const MatjipInputbox:React.FC = () => {
         style={{ width: `${ windowSize.width / (windowSize.width >= 768 ? 2.5 : 1.1) }px` 
         }} 
         className={`
-        absolute z-10 top-32 flex flex-row justify-center items-center rounded-[10px] py-2
-        bg-gradient-to-r from-red-200 from-10% via-lime-300 via-30%  via-yellow-300 via-60% to-slate-200 to-90%
-        ${ environmentVariables.backgroundMode ? 'text-black' : 'bg-[#2A303C] text-white' }
+        absolute z-10 flex flex-row justify-center items-center border-2 border-gray-300
+        laptop:top-28 rounded-[10px] py-2
+        tablet:top-28 rounded-[10px] py-2
+        mobile:top-28 rounded-[10px] py-2
+        smallest:top-20 h-[45px] rounded-[5px] py-1
       `}>
         <div 
           className="flex flex-row gap-0 rounded-[6px]">
@@ -68,7 +70,7 @@ const MatjipInputbox:React.FC = () => {
             onKeyDown={ (e: React.KeyboardEvent<HTMLElement>) => {
               e.code === 'Enter' ? onSearchBtnClick(e) : null
             } }
-            style={{ width: `${ (windowSize.width / (windowSize.width >= 768 ? 2.5 : 1.1)) - 70 }px` }} 
+            style={{ width: `${ (windowSize.width / (windowSize.width >= 768 ? 2.5 : 1.1)) - 55 }px` }} 
             className={`
               searchInput h-[40px] rounded-l-[5px]
               ${ environmentVariables.backgroundMode ? 'text-black bg-white focus:text-black' : 
@@ -99,4 +101,5 @@ const MatjipInputbox:React.FC = () => {
 
 export default MatjipInputbox;
 
-//  ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
+// bg-gradient-to-r from-red-200 from-10% via-lime-300 via-30%  via-yellow-300 via-60% to-slate-200 to-90%
+// ${ environmentVariables.backgroundMode ? 'text-black' : 'bg-[#2A303C] text-white' }

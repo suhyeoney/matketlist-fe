@@ -1,5 +1,6 @@
 'use client'
 
+import { useWindowSize } from '@hooks/useWindowSize';
 import { RootState } from '@store/store';
 import { useSelector } from 'react-redux';
 
@@ -11,13 +12,15 @@ interface SlideUpProps {
 
 const FloatedSlideUp: React.FC<SlideUpProps> = ({ idString, contentArea, buttonArea }) => {
   
+  const windowSize = useWindowSize();
   const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
 
   return (
     <div 
       id={ idString }
+      style={{ width: `${ windowSize.width }px` }}
       className={`
-      fixed z-30 bottom-0 left-0 right-0 w-full flex flex-col items-center justify-center gap-2
+      fixed z-30 bottom-0 left-0 right-0 flex flex-col items-center justify-center gap-2
       rounded-tl-[10px] rounded-tr-[10px] overflow-hidden
       laptop:h-[140px]
       tablet:h-[140px]

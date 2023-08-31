@@ -27,16 +27,19 @@ const Header: React.FC = () => {
 
   return (
     <div className={`
-      absolute z-10 top-10 w-full flex flex-row items-center justify-center gap-3
-      smallest:h-[75px]
+      absolute z-10 w-full flex flex-row items-center justify-center gap-3
+      laptop:top-10
+      tablet:top-10
+      mobile:top-10
+      smallest:top-8
     `}>
       <div className={`
-        ${ YeongdeokSea.className } font-bold text-center h-[80px] p-[10px] flex justify-center items-center
+        ${ YeongdeokSea.className } font-bold text-center h-[50px] flex justify-center items-center
         text-black cursor-default
         laptop:text-5xl
         tablet:text-4xl
         mobile:text-3xl
-        smallest:text-2xl
+        smallest:text-xl
       `}>
         맛킷 리스트
       </div>
