@@ -9,8 +9,8 @@ import image1 from '@assets/icons/error-spanish.png';
 import image2 from '@assets/icons/left-arrow.png';
 import image3 from '@assets/icons/error-oops.png';
 
-const YeongdeokBlueroad = localFont({
-  src: './assets/fonts/YeongdeokBlueroad.woff'
+const AppleSDGothicNeoM = localFont({
+  src: './assets/fonts/AppleSDGothicNeoM.woff'
 });
 
 const Error: React.FC = () => {
@@ -23,8 +23,8 @@ const Error: React.FC = () => {
     <div 
       id="errorPage"
       className={`
-        relative h-screen flex items-center justify-center overflow-hidden text-white
-        ${ YeongdeokBlueroad.className }
+        relative h-screen flex items-center justify-center overflow-hidden text-black
+        ${ AppleSDGothicNeoM.className }
     `}>
       <div className="absolute z-5 w-full h-full flex flex-col items-center justify-center gap-4">
         <Image

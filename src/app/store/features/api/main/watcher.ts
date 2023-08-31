@@ -19,7 +19,6 @@ export function*getLocalSearchDataSaga(action: { payload: LocalSearchParamsType 
   try {
     const response: SearchMatjipInfo = yield call(MainService.getLocalSearchDataApi, param);
     yield put(getLocalSearchDataSuccess(response));
-    console.log('getLocalSearchDataSuccess data result', );
   } catch(error) {
     yield put(getLocalSearchDataFailure(error));
   }
@@ -30,7 +29,6 @@ export function*getPlaceDetailDataSaga(action: { payload: PlaceDetailParamsType 
   try {
     const response: SearchMatjipInfo = yield call(MainService.getPlaceDetailDataApi, param);
     yield put(getPlaceDetailDataSuccess(response));
-    console.log('getPlaceDetailDataSuccess data result', );
   } catch(error) {
     yield put(getPlaceDetailDataFailure(error));
   }

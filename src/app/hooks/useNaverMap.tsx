@@ -1,24 +1,44 @@
 'use client'
 
-import { DOMElement, useEffect, useRef, useState } from 'react';
+import localFont from 'next/font/local';
+
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@store/store';
-import { InfoWindow, Marker } from 'react-naver-maps';
 import image1 from '@assets/icons/you-are-here.png';
-import image2 from '@assets/icons/like-it.png';
+import image2 from '@assets/icons/i-like-it.png';
 import { SearchMatjipInfo } from '@dataTypes/matjip';
-import { removeLocation } from '@store/features/location/slice';
-import { setMatjipInfoModalOpen, setMyMatjipSlidersOpen } from '@store/features/modalControl/slice';
+import { setMyMatjipSlidersOpen } from '@store/features/modalControl/slice';
 import image3 from '@assets/icons/my-matjip-list.png';
-import { moveToMapToggle } from '@store/features/environmentVariables/slice';
-import { useWindowSize } from './useWindowSize';
 
+import image4 from '@assets/icons/top1.png';
+import image5 from '@assets/icons/top2.png';
+import image6 from '@assets/icons/top3.png';
+import image7 from '@assets/icons/top4.png';
+import image8 from '@assets/icons/top5.png';
+
+import { moveToMapToggle } from '@store/features/environmentVariables/slice';
+
+interface RankType {
+  rankNum: string,
+  name: string,
+  placeId: string,
+  latitude: number,
+  longitude: number,
+  cnt: number,
+};
+
+const YeongdeokSea = localFont({
+  src: '../assets/fonts/YeongdeokSea.woff'
+});
 
 const NaverMap = (
     mapObj: naver.maps.Map | undefined | null, 
     setMapObj: React.Dispatch<React.SetStateAction<naver.maps.Map | undefined | null>>,
     position: { latitude: number; longitude: number },
-    isAuthorized: boolean,  
+    isAuthorized: boolean,
+    selectInfo: React.Dispatch<React.SetStateAction<SearchMatjipInfo | undefined>>,
+    setInfoFloatBtnAreaOpen: React.Dispatch<React.SetStateAction<boolean>>,
   ) => {
   const mapRef = useRef<HTMLElement | null | any>(null);
   const [myLocation, setMyLocation] = useState<
@@ -26,9 +46,9 @@ const NaverMap = (
   >('');
 
   const [ arrMatjipLocation, setArrMatjipLocation ] = useState<SearchMatjipInfo[]>([]);
+  const [ arrLocationRanks, setArrLocationRanks ] = useState<RankType[]>([]);
   const [ markersList, setMarkersList ] = useState<any>([]); // 해당 모듈 내부에서 로컬용으로 사용할 마커 집합. 추가 / 제거 모두 구현되어야 함!
   const [ badgeObj, setBadgeObj ] = useState<naver.maps.CustomControl | undefined | null>(null);
-  const [ isSilderOpen, setSliderOpen ] = useState<boolean>(false);
 
   const location = useSelector((state: RootState) => state.location);
   const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
@@ -69,6 +89,22 @@ const NaverMap = (
     ].join('');
   };
 
+  const setMarkerDistanceLabelHtmlString  = (distance: number) => {
+    return [
+      `<div class="${ YeongdeokSea.className } text-black text-[13px] bg-gray-200 rounded-[5px] p-1">`,
+      `${ distance > 1000 ? Math.round(distance / 1000) + 'km' : Math.round(distance) + 'm' }`,
+      `</div>`
+    ].join('');
+  };
+
+  useEffect(() => {
+    setArrMatjipLocation(location.arrLocation);
+  }, [ location.arrLocation ]);
+
+  useEffect(() => {
+    setArrLocationRanks(location.arrLocationRanks);
+  }, [ location.arrLocationRanks ]);
+
   useEffect(() => {
     // geolocation 이용 현재 위치 확인, 위치 미동의 시 기본 위치로 지정
     if(isAuthorized) {
@@ -87,10 +123,6 @@ const NaverMap = (
   }, [ isAuthorized ]);
 
   useEffect(() => {
-    setArrMatjipLocation([ ...location.arrLocation ]);
-  }, [ location.arrLocation ]);
-
-  useEffect(() => {
     if(badgeObj !== undefined && badgeObj !== null) {
       naver.maps.Event.once(mapObj, 'init_stylemap', () => {
         badgeObj.setMap(mapObj);
@@ -104,22 +136,6 @@ const NaverMap = (
       });
     }
   }, [ badgeObj ]);
-
-  const closeOtherMarkerInfos = () => {
-    markersList.forEach((m: any) => {
-      const sizeX = m.getIcon().size.width;
-      const sizeY = m.getIcon().size.height;
-      if(sizeX !== 30 && sizeY !== 30) { // Default 사이즈인 30x30 이 아니면, Default로 크기를 되돌림.
-        m.setIcon({
-          url: image2.src,
-          size: new naver.maps.Size(30, 30), // 마커 크기
-          scaledSize: new naver.maps.Size(30, 30), // 아이콘 크기
-          origin: new naver.maps.Point(0, 0),
-          // anchor: new naver.maps.Point(11, 35)
-        });
-      }
-    });
-  };
 
   useEffect(() => {
     if(isAuthorized) {
@@ -213,7 +229,7 @@ const NaverMap = (
         }
         // TODO : 복수개의 위경도 좌표를 DB에 저장되어 있다고 가정하고 HTML을 먼저 pre-rendering 후
         // 해당 데이터를 for문에 의해 fetch 하는 방식으로 진행해보려고 함. Static Site Generation
-
+        
         arrMatjipLocation.forEach((x: SearchMatjipInfo, index: number) => {
           const marker = mapRef.current = new naver.maps.Marker({
             position: new naver.maps.LatLng(x.latitude, x.longitude),
@@ -241,42 +257,41 @@ const NaverMap = (
             backgroundColor: 'transparent',
           });
 
-          setMarkersList([ ...markersList, { ...infowindow, placeId: x.placeId }]);
+          // setMarkersList([ ...markersList, { ...infowindow, placeId: x.placeId }]);
 
           naver.maps.Event.addListener(marker, 'click', (e: React.MouseEvent) => {
-            if (infowindow.getMap()) {
-              infowindow.close();
-            } else { // 마커 클릭 시, > Popup Open
-              infowindow.open(map, marker);
-              dispatch(setMatjipInfoModalOpen(true));
-              const elementBtnClose = document.querySelector('#btn-close');
-              const elementBtnRemove = document.querySelector('#btn-remove');
-              if(elementBtnClose !== null && elementBtnClose !== undefined) {
-                elementBtnClose?.addEventListener('click', () => {
-                  infowindow.close();
-                  dispatch(setMatjipInfoModalOpen(false));
-                });
-              }
-              if(elementBtnRemove !== null && elementBtnRemove !== undefined) {
-                elementBtnRemove?.addEventListener('click', () => {
-                  if(confirm('정말로 해제하시겠어요?')) {
-                    dispatch(removeLocation(x.placeId));
-                    setMarkersList(markersList.filter((e: any) => e.placeId !== x.placeId));
-                  } else {
-                    return;
-                  }
-                  infowindow.close();
-                  dispatch(setMatjipInfoModalOpen(false));
-                });
-              }
-              // marker.setIcon({
-              //   url: image2.src,
-              //   size: new naver.maps.Size(50, 50), // 마커 크기
-              //   scaledSize: new naver.maps.Size(50, 50), // 아이콘 크기
-              //   origin: new naver.maps.Point(0, 0),
-              //   anchor: new naver.maps.Point(11, 35)
-              // });
-            }
+            console.log('marker clicked', marker);
+            const target = location.arrLocation.find((x: SearchMatjipInfo) => 
+            x.latitude === marker.getPosition().y && x.longitude === marker.getPosition().x);
+            console.log('target', target);
+            selectInfo(target);
+            setInfoFloatBtnAreaOpen(true);
+            // if (infowindow.getMap()) {
+            //   infowindow.close();
+            // } else { // 마커 클릭 시, > Popup Open
+            //   infowindow.open(map, marker);
+            //   dispatch(setMatjipInfoModalOpen(true));
+            //   const elementBtnClose = document.querySelector('#btn-close');
+            //   const elementBtnRemove = document.querySelector('#btn-remove');
+            //   if(elementBtnClose !== null && elementBtnClose !== undefined) {
+            //     elementBtnClose?.addEventListener('click', () => {
+            //       infowindow.close();
+            //       dispatch(setMatjipInfoModalOpen(false));
+            //     });
+            //   }
+            //   if(elementBtnRemove !== null && elementBtnRemove !== undefined) {
+            //     elementBtnRemove?.addEventListener('click', () => {
+            //       if(confirm('정말로 해제하시겠어요?')) {
+            //         dispatch(removeLocation(x.placeId));
+            //         setMarkersList(markersList.filter((e: any) => e.placeId !== x.placeId));
+            //       } else {
+            //         return;
+            //       }
+            //       infowindow.close();
+            //       dispatch(setMatjipInfoModalOpen(false));
+            //     });
+            //   }
+            // }
           });
 
           if(!environmentVariables.moveToMap && index === arrMatjipLocation.length - 1) {
@@ -287,9 +302,99 @@ const NaverMap = (
           map.setCenter(new naver.maps.LatLng(position.latitude, position.longitude));
           dispatch(moveToMapToggle(false));
         }
+
+        // Polyline 그리기 & Distance from current location 표시하기
+        arrMatjipLocation.forEach((e: SearchMatjipInfo) => {
+          const projection = map.getProjection();
+          const distance = projection.getDistance(
+            new naver.maps.LatLng(myLocation.latitude, myLocation.longitude),
+            new naver.maps.LatLng(e.latitude, e.longitude),
+          );
+          // console.log(`>>>>> Distance from current location to ${ e.name }`, distance);
+          const halfPoint = new naver.maps.LatLng(
+            e.latitude < myLocation.latitude ? ((myLocation.latitude - e.latitude) / 2) + e.latitude : ((e.latitude - myLocation.latitude) / 2) + myLocation.latitude,
+            e.longitude < myLocation.longitude ? ((myLocation.longitude - e.longitude) / 2) + e.longitude : ((e.longitude - myLocation.longitude) / 2) + myLocation.longitude,
+          );
+          const distanceLabel = new naver.maps.Marker({
+            position: halfPoint,
+            map: map,
+            clickable: true,
+            icon: {
+              content: setMarkerDistanceLabelHtmlString(distance),
+              size: new naver.maps.Size(50, 30),
+              anchor: new naver.maps.Point(11, 10)
+            }
+          });
+          const polyline = new naver.maps.Polyline({
+            map: map,
+            path: [
+              new naver.maps.LatLng(myLocation.latitude, myLocation.longitude),
+              new naver.maps.LatLng(e.latitude, e.longitude),
+            ],
+            clickable: true,
+            strokeColor: distance >= 2000 ? '#ba03fc' : distance >= 1000 ? '#1b07f7' : '#fc1803',
+            strokeStyle: 'solid',
+            strokeOpacity: 0.3,
+            strokeWeight: 2
+          });
+          naver.maps.Event.addListener(distanceLabel, 'mouseover', () => {
+            polyline.setOptions({
+              path: [
+                new naver.maps.LatLng(myLocation.latitude, myLocation.longitude),
+                new naver.maps.LatLng(e.latitude, e.longitude),
+              ],
+              strokeColor: distance >= 2000 ? '#ba03fc' : distance >= 1000 ? '#1b07f7' : '#fc1803',
+              strokeStyle: 'solid',
+              strokeLineCap: 'round',
+              strokeOpacity: 0.3,
+              strokeWeight: 5
+            });
+          });
+          naver.maps.Event.addListener(distanceLabel, 'mouseout', () => {
+            polyline.setOptions({
+              path: [
+                new naver.maps.LatLng(myLocation.latitude, myLocation.longitude),
+                new naver.maps.LatLng(e.latitude, e.longitude),
+              ],
+              strokeColor: distance >= 2000 ? '#ba03fc' : distance >= 1000 ? '#1b07f7' : '#fc1803',
+              strokeStyle: 'solid',
+              strokeOpacity: 0.3,
+              strokeWeight: 2
+            });
+          });
+          naver.maps.Event.addListener(distanceLabel, 'click', () => {
+            polyline.setOptions({
+              path: [
+                new naver.maps.LatLng(myLocation.latitude, myLocation.longitude),
+                new naver.maps.LatLng(e.latitude, e.longitude),
+              ],
+              strokeColor: distance >= 2000 ? '#ba03fc' : distance >= 1000 ? '#1b07f7' : '#fc1803',
+              strokeStyle: 'solid',
+              strokeLineCap: 'round',
+              strokeOpacity: 0.3,
+              strokeWeight: 5
+            });
+          });
+        });
+
+        arrLocationRanks.forEach((x: RankType, index: number) => {
+          const marker = mapRef.current = new naver.maps.Marker({
+            position: new naver.maps.LatLng(x.latitude, x.longitude),
+            clickable: true,
+            icon: {
+              url: index === 0 ? image4.src : index === 1 ? 
+              image5.src : index === 2 ? image6.src : index === 3 ? 
+              image7.src : image8.src,
+              size: new naver.maps.Size(70, 40), // 마커 크기
+              scaledSize: new naver.maps.Size(70, 40), // 아이콘 크기
+              origin: new naver.maps.Point(0, 0),
+            },
+            map: map
+          });
+        });
       }
     } else {}
-  }, [ myLocation, arrMatjipLocation, position ]);
+  }, [ myLocation, arrMatjipLocation, arrLocationRanks, position ]);
   
   return {
     myLocation,

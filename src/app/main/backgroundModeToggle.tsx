@@ -29,9 +29,9 @@ const BackgroundModeToggle:React.FC = () => {
           <Image
             src={ image1.src }
             alt=""
-            width="20"
-            height="20"
-            className="w-[20px] h-[20px]"
+            width="14"
+            height="14"
+            className="w-[14px] h-[14px]"
           />
         );
       case false:
@@ -39,9 +39,9 @@ const BackgroundModeToggle:React.FC = () => {
           <Image 
             src={ image2.src }
             alt=""
-            width="20"
-            height="20"
-            className="w-[20px] h-[20px]"
+            width="14"
+            height="14"
+            className="w-[14px] h-[14px]"
           />
         );
     }
@@ -57,16 +57,22 @@ const BackgroundModeToggle:React.FC = () => {
       smallest:gap-[2px] 
     ">
       <div className="item-center">
-        { renderBackgroundModeIcon() }
       </div>
       <div>
-        <input 
-          type="checkbox" onClick={ toggle }
-          defaultChecked={ !environmentVariables.backgroundMode }
-          className={`
-            toggle
-            ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-yellow-400' }
-        `}/>
+        <label className="toggle">
+          <input 
+            type="checkbox" 
+            onClick={ toggle } 
+            defaultChecked={ !environmentVariables.backgroundMode }
+          />
+          <span className={`
+            x-slider round
+            flex items-center px-[4px]
+            ${ environmentVariables.backgroundMode ? 'justify-end' : 'justify-start' }
+          `}>
+          { renderBackgroundModeIcon() }
+          </span>
+        </label>
       </div>
     </div>
   );

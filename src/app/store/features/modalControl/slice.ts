@@ -7,6 +7,7 @@ export interface ModalControlState {
   isMyMatjipSlidersOpen: boolean,
   isMatjipInfoModalOpen: boolean,
   isHashtagTreeOpen: boolean,
+  isMatjipRankReduced: boolean, // 모바일 이하 모드에서 맛집랭킹 팝업의 크기를 축소시키는 버튼을 클릭하면 true
 };
 
 const initialState: ModalControlState = {
@@ -14,6 +15,7 @@ const initialState: ModalControlState = {
   isMyMatjipSlidersOpen: false,
   isMatjipInfoModalOpen: false,
   isHashtagTreeOpen: false,
+  isMatjipRankReduced: false,
 }
 
 export const modalControlSlice = createSlice({
@@ -32,6 +34,9 @@ export const modalControlSlice = createSlice({
     setHashtagTreeOpen: (state, action) => {
       state.isHashtagTreeOpen = action.payload
     },
+    setMatjipRankReduced: (state, action) => {
+      state.isMatjipRankReduced = action.payload;
+    },
   }
 });
 
@@ -40,6 +45,7 @@ export const {
   setMyMatjipSlidersOpen,
   setMatjipInfoModalOpen, 
   setHashtagTreeOpen,
+  setMatjipRankReduced,
 } = modalControlSlice.actions;
 
 export default modalControlSlice.reducer;

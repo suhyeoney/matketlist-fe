@@ -7,8 +7,8 @@ import { RootState } from '@store/store';
 import SignOut from '@main/signout';
 import { accessTokenSetting } from '@store/features/environmentVariables/slice';
 
-const Tenada = localFont({
-  src: '../assets/fonts/Tenada.woff'
+const YeongdeokSea = localFont({
+  src: '../assets/fonts/YeongdeokSea.woff'
 });
 
 const Header: React.FC = () => {
@@ -18,24 +18,28 @@ const Header: React.FC = () => {
   const navigator = useRouter();
 
   const signOut = () => {
-    document.querySelector('#mainPage')?.classList.replace('animate-showPage', 'animate-closePage');
+    document.querySelector('html')?.classList.replace('animate-showPage', 'animate-closePage');
     setTimeout(() => {
-      navigator.push('/signIn');
-      dispatch(accessTokenSetting(''));
+      dispatch(accessTokenSetting({ access_token: '', user_id: '' }));
+      navigator.push('/');
     }, 1000);
   };
 
   return (
     <div className={`
-      absolute z-10 top-10 w-full flex flex-row items-center justify-center gap-3
-      smallest:h-[75px]
+      absolute z-10 w-full flex flex-row items-center justify-center gap-3
+      laptop:top-10
+      tablet:top-10
+      mobile:top-10
+      smallest:top-8
     `}>
       <div className={`
-        ${ Tenada.className } h-[80px] text-center p-[10px] flex justify-center items-center text-black
+        ${ YeongdeokSea.className } font-bold text-center h-[50px] flex justify-center items-center
+        text-black cursor-default
         laptop:text-5xl
         tablet:text-4xl
         mobile:text-3xl
-        smallest:text-2xl
+        smallest:text-xl
       `}>
         맛킷 리스트
       </div>
