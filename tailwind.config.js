@@ -159,6 +159,49 @@ module.exports = {
           transform: 'rotate(360deg)'
         }
       },
+      foldUp: {
+        '0%': {
+          height: '245px'
+        },
+        '100%': {
+          height: '65px'
+        }
+      },
+      openDown: {
+        '0%': {
+          height: '65px'
+        },
+        '100%': {
+          height: '245px'
+        }
+      },
+      appear: {
+        '0%': {
+          // top: 0,
+          opacity: 0,
+          height: '0px',
+          // transform: 'translateY(50%)',
+        },
+        '100%': {
+          // bottom: 0,
+          opacity: 1,
+          height: '175px',
+          // transform: 'translateY(-50%)',
+        }
+      },
+      disappear: {
+        '0%': {
+          opacity: 1,
+          height: '175px',
+          // transform: 'translateY(-50%)',
+        },
+        '100%': {
+          // top: 0,
+          opacity: 0,
+          height: '0px',
+          // transform: 'translateY(50%)',
+        }
+      },
     },
     animation: {
       rotate: 'rotate 1.5s linear infinite',
@@ -176,6 +219,10 @@ module.exports = {
       slideUp: 'slideUp 0.5s linear',
       slideDown: 'slideDown 0.5s linear',
       rotate360: 'rotate360 1s linear',
+      foldUpRankContainer: 'foldUp 0.5s linear',
+      openDownRankContainer: 'openDown 0.4s linear',
+      foldUpRankContent: 'disappear 0.5s linear',
+      openDownRankContent: 'appear 0.4s linear',
     },
   },
   plugins: [
