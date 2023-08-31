@@ -1,5 +1,5 @@
 import { get } from '@api/api';
-import { instanceForNaverApi } from '@api/axios';
+import { instanceForNaverApi, instanceForNaverProfileApi } from '@api/axios';
 import { AxiosResponse } from 'axios';
 
 interface ResponseTokenType {
@@ -11,6 +11,7 @@ interface ResponseTokenType {
 const NAVER_API_HOST_URL = 'https://nid.naver.com';
 const NAVER_API_AUTH_ENDPOINT = '/oauth2.0/authorize';
 const NAVER_API_TOKEN_ENDPOINT = '/oauth2.0/token';
+const NAVER_API_PROFILE_ENDPOINT = '/v1/nid/me';
 const NAVER_CALLBACK_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:3000/main' : 'https://matketlist.site/main';
 // const NAVER_CALLBACK_URL = 'http://localhost:3000/main';
 
@@ -45,20 +46,37 @@ const getTokenNaverApi = async (code: string, state: string) => {
     state: state,
     redirect_uri: encodeURI(NAVER_CALLBACK_URL),
   };
-  // const url = NAVER_API_HOST_URL +
-  //   NAVER_API_TOKEN_ENDPOINT +
-  //   `?grant_type=${ requestTokenParams.grant_type}` +                 
-  //   `&client_id=${ requestTokenParams.client_id }` +   
-  //   `&client_secret=${ requestTokenParams.client_secret }` +   
-  //   `&code=${ requestTokenParams.code }` +             
-  //   `&state=${ requestTokenParams.state }`;
   try {
+    const result = {
+      access_token: '',
+      user_id: '',
+    };
     const response: AxiosResponse = await get<ResponseTokenType>(
       NAVER_API_TOKEN_ENDPOINT, 
       requestTokenParams, 
       instanceForNaverApi
     );
     const data = response.data.access_token;
+    if(data) {
+      result.access_token = data;
+      const responseUserId = await getUserProfileApi(data);
+      result.user_id = responseUserId;
+      console.log('result', result);
+      return result;
+    }
+  } catch(e) {
+  }
+};
+
+const getUserProfileApi = async (accessToken: string) => {
+  console.log(process.env.NODE_ENV);
+  try {
+    const res: AxiosResponse = await get<any>(
+      NAVER_API_PROFILE_ENDPOINT, 
+      {},
+      instanceForNaverProfileApi(accessToken)
+    );
+    const data = res.data.response.id;
     return data;
   } catch(e) {
   }
@@ -67,6 +85,7 @@ const getTokenNaverApi = async (code: string, state: string) => {
 const SignInService = {
   authorizeNaverApi,
   getTokenNaverApi,
+  getUserProfileApi,
 };
 
 export default SignInService;

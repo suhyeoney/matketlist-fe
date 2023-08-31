@@ -1,7 +1,7 @@
 import moment from 'moment-timezone'; 
 
 export const getToday = (timezone: string) => {
-  return moment().tz(timezone).format('YYYY-MM-DD HH:mm');
+  return moment().tz(timezone).format('YYYY.MM.DD HH:mm');
 };
 
 export const getDiffBetweenTwoDays = (userRegisterDate: string) => { // 오늘 기준 하루(24H)이내이면 최신(NEW)로 간주

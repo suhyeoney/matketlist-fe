@@ -1,18 +1,12 @@
 'use client'
 
-// import video1_wide from '@assets/videos/matket-list-background1-wide.mp4';
-// import video1_narrow from '@assets/videos/matket-list-background1-narrow.mp4';
-// import video2 from '@assets/videos/matket-list-background2.mp4';
-// import poster1 from '@assets/images/matket-list-background1-wide-medium-poster.png';
-// import poster2 from '@assets/images/matket-list-background1-narrow-low-poster.png';
-import video1_wide from '@assets/videos/matket-list-background1-wide-medium.mp4';
 import video1_narrow from '@assets/videos/matket-list-background1-narrow-low.mp4';
 
 import { useWindowSize } from '@hooks/useWindowSize';
 
 const Background: React.FC = () => {
 
-  const window = useWindowSize();
+  const windowSize = useWindowSize();
 
   return (
     <div className="absolute z-0">
@@ -21,21 +15,10 @@ const Background: React.FC = () => {
         autoPlay 
         muted 
         playsInline 
-        // poster={ useWindowSize().width < 1024 ? poster2.src : poster1.src }
-        // style={{ width: window.width, height: window.height }}
-        className="fixed min-w-full min-h-full left-0 top-0 pointer-events-none"
-      >
-        <source src={ window.width < 1024 ? video1_narrow : video1_wide } type="video/mp4" />
+        className="fixed top-0 left-0 pointer-events-none filter grayscale w-full"
+    >
+        <source src={ video1_narrow } type="video/mp4" />
       </video>
-      {/* <video 
-        loop 
-        autoPlay 
-        muted
-        className="
-        laptop:w-full h-screen  
-      ">
-        <source src={ video2 } type="video/mp4" />
-      </video> */}
     </div>
   );
 };

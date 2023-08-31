@@ -25,9 +25,9 @@ export const useWindowSize = () => {
       height: window.innerHeight,
     });
     const currentUrl = window.location.href;
-    if(currentUrl.includes('/signIn')) {
-      window.location.reload();
-    }
+    // if(currentUrl.includes('/signIn')) {
+    //   window.location.reload();
+    // }
   }, 500);
 
   return windowSize;

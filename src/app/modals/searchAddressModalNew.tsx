@@ -13,7 +13,7 @@ import { Subscribe, bind } from '@react-rxjs/core';
 import { SearchMatjipInfo } from '@dataTypes/matjip';
 import { createSignal } from '@react-rxjs/utils';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
-import { addLocation } from '@store/features/location/slice';
+import { addLocation, getLocation } from '@store/features/location/slice';
 import { storeInputMajip } from '@store/features/inputControl/slice';
 import { getToday } from '@utils/dateUtils';
 import ResultTag from '@modals/resultTag';
@@ -21,6 +21,7 @@ import image1 from '@assets/icons/end.png';
 import image2 from '@assets/icons/godown.png';
 import LoadingSpinner03 from '@spinners/loadingSpinner03';
 import { getLocalSearchData, getPlaceDetailData } from '@store/features/api/main/slice';
+import { convertWithRegionCode } from '@utils/stringUtils';
 
 // rxjs
 const [ keywordChange$, setKeyword ] = createSignal<string>();
@@ -119,8 +120,8 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
       
       const getPhoneNumber = placeDetailResult.formatted_phone_number;
       const getWebsiteUrl = placeDetailResult.website;
-      
-      dispatch(addLocation({ 
+
+      const requestBody = { 
         latitude: inputLatitude, 
         longitude: inputLongitude, 
         name: inputName, 
@@ -131,9 +132,14 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
         website: getWebsiteUrl ?? '-',
         userRegisterDate: getToday('Asia/Seoul'),
         compoundCode: inputCompoundCode,
-        hashtags: [], 
-      }));
-      alert('맛집이 정상적으로 등록되었습니다.');
+        hashtags: [],
+        registerUser: environmentVariables.userId,
+        regionCode: convertWithRegionCode(inputAddress, inputCompoundCode).key,
+      };
+
+      console.log(requestBody);
+
+      dispatch(addLocation(requestBody));
       dispatch(storeInputMajip(null));
       setRegisteringStatus(false);
       closeModal();
@@ -234,13 +240,14 @@ const SearchAddressModal: React.FC<SearchAddressModalProps> = ({ size }) => {
         <div
           className="absolute z-20 inset-0 flex items-center justify-center bg-gray-700 bg-opacity-50"
         >
-          <div 
+          <div
+            id="searchAddressModalWrapper"
             style={{
               width: `${ size.width >= size.height ? size.width * 0.6 : size.width * 0.9  }px`, 
               height: `${ size.width >= size.height ? size.height * 0.7 : size.width >= 375 ? size.height * 0.7 : size.height * 0.85 }px`
             }}
             className={`
-              px-5 py-1 divide-y divide-gray-500 border-2 animate-showModal
+              px-5 py-1 divide-y divide-gray-500 border-2 rounded-[10px] animate-showModal
               ${ environmentVariables.backgroundMode ? 'bg-white border-slate-950' : 'bg-[#2A303C] border-white' }
           `}>
             <div 

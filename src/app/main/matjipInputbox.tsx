@@ -1,8 +1,9 @@
 'use client'
 
 import localFont from 'next/font/local';
+import Image from 'next/image';
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@store/store';
 import { addLocation } from '@store/features/location/slice';
@@ -11,9 +12,10 @@ import { setSearchAddressModalOpen } from '@store/features/modalControl/slice';
 import { storeInputMajip } from '@store/features/inputControl/slice';
 import { LocationType } from '@dataTypes/location';
 import { useWindowSize } from '@hooks/useWindowSize';
+import image1 from '@assets/icons/search-data.png';
 
-const Tenada = localFont({
-  src: '../assets/fonts/Tenada.woff'
+const YeongdeokBlueroad = localFont({
+  src: '../assets/fonts/YeongdeokBlueroad.woff'
 });
 
 const MatjipInputbox:React.FC = () => {
@@ -27,9 +29,11 @@ const MatjipInputbox:React.FC = () => {
   const modalControl = useSelector((state: RootState) => state.modalControl);
   const environmentVariables = useSelector((state: RootState) => state.environmentVariables);
   // const inputControl = useSelector((state: RootState) => state.inputControl);
+  const windowSize = useWindowSize();
   const dispatch = useDispatch();
 
-  const onSearchBtnClick = useCallback((e: React.MouseEvent<HTMLElement>) => {
+  const onSearchBtnClick = useCallback((e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => {
+    console.log('>>>>>> onsearchbtnclick');
     const inputValue = matjipRef.current?.value;
     if(!inputValue) {
       alert('검색할 맛집 상호명을 입력해주세요.');
@@ -43,59 +47,53 @@ const MatjipInputbox:React.FC = () => {
     console.log(e);
   }, []);
 
-  const onAddBtnClick = useCallback((e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-
-    const inputLatitude = Number(latitudeRef.current?.value);
-    const inputLongitude = Number(longitudeRef.current?.value);
-    
-    const newLocation = {
-      latitude: inputLatitude,
-      longitude: inputLongitude
-    };
-
-    dispatch(addLocation(newLocation));
-
-  }, [ location.arrLocation ]);
-
   return (
     <>
-      <div className={`
-       absolute z-10 top-28 flex flex-row justify-center items-center rounded-[10px]
-        laptop:gap-[20px] p-[10px] 
-        tablet:gap-[20px] p-[10px] 
-        mobile:gap-[10px] p-[10px]
-        smallest:gap-[5px] m-0
+      <div
+        style={{ width: `${ windowSize.width / (windowSize.width >= 768 ? 2.5 : 1.1) }px` 
+        }} 
+        className={`
+        absolute z-10 flex flex-row justify-center items-center border-2 border-gray-300
+        laptop:top-28 rounded-[10px] py-2
+        tablet:top-28 rounded-[10px] py-2
+        mobile:top-28 rounded-[10px] py-2
+        smallest:top-20 h-[45px] rounded-[5px] py-1
       `}>
-        { useWindowSize().width >= 768 ?
-          <span className={`
-          ${ Tenada.className } h-[48px] text-center p-[10px] rounded-md flex justify-center items-center 
-          laptop:text-base bg-yellow-300 
-          tablet:text-sm bg-yellow-300
-          mobile:text-[0px] 
-        `}>나만의 맛집 추가하기</span> : null
-        }
-        <div className="flex flex-row gap-[20px]">
+        <div 
+          className="flex flex-row gap-0 rounded-[6px]">
           <input
             type="search" 
             ref={ matjipRef } 
-            placeholder={ useWindowSize().width >= 768 ? '맛집 상호명 입력' : '나만의 맛집 추가하기' } 
+            placeholder="맛집 가게명 입력"
             onFocus={ () => document.querySelector('#footer')?.classList.add('hidden') }
             onBlur={ () => document.querySelector('#footer')?.classList.remove('hidden') }
+            onKeyDown={ (e: React.KeyboardEvent<HTMLElement>) => {
+              e.code === 'Enter' ? onSearchBtnClick(e) : null
+            } }
+            style={{ width: `${ (windowSize.width / (windowSize.width >= 768 ? 2.5 : 1.1)) - 55 }px` }} 
             className={`
-              searchInput
-              input input-bordered border
-              ${ environmentVariables.backgroundMode ? 'text-black bg-white border-black focus:text-black focus:border-black' : 
-              'text-white bg-[#2A303C] border-white focus:text-white focus:border-white' }
-              smallest:w-[170px]
-            `}/>
+              searchInput h-[40px] rounded-l-[5px]
+              ${ environmentVariables.backgroundMode ? 'text-black bg-white focus:text-black' : 
+              'text-white bg-[#2A303C] focus:text-white' }
+          `}/>
+          <button 
+            onClick={ onSearchBtnClick }
+            className={`
+            ${ YeongdeokBlueroad.className } flex items-center justify-center
+            ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
+            w-[50px] h-[40px] rounded-r-[5px]
+          `}>
+            <Image
+              src={ image1.src }
+              alt=""
+              width="20"
+              height="20"
+              className={`
+                w-[20px] h-[20px]
+              `}
+            />
+          </button>
         </div>
-        <button 
-          onClick={ onSearchBtnClick }
-          // disabled={ modalControl.isMatjipInfoModalOpen ? true : false }
-          className={`
-          ${ Tenada.className } text-white text-[17px] btn w-[100px] border-violet-500 bg-violet-500
-        `}><span className="pr-2">🔍</span>검색</button>
       </div>      
     </>
   );
@@ -103,4 +101,5 @@ const MatjipInputbox:React.FC = () => {
 
 export default MatjipInputbox;
 
-//  ${ environmentVariables.backgroundMode ? 'bg-white' : 'bg-[#2A303C]' }
+// bg-gradient-to-r from-red-200 from-10% via-lime-300 via-30%  via-yellow-300 via-60% to-slate-200 to-90%
+// ${ environmentVariables.backgroundMode ? 'text-black' : 'bg-[#2A303C] text-white' }

@@ -36,35 +36,29 @@ export const mainApiSlice = createSlice({
   reducers: {
     // /maps/api/place/textsearch/json
     getLocalSearchData: (state, action: PayloadAction<LocalSearchParamsType>) => {
-      console.log('>>> getLocalSearchData');
       state.isLoading = true;
     },
     getLocalSearchDataSuccess: (state, action: PayloadAction<any>) => {
-      console.log('>>> getLocalSearchDataSuccess');
       state.localSearchData.length = 0;
       const newState = state.localSearchData.concat(action.payload);
       state.localSearchData = newState;
       state.isLoading = false;
     },
     getLocalSearchDataFailure: (state, { payload: error }) => {
-      console.log('>>> getLocalSearchDataFailure', error);
       state.error = error;
       state.isLoading = false;
     },
 
     // /maps/api/place/details/json
     getPlaceDetailData: (state, action: PayloadAction<PlaceDetailParamsType>) => {
-      console.log('>>> getPlaceDetailData');
       state.isLoading = true;
     },
     getPlaceDetailDataSuccess: (state, action: PayloadAction<any>) => {
-      console.log('>>> getPlaceDetailDataSuccess');
       const newState = action.payload;
       state.placeDetailData = newState;
       state.isLoading = false;
     },
     getPlaceDetailDataFailure: (state, { payload: error }) => {
-      console.log('>>> getPlaceDetailDataFailure', error);
       state.error = error;
       state.isLoading = false;
     },

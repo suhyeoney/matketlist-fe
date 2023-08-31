@@ -52,11 +52,11 @@ module.exports = {
       },
       flowing: {
         '0%': {
-          transform: 'translateX(200%)',
+          transform: 'translateX(100%)',
           right: '0'
         },
         '100%': {
-          transform: 'translateX(-200%)',
+          transform: 'translateX(-100%)',
           left: '0'
         },
       },
@@ -151,12 +151,63 @@ module.exports = {
           transform: 'translateY(100%)'
         }
       },
+      rotate360: {
+        '0%': {
+          transform: 'rotate(0deg)'
+        },
+        '100%': {
+          transform: 'rotate(360deg)'
+        }
+      },
+      foldUp: {
+        '0%': {
+          height: '245px'
+        },
+        '100%': {
+          height: '65px'
+        }
+      },
+      openDown: {
+        '0%': {
+          height: '65px'
+        },
+        '100%': {
+          height: '245px'
+        }
+      },
+      appear: {
+        '0%': {
+          // top: 0,
+          opacity: 0,
+          height: '0px',
+          // transform: 'translateY(50%)',
+        },
+        '100%': {
+          // bottom: 0,
+          opacity: 1,
+          height: '175px',
+          // transform: 'translateY(-50%)',
+        }
+      },
+      disappear: {
+        '0%': {
+          opacity: 1,
+          height: '175px',
+          // transform: 'translateY(-50%)',
+        },
+        '100%': {
+          // top: 0,
+          opacity: 0,
+          height: '0px',
+          // transform: 'translateY(50%)',
+        }
+      },
     },
     animation: {
       rotate: 'rotate 1.5s linear infinite',
       ping: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
-      flowing: 'flowing 60s linear infinite',
-      showPage: 'show 1s linear',
+      flowing: 'flowing 30s linear infinite',
+      showPage: 'show 2s linear',
       closePage: 'close 1s linear',
       showModal: 'show 0.5s linear',
       hideModal: 'hide 0.5s linear',
@@ -167,6 +218,11 @@ module.exports = {
       bounceDefault: 'bounceDefault 1.5s linear infinite',
       slideUp: 'slideUp 0.5s linear',
       slideDown: 'slideDown 0.5s linear',
+      rotate360: 'rotate360 1s linear',
+      foldUpRankContainer: 'foldUp 0.5s linear',
+      openDownRankContainer: 'openDown 0.4s linear',
+      foldUpRankContent: 'disappear 0.5s linear',
+      openDownRankContent: 'appear 0.4s linear',
     },
   },
   plugins: [

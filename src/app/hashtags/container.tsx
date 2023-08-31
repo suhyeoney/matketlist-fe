@@ -119,6 +119,7 @@ const HashtagTree: React.FC<HashtagTreeProps> = ({ size, closeHashtagTree }) => 
         return val;
       });
       tempArrLocation.map((e: SearchMatjipInfo) => {
+        console.log('tempArrLocation', tempArrLocation);
         for(const i of e.hashtags) {
           if(!arrHashtagIds.includes(i)) {
             return {

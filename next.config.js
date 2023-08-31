@@ -5,6 +5,9 @@ const withVideos = require('next-videos');
 
 const nextConfig = {
   reactStrictMode: false,
+  experimental: {
+    appDir: true,
+  },
   compiler: {
     styledComponents: true,
   },
@@ -27,6 +30,7 @@ const nextConfig = {
         '@api': path.resolve(__dirname, 'src/app/api'),
         '@assets': path.resolve(__dirname, 'src/app/assets'),
         '@dataTypes': path.resolve(__dirname, 'src/app/dataTypes'),
+        '@floats': path.resolve(__dirname, 'src/app/floats'),
         '@hashtags': path.resolve(__dirname, 'src/app/hashtags'),
         '@hooks': path.resolve(__dirname, 'src/app/hooks'),
         '@main': path.resolve(__dirname, 'src/app/main'),
@@ -51,10 +55,18 @@ const nextConfig = {
         source: '/naver/:path*',
         destination: 'https://nid.naver.com/:path*',
       },
-      { // 2. 구글 OpenAPI
+      { // 2. 네이버 OpenAPI > Profile specific
+        source: '/profile/:path*',
+        destination: 'https://openapi.naver.com/:path*',
+      },
+      { // 3. 구글 OpenAPI
         source: '/google/:path*',
         destination: 'https://maps.googleapis.com/:path*',
-      }
+      },
+      { // 4. 로컬 백엔드API
+        source: '/backend/:path*',
+        destination: 'http://localhost:8080/:path*',
+      },
     ];
   }
 }
@@ -76,10 +88,18 @@ module.exports = withVideos({
         source: '/naver/:path*',
         destination: 'https://nid.naver.com/:path*',
       },
-      { // 2. 구글 OpenAPI
+      { // 2. 네이버 OpenAPI > Profile specific
+        source: '/profile/:path*',
+        destination: 'https://openapi.naver.com/:path*',
+      },
+      { // 3. 구글 OpenAPI
         source: '/google/:path*',
         destination: 'https://maps.googleapis.com/:path*',
-      }
+      },
+      { // 4. 로컬 백엔드API
+        source: '/backend/:path*',
+        destination: 'http://localhost:8080/:path*',
+      },
     ];
   }
 });

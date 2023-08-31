@@ -25,6 +25,7 @@
       "@api/*": ["src/app/api/*"],
       "@assets/*": ["src/app/assets/*"],
       "@dataTypes/*": ["src/app/dataTypes/*"],
+      "@floats/*": ["src/app/floats/*"],
       "@hashtags/*": ["src/app/hashtags/*"],
       "@hooks/*": ["src/app/hooks/*"],
       "@main/*": ["src/app/main/*"],
@@ -38,6 +39,6 @@
       "@utils/*": ["src/app/utils/*"]
     }
   },
-  "include": ["next-env.d.ts", "mp4.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "mp4.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "middleware.ts"],
   "exclude": ["node_modules"]
 }

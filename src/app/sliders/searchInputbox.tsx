@@ -21,9 +21,9 @@ const SearchInputbox:React.FC<SearchInputboxProps> = ({ setKeyword, placeholder 
     <>
       <div className="
         flex flex-row justify-center items-center 
-        laptop:gap-[20px] p-[10px] border-[1px] border-solid border-grey 
-        tablet:gap-[20px] p-[10px] border-[1px] border-solid border-grey 
-        mobile:gap-[10px] p-[10px] border-[1px] border-solid border-grey 
+        laptop:gap-[20px] p-[10px] border border-gray-300
+        tablet:gap-[20px] p-[10px] border border-gray-300 
+        mobile:gap-[10px] p-[10px] border border-gray-300
         smallest:gap-[5px] border-transparent m-0
       ">
         <div className="flex ">
