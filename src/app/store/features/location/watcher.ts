@@ -52,6 +52,7 @@ export function*removeLocationSaga(action: { payload: DeleteLocationParamsType }
       registerUserId: action.payload.registerUserId,
       regionCode:'',
     }));
+    yield put(getLocationRanks());
   } catch(error) {
     yield put(removeLocationFailure(error));
   }
