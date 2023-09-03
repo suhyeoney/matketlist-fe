@@ -31,8 +31,8 @@ rl.question('', async input1 => {
           arrQuery[i] = [ Number(elementQuery[0]), Number(elementQuery[1]) ];
           arrResult[i] = arrSum[arrQuery[i][1]] - arrSum[arrQuery[i][0] - 1];
           resolve();
-        }) 
-      })
+        });
+      });
     }
     for(let i = 0; i < arrResult.length; i++) {
       console.log(arrResult[i]);

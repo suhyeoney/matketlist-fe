@@ -15,8 +15,7 @@ rl.question('', input1 => {
   arrResult = Array(Number(arrInput1[0]));
   windowSize = Number(arrInput1[1]);
   rl.question('', input2 => {
-    const arrInput2 = input2.split(' ');
-    arrInput2.map(e => {
+    const arrInput2 = input2.split(' ').map(e => {
       let el = 0;
       el = Number(e);
       return el;
