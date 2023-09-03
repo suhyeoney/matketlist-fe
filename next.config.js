@@ -41,6 +41,7 @@ const nextConfig = {
         '@spinners': path.resolve(__dirname, 'src/app/spinners'),
         '@store': path.resolve(__dirname, 'src/app/store'),
         '@tables': path.resolve(__dirname, 'src/app/tables'),
+        '@test': path.resolve(__dirname, 'src/app/test'),
         '@utils': path.resolve(__dirname, 'src/app/utils'),
       },
       ...config.resolve
