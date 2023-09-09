@@ -36,9 +36,10 @@
       "@spinners/*": ["src/app/spinners/*"],
       "@store/*": ["src/app/store/*"],
       "@tables/*": ["src/app/tables/*"],
+      "@test/*": ["src/app/test/*"],
       "@utils/*": ["src/app/utils/*"]
     }
   },
-  "include": ["next-env.d.ts", "mp4.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "middleware.ts"],
+  "include": ["next-env.d.ts", "mp4.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "middleware.ts", "src/app/test/algorithm003.js"],
   "exclude": ["node_modules"]
 }
