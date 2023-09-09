@@ -59,14 +59,11 @@ export const locationSlice = createSlice({
       console.log('>>>>> getLocationSuccess');
       state.arrLocation.length = 0;
       const newState = state.arrLocation.concat(action.payload);
-      state.arrLocation = newState;
-      state.arrLocation.map((e: SearchMatjipInfo) => {
-        const obj = { ...e };
-        let pHashtags: number[];
-        pHashtags = [];
-        obj.hashtags = pHashtags;
+      state.arrLocation = newState.map((e: SearchMatjipInfo) => {
+        const pHashtags: number[] = [];
+        const obj = { ...e, hashtags: pHashtags };
         return obj;
-      });
+      });;
       state.cntLocation = newState.length;
       state.isLoading = false;
       console.log('arrLocation', state.arrLocation);

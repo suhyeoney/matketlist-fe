@@ -192,12 +192,12 @@ const HashtagCheckbox: React.FC<HashtagCheckboxProps> = ({ placeId, setHashtagCh
           <span
             className={`
             px-4
-            ${ environmentVariables.backgroundMode ? 'text-lime-200' : 'text-purple-500' }
+            ${ environmentVariables.backgroundMode ? 'text-purple-500' : 'text-lime-200' }
           `}>
             { joinedSelectedHashtagTexts }
             <span
               className={`
-              ${ environmentVariables.backgroundMode ? 'text-white' : 'text-black' }
+              ${ environmentVariables.backgroundMode ? 'text-black' : 'text-white' }
             `}>
               { checkHangeulTextEndsWithJongseong(joinedSelectedHashtagTexts) ? ' 가 선택됨' : ' 이 선택됨' }
             </span>
@@ -301,6 +301,7 @@ const HashtagCheckbox: React.FC<HashtagCheckboxProps> = ({ placeId, setHashtagCh
           idString={ 'hashtagFloatBtnArea' } 
           contentArea={ floatedSlideUpContent } 
           buttonArea={ floatedSlideUpButton }
+          gap={ 'gap-8' }
         />
         : null
       }
