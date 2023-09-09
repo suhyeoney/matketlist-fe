@@ -41,6 +41,7 @@ const SocialSignInForm: React.FC = () => {
       >
         <div className="
           flex flex-row items-center justify-center absolute z-[9]
+          border border-gray-600 rounded-[10px] px-6 py-4
           laptop:top-[400px] gap-4
           tablet:top-[400px] gap-4 
           mobile:top-[370px] gap-2
@@ -90,8 +91,8 @@ const SocialSignInForm: React.FC = () => {
           <Image 
             src={ gif1.src } 
             alt=""
-            width="100"
-            height="100" 
+            width="150"
+            height="150" 
           />
         </div>
       </Link>

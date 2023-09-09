@@ -25,6 +25,7 @@
             "@spinners": "./src/app/spinners",
             "@store": "./src/app/store",
             "@tables": "./src/app/tables",
+            "@test": "./src/app/test",
             "@utils": "./src/app/utils"
           }
         }
