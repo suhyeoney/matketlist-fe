@@ -256,6 +256,7 @@ const FullContainer: React.FC = () => {
           idString={ 'infoFloatBtnArea' } 
           contentArea={ floatedSlideUpContent } 
           buttonArea={ floatedSlideUpButton }
+          gap={ 'gap-2' }
         /> : null
       }
     </div>
