@@ -1,34 +1,12 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Demo Scenes are here for you! (Last Updated : 2023.09.11)
 
-## Getting Started
 
-First, run the development server:
+https://github.com/suhyeoney/matketlist-fe/assets/38124124/c2efbdce-a5ed-456e-bcba-cbedd7712a68
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+https://github.com/suhyeoney/matketlist-fe/assets/38124124/4279258b-87e6-4e7d-8c0c-131d91a42bcb
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+https://github.com/suhyeoney/matketlist-fe/assets/38124124/0e5c4b35-d396-4081-a8d7-94318025f8f6
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+https://github.com/suhyeoney/matketlist-fe/assets/38124124/e4b08d43-23e1-4bdd-98e5-ff672624cd87
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
