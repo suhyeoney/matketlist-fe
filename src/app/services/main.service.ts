@@ -1,7 +1,8 @@
-import { AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { SearchMatjipInfo } from '@dataTypes/matjip';
 import { _delete, get, post } from '../api/api';
 import { instanceForBackend, instanceForGoogleApi, instanceForNaverApi } from '../api/axios';
+import * as Sentry from '@sentry/nextjs';
 
 interface LocalSearchParamsType {
   key: string | undefined,
@@ -111,7 +112,8 @@ const getLocationRanksApi = async() => {
     );
     const data = response.data;
     return data;
-  } catch(e) {
+  } catch(error) {
+    Sentry.captureException(error);
   }
 };
 
